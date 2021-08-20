@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="WPF_MVVM_FusionProject.View.UserManageTreeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_MVVM_FusionProject"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
+             xmlns:model="clr-namespace:WPF_MVVM_FusionProject.Model"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.DataContext>
+        <viewModel:UserManageTreeViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,15,0,0" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="{x:Null}" Foreground="#FFF1F1F1"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <TreeView x:Name="treeView" Margin="20,-47,0, 0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectedItemChanged">
+                            <i:InvokeCommandAction Command="{Binding CommandSelectedItem}" CommandParameter="{Binding ElementName=treeView, Path=SelectedItem}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type model:UserManageTreeModel}" ItemsSource="{Binding ChildGroupList}">
+                            <Grid>
+                                <TextBlock Text="{Binding Header}" Margin="0,5,0,0">
+                                    <TextBlock.Resources>
+                                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="ParentGroupContextMenu">
+                                            <MenuItem Header="Add">
+                                                <MenuItem Header="RootAdd" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeRootAddClick}"/>
+                                                <MenuItem Header="ChildAdd" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeChildAddClick}" CommandParameter="{Binding PrimaryKey}"/>
+                                            </MenuItem>
+                                            <MenuItem Header="Delete" Command="{Binding CommandDeleteClick}"/>
+                                            <MenuItem Header="Rename" Command="{Binding CommandRenameClick}"/>
+                                        </ContextMenu>
+                                        <ContextMenu x:Key="UserGroupContextMenu">
+                                            <MenuItem Header="Add" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeUserAddClick}"/>
+                                            <MenuItem Header="Delete" Command="{Binding CommandDeleteClick}"/>
+                                            <MenuItem Header="Rename" Command="{Binding CommandRenameClick}"/>
+                                        </ContextMenu>
+                                    </TextBlock.Resources>
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding DepthCount}" Value="0">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource ParentGroupContextMenu}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding DepthCount}" Value="1">
+                                                    <Setter Property="ContextMenu" Value="{StaticResource UserGroupContextMenu}"/>
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding DepthCount}" Value="2">
+                                                    <Setter Property="ContextMenu" Value="{x:Null}"/>
+                                                </DataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Foreground" Value="#FF0FB57D"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBox Grid.Column="1" Text="{Binding InputHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsTextBoxVisibility, Converter={StaticResource BoolToVisibility}}" local:FocusExtension.IsFocused="{Binding IsTextBoxFocus}" ContextMenu="{x:Null}">
+                                    <i:Interaction.Triggers>
+                                        <i:EventTrigger EventName="LostFocus">
+                                            <i:InvokeCommandAction Command="{Binding CommandSaveClick}"/>
+                                        </i:EventTrigger>
+                                    </i:Interaction.Triggers>
+                                    <TextBox.InputBindings>
+                                        <KeyBinding Key="Return" Command="{Binding CommandSaveClick}"/>
+                                    </TextBox.InputBindings>
+                                </TextBox>
+                            </Grid>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                    <!--<TreeView.ItemContainerStyle>
+                        <Style TargetType="{x:Type TreeViewItem}">
+                            <Setter Property="FontFamily" Value="/Fonts/#Roboto Light"/>
+                            <Setter Property="FontSize" Value="15"/>
+                            <Style.Resources>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"/>
+                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey }" Color="#FFF1F1F1" />
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="FontFamily" Value="/Fonts/#Roboto Bold"/>
+                                    <Setter Property="Foreground" Value="#FF0FB57D"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true"/>
+                                        <Condition Property="IsSelectionActive" Value="false"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="{x:Null}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
+                                </MultiTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TreeView.ItemContainerStyle>-->
+                </TreeView>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1" Background="#FF1F2428"/>
+    </Grid>
+</UserControl>

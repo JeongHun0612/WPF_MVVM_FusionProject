@@ -1,0 +1,114 @@
+﻿<UserControl x:Class="WPF_MVVM_FusionProject.View.LoginWindowView.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_MVVM_FusionProject"
+             xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel.LoginWindowViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="400">
+    
+    <UserControl.DataContext>
+        <viewModel:LoginViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Background="#FF141C1E" FocusManager.FocusedElement="{Binding ElementName=IdTextBox}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="250"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <!-- Exit Button -->
+            <Button Style="{StaticResource ExitButtonStyle}" Width="25" Height="25" VerticalAlignment="Top" HorizontalAlignment="Right" BorderBrush="Transparent" Margin="0,10,10,0"
+                    Command="{Binding CommandExitClick}">
+                <Button.Background>
+                    <ImageBrush ImageSource= "/WPF_MVVM_FusionProject;component/Image/exitNormal.png"/>
+                </Button.Background>
+            </Button>
+
+            <!-- Title Name -->
+            <!--<Label Content="Normal" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="#FF04D46A" FontWeight="Bold" FontSize="30" FontFamily="/Font/#Roboto Medium" Margin="0,70,0,0" />-->
+            <Image Height="135" Width="135" RenderTransformOrigin="0.5,0.5" Margin="7,45,0,0" Source="/WPF_MVVM_FusionProject;component/Image/TitleIcon.png">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <SkewTransform/>
+                        <RotateTransform Angle="6.457"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ID TextBox -->
+            <Grid Grid.Row="0">
+                <TextBox x:Name="IdTextBox" Style="{StaticResource TextBoxStyle}" Width="240" Height="24" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="#FFD9D9D9" BorderThickness="0,0,0,1" Foreground="#FFD9D9D9" FontFamily="Segoe UI" FontSize="15" MaxLength="20" Margin="0,0,0,20"
+                         ContextMenu="{x:Null}" local:FocusExtension.IsFocused="{Binding IsIdTextBoxFocus}" Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding CommandLoginClick}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+                <!-- ID TextBox Watermark -->
+                <TextBlock Style="{StaticResource IdWatermarkStyle}" Text="아이디" Width="240" VerticalAlignment="Center" IsHitTestVisible="False" Foreground="Gray" FontFamily="/Font/#KoPubDotum Light" Margin="8,0,0,18"/>
+
+                <!-- ID ErrorMessage -->
+                <Label Content="{Binding IdErrorMessage}" Width="238" Height="25" VerticalAlignment="Bottom" Foreground="#FFF54E4F" FontFamily="/Font/#KoPubDotum Light" FontSize="11" Margin="0,0,5,10"/>
+            </Grid>
+            <Grid Grid.Row="1">
+                <!-- Pw TextBox -->
+                <TextBox x:Name="PwTextBox" Style="{StaticResource TextBoxStyle}" Width="240" Height="24" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="#FFD9D9D9" BorderThickness="0,0,0,1" Foreground="#FFD9D9D9" FontFamily="Segoe UI" FontSize="15" MaxLength="20" Margin="0,0,0,30"
+                             ContextMenu="{x:Null}" local:FocusExtension.IsFocused="{Binding IsPwTextBoxFocus}" Text="{Binding UserPw, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsPwTextBoxVisibility, Converter={StaticResource BoolToVisibility}}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding CommandLoginClick}"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                <!-- Pw PasswordBox -->
+                <PasswordBox Style="{StaticResource PasswordBoxStyle}" Width="240" Height="24" VerticalContentAlignment="Center" Background="Transparent" BorderBrush="#FFD9D9D9" BorderThickness="0,0,0,1" Foreground="#FFD9D9D9" FontFamily="Segoe UI" FontSize="15" MaxLength="20" Margin="0,0,0,30"
+                             ContextMenu="{x:Null}" local:FocusExtension.IsFocused="{Binding IsPwPasswordBoxFocus}" local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding UserPw, Mode=TwoWay}" Visibility="{Binding IsPwPasswordBoxVisibility, Converter={StaticResource BoolToVisibility}}">
+                    <PasswordBox.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding CommandLoginClick}"/>
+                    </PasswordBox.InputBindings>
+                </PasswordBox>
+                <!-- Pw PasswordBox Watermark -->
+                <TextBlock Style="{StaticResource PwWatermarkStyle}" Text="비밀번호" Width="240" VerticalAlignment="Center" IsHitTestVisible="False" Foreground="Gray" FontFamily="/Font/#KoPubDotum Light" Margin="8,0,0,30"/>
+
+                <!-- PW ErrorMessage -->
+                <Label Content="{Binding PwErrorMessage}" Width="238" Height="25" VerticalAlignment="Bottom" Foreground="#FFF54E4F" FontFamily="/Font/#KoPubDotum Light" FontSize="11" Margin="0,0,5,15"/>
+
+                <!-- Show Password Button -->
+                <Button Style="{StaticResource ShowPasswordButtonStyle}" Width="19" Height="19" HorizontalAlignment="Center" BorderBrush="Transparent" Margin="215,0,0,30"
+                       Command="{Binding CommandShowPwClick}">
+                    <Button.Background>
+                        <ImageBrush ImageSource="{Binding ShowPwImageSource[0]}"/>
+                    </Button.Background>
+                </Button>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid>
+                <!-- Login Button -->
+                <Button x:Name="loginButton" Style="{StaticResource ButtonStyle}" Content="Log in" Width="240" Height="36" VerticalAlignment="Top" Background="Transparent" BorderBrush="#FF04D46A" Foreground="#FF04D46A" FontFamily="/Font/#Roboto Medium" FontSize="17" Margin="0,20,0,0"
+                        IsEnabled="{Binding IsLoginButtonEnabled}" Command="{Binding CommandLoginClick}"/>
+
+                <Button Style="{StaticResource TextButtonStyle}" Content="아이디 찾기" Width="64" VerticalAlignment="Center"  Background="Transparent" BorderBrush="Transparent" Foreground="#FFD9D9D9" FontFamily="/Font/#KoPubDotum Light" FontSize="11" Margin="0,0,190,10"/>
+                <Button Style="{StaticResource TextButtonStyle}" Content="비밀번호 찾기" Width="64" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Foreground="#FFD9D9D9" FontFamily="/Font/#KoPubDotum Light" FontSize="11" Margin="10,0,0,10"/>
+                <Button Style="{StaticResource TextButtonStyle}" Content="회원가입" Width="64" VerticalAlignment="Center" Background="Transparent" BorderBrush="Transparent" Foreground="#FFD9D9D9" FontFamily="/Font/#KoPubDotum Light" FontSize="11" Margin="200,0,0,10"/>
+                <Path Data="M198.75,146.02 L198.75,155.2825" Height="10" VerticalAlignment="Center" Stretch="Fill" Stroke="#FFC7C7C7" StrokeThickness="0.5" Margin="112,0,0,10" />
+                <Path Data="M198.75,146.02 L198.75,155.2825" Height="10" VerticalAlignment="Center" Stretch="Fill" Stroke="#FFC7C7C7" StrokeThickness="0.5" Margin="0,0,98,10" />
+            </Grid>
+        </Grid>
+
+        <!-- Login Limit View -->
+        <Grid Grid.Row="1" Visibility="{Binding LoginLimitVisibility, Converter={StaticResource BoolToVisibility}}" Background="#FF141C1E">
+            <TextBlock Text="{Binding LoginLimitCount}" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="#FF04D46A" FontSize="95" Margin="0,-27.5,0,0"/>
+            <TextBlock Text="20초 후 다시 로그인을 시도하거나 하단의 비밀번호 찾기를 이용해보세요."
+                       Width="350" VerticalAlignment="Bottom" TextWrapping="Wrap" TextAlignment="Center" Foreground="#FFD9D9D9" FontFamily="/Font/#KoPubDotum Medium" FontSize="11" Margin="0,0,0,20"/>
+        </Grid>
+    </Grid>
+</UserControl>

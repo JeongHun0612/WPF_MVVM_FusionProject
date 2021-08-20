@@ -1,0 +1,74 @@
+﻿<UserControl x:Class="WPF_MVVM_FusionProject.View.SystemTimeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_MVVM_FusionProject.View"
+             xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="1000">
+    
+    <UserControl.DataContext>
+        <viewModel:SystemTimeViewModel/>
+    </UserControl.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Content="KST" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label Content="{Binding KSTDateTime}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Rectangle HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="2" Margin="0,4,0,0" RadiusX="1" RadiusY="1">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="#FFC8CBCB" Opacity="0.4"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Content="UTC" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label Content="{Binding UTCDateTime}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="3">
+            <Rectangle HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="2" Margin="0,4,0,0" RadiusX="1" RadiusY="1">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="#FFC8CBCB" Opacity="0.4"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+        <Grid Grid.Column="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Content="Gps Week" HorizontalAlignment="Right" Margin="0,3,2,0" VerticalAlignment="Center" Width="100" Height="40" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label Content="{Binding GPSWeek}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

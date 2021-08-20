@@ -1,0 +1,30 @@
+﻿<Window x:Class="WPF_MVVM_FusionProject.View.LoginWindowView.LoginMainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_MVVM_FusionProject.View.LoginWindowView"
+        xmlns:view="clr-namespace:WPF_MVVM_FusionProject.View.LoginWindowView"
+        xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel.LoginWindowViewModel"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        Title="LoginMainView" Height="600" Width="400">
+    
+    <Window.DataContext>
+        <viewModel:LoginMainViewModel/>
+    </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseLeftButtonDown">
+            <i:InvokeCommandAction Command="{Binding CommandDragMove}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
+    <Grid>
+        <view:LoginView DataContext="{Binding Source={x:Static viewModel:LoginMainViewModel.loginViewModel}}"/>
+        <view:MessageBoxView DataContext="{Binding Source={x:Static viewModel:LoginMainViewModel.messageBoxViewModel}}"/>
+    </Grid>
+</Window>
