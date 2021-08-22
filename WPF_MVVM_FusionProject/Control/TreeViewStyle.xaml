@@ -20,7 +20,7 @@
                     <Border Background="Transparent" Height="36" Padding="5,5,5,5" Width="36">
                         <Path x:Name="ExpandPath" Data="{StaticResource TreeArrow}" Fill="{StaticResource TreeViewItem.TreeArrow.Static.Fill}" Stroke="{StaticResource TreeViewItem.TreeArrow.Static.Stroke}">
                             <Path.RenderTransform>
-                                <RotateTransform Angle="135" CenterY="3" CenterX="3"/>
+                                <RotateTransform Angle="135" CenterY="2" CenterX="2"/>
                             </Path.RenderTransform>
                         </Path>
                     </Border>
@@ -28,7 +28,7 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter Property="RenderTransform" TargetName="ExpandPath">
                                 <Setter.Value>
-                                    <RotateTransform Angle="225" CenterY="4" CenterX="5"/>
+                                    <RotateTransform Angle="225" CenterY="2" CenterX="2"/>
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Fill" TargetName="ExpandPath" Value="#FF0FB57D"/>
@@ -37,7 +37,7 @@
                         <Trigger Property="IsChecked" Value="False">
                             <Setter Property="RenderTransform" TargetName="ExpandPath">
                                 <Setter.Value>
-                                    <RotateTransform Angle="135" CenterY="6" CenterX="3"/>
+                                    <RotateTransform Angle="135" CenterY="2" CenterX="2"/>
                                 </Setter.Value>
                             </Setter>
                             <Setter Property="Fill" TargetName="ExpandPath" Value="#FF0FB57D"/>

@@ -136,7 +136,9 @@ namespace WPF_MVVM_FusionProject.ViewModel
             MainWindowViewModel.userManageListViewModel.IsAddMember = false;
             MainWindowViewModel.userManageListViewModel.SelectedItem = selectedItem;
 
-            MainWindowViewModel.userManageListViewModel.SelectUserListCollection = new ObservableCollection<UserManageListModel>();
+            //MainWindowViewModel.userManageListViewModel.SelectUserListCollection = new ObservableCollection<UserManageListModel>();
+            MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Clear();
+
             ObservableCollection<UserManageListModel> userListCollection = MainWindowViewModel.userManageListViewModel.UserListCollection;
             ObservableCollection<UserManageListModel> selectUserListCollection = MainWindowViewModel.userManageListViewModel.SelectUserListCollection;
 

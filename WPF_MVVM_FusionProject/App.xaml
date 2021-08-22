@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TextStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/CheckBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TabControlStyle.xaml"/>

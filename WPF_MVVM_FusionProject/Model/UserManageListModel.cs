@@ -17,6 +17,7 @@ namespace WPF_MVVM_FusionProject.Model
             this.userName = string.Empty;
             this.userBirth = string.Empty;
             this.userId = string.Empty;
+            this.tempUserId = string.Empty;
             this.userPw = string.Empty;
             this.userDepartment = string.Empty;
             this.userEmployeeNum = string.Empty;
@@ -27,11 +28,14 @@ namespace WPF_MVVM_FusionProject.Model
             this.UserGroupId = string.Empty;
 
             this.isReadOnly = false;
+            this.isUserPwTextBoxVisibility = true;
+            this.isUserPwPasswordBoxVisibility = false;
             this.isGroupListVisibility = true;
             this.isSaveBtnVisibility = true;
             this.isCancleBtnVisibility = true;
             this.isEditBtnVisibility = false;
             this.isDeleteBtnVisibility = false;
+            this.isNameTextBoxFocus = true;
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
@@ -45,6 +49,7 @@ namespace WPF_MVVM_FusionProject.Model
             this.userName = userName;
             this.userBirth = userBirth;
             this.userId = userId;
+            this.tempUserId = userId;
             this.userPw = userPw;
             this.userDepartment = userDepartment;
             this.userEmployeeNum = userEmployeeNum;
@@ -90,6 +95,13 @@ namespace WPF_MVVM_FusionProject.Model
         {
             get { return this.userId; }
             set { this.userId = value; NotifyCollection("UserId"); }
+        }
+
+        private string tempUserId = string.Empty;
+        public string TempUserId
+        {
+            get { return this.tempUserId; }
+            set { this.tempUserId = value; NotifyCollection("TempUserId"); }
         }
 
         private string userPw = string.Empty;
@@ -155,6 +167,20 @@ namespace WPF_MVVM_FusionProject.Model
             set { this.isReadOnly = value; NotifyCollection("IsReadOnly"); }
         }
 
+        private bool isUserPwTextBoxVisibility = false;
+        public bool IsUserPwTextBoxVisibility
+        {
+            get { return this.isUserPwTextBoxVisibility; }
+            set { this.isUserPwTextBoxVisibility = value; NotifyCollection("IsUserPwTextBoxVisibility"); }
+        }
+
+        private bool isUserPwPasswordBoxVisibility = true;
+        public bool IsUserPwPasswordBoxVisibility
+        {
+            get { return this.isUserPwPasswordBoxVisibility; }
+            set { this.isUserPwPasswordBoxVisibility = value; NotifyCollection("IsUserPwPasswordBoxVisibility"); }
+        }
+
         private bool isGroupListVisibility = false;
         public bool IsGroupListVisibility
         {
@@ -188,6 +214,20 @@ namespace WPF_MVVM_FusionProject.Model
         {
             get { return this.isCancleBtnVisibility; }
             set { this.isCancleBtnVisibility = value; NotifyCollection("IsCancleBtnVisibility"); }
+        }
+
+        private bool isNameTextBoxFocus = false;
+        public bool IsNameTextBoxFocus
+        {
+            get { return this.isNameTextBoxFocus; }
+            set { this.isNameTextBoxFocus = value; NotifyCollection("IsNameTextBoxFocus"); }
+        }
+
+        private bool isIdTextBoxFocus = false;
+        public bool IsIdTextBoxFocus
+        {
+            get { return this.isIdTextBoxFocus; }
+            set { this.isIdTextBoxFocus = value; NotifyCollection("IsIdTextBoxFocus"); }
         }
         #endregion
 
@@ -223,11 +263,12 @@ namespace WPF_MVVM_FusionProject.Model
         {
             UserGroupList = MainWindowViewModel.userManageTreeViewModel.UserGroupList;
 
-            for (int idx = 0; idx < UserGroupList.Count; idx++)
+            foreach (ComboBoxGroupListModel item in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
             {
-                if (UserGroupId == UserGroupList[idx].GroupId)
+                if (!item.IsHeader && (item.GroupId == UserGroupId))
                 {
-                    ComboBoxSelectedIndex = idx;
+                    int index = MainWindowViewModel.userManageTreeViewModel.UserGroupList.IndexOf(item);
+                    ComboBoxSelectedIndex = index;
                 }
             }
 
@@ -240,6 +281,8 @@ namespace WPF_MVVM_FusionProject.Model
         private void UserDeleteClick(object obj)
         {
             WarningMessageBoxView messageBox = new WarningMessageBoxView();
+            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "정말로 삭제하시겠습니까?";
+            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 0;
             messageBox.ShowDialog();
 
             if (MainWindowViewModel.warningMessageBoxViewModel.IsMessageBoxResult)
@@ -270,80 +313,87 @@ namespace WPF_MVVM_FusionProject.Model
         private void UserSaveClick(object obj)
         {
             ComboBoxGroupListModel selectedItem = obj as ComboBoxGroupListModel;
-
             string tableName = "users";
 
             if (UserName != string.Empty && UserBirth != string.Empty && UserId != string.Empty && UserPw != string.Empty && UserDepartment != string.Empty && UserEmployeeNum != string.Empty && selectedItem != null && UserNumber != string.Empty)
             {
-                if (IsEditBtnVisibility)
-                {
-                    string userUpdateQuery = string.Format("UPDATE {0} SET user_name='{1}', user_birth='{2}', user_id='{3}', user_pw='{4}', user_department='{5}', user_employee_num='{6}', user_number='{7}', group_name='{8}', group_id='{9}' WHERE id = '{10}'", tableName, UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, selectedItem.GroupName, selectedItem.GroupId, PrimaryKey);
-                    if (MainWindowViewModel.manager.MySqlQueryExecuter(userUpdateQuery))
-                    {
-                        if (selectedItem.GroupId != UserGroupId)
-                        {
-                            foreach (UserManageListModel item in userListCollection)
-                            {
-                                if (item.PrimaryKey == PrimaryKey)
-                                {
-                                    item.UserGroupId = selectedItem.GroupId;
-                                    item.UserGroupName = selectedItem.GroupName;
-                                }
-                            }
-                            selectUserListCollection.Remove(this);
+                string userSelectQuery = string.Format("SELECT * FROM {0} WHERE user_id = '{1}'", tableName, UserId);
+                DataSet userDataSet = MainWindowViewModel.manager.Select(userSelectQuery, tableName);
 
-                            UserManageTreeDeleteInit();
-                            UserGroupId = selectedItem.GroupId;
-                            UserGroupName = selectedItem.GroupName;
-                            UserManageTreeAddInit(UserGroupId, PrimaryKey);
-                        }
-                        IsReadOnly = true;
-                        IsSaveBtnVisibility = false;
-                        IsCancleBtnVisibility = false;
-                        IsGroupListVisibility = false;
-                    }
+                if (userDataSet.Tables[0].Rows.Count > 0 && (TempUserId != UserId))
+                {
+                    WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                    MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "이미 사용중인 아이디입니다.";
+                    MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                    messageBox.ShowDialog();
+                    IsIdTextBoxFocus = true;
                 }
                 else
                 {
-                    int PrimaryKey = (MainWindowViewModel.userManageListViewModel.UserListCollection.Count == 0) ? 1 : MainWindowViewModel.userManageListViewModel.LastPrimaryKey + 1;
-
-                    if (UserName != string.Empty && UserBirth != string.Empty && UserId != string.Empty && UserPw != string.Empty && UserDepartment != string.Empty && UserEmployeeNum != string.Empty && selectedItem != null && UserNumber != string.Empty)
+                    if (IsEditBtnVisibility)
                     {
-                        string userSelectQuery = string.Format("SELECT * FROM {0} WHERE user_id = '{1}'", tableName, UserId);
-                        DataSet userDataSet = MainWindowViewModel.manager.Select(userSelectQuery, tableName);
-
-                        if (userDataSet.Tables[0].Rows.Count > 0)
+                        string userUpdateQuery = string.Format("UPDATE {0} SET user_name='{1}', user_birth='{2}', user_id='{3}', user_pw='{4}', user_department='{5}', user_employee_num='{6}', user_number='{7}', group_name='{8}', group_id='{9}' WHERE id = '{10}'", tableName, UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, selectedItem.GroupName, selectedItem.GroupId, PrimaryKey);
+                        if (MainWindowViewModel.manager.MySqlQueryExecuter(userUpdateQuery))
                         {
-                            MessageBox.Show("이미 사용중인 아이디입니다.");
-                        }
-                        else
-                        {
-                            string userInsertQuery = string.Format("INSERT INTO {0} VALUES('{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')", tableName, PrimaryKey, UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, selectedItem.GroupName, selectedItem.GroupId);
-                            if (MainWindowViewModel.manager.MySqlQueryExecuter(userInsertQuery))
+                            if (selectedItem.GroupId != UserGroupId)
                             {
-                                UserGroupName = selectedItem.GroupName;
+                                foreach (UserManageListModel item in userListCollection)
+                                {
+                                    if (item.PrimaryKey == PrimaryKey)
+                                    {
+                                        item.UserGroupId = selectedItem.GroupId;
+                                        item.UserGroupName = selectedItem.GroupName;
+                                    }
+                                }
+                                selectUserListCollection.Remove(this);
+
+                                UserManageTreeDeleteInit();
                                 UserGroupId = selectedItem.GroupId;
-                                userListCollection.Add(new UserManageListModel(PrimaryKey.ToString(), UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, UserGroupName, UserGroupId));
-
-                                IsReadOnly = true;
-                                IsEditBtnVisibility = true;
-                                IsDeleteBtnVisibility = true;
-                                IsSaveBtnVisibility = false;
-                                IsCancleBtnVisibility = false;
-                                IsGroupListVisibility = false;
-                                MainWindowViewModel.userManageListViewModel.IsAddMember = false;
-                                MainWindowViewModel.userManageListViewModel.LastPrimaryKey = PrimaryKey;
-                                Debug.WriteLine(MainWindowViewModel.userManageListViewModel.LastPrimaryKey);
-
-                                UserManageTreeAddInit(selectedItem.GroupId, PrimaryKey.ToString());
+                                UserGroupName = selectedItem.GroupName;
+                                UserManageTreeAddInit(UserGroupId, PrimaryKey);
                             }
+                            TempUserId = UserId;
+                            IsReadOnly = true;
+                            IsSaveBtnVisibility = false;
+                            IsCancleBtnVisibility = false;
+                            IsGroupListVisibility = false;
+                        }
+                    }
+                    else
+                    {
+                        int primaryKey = (MainWindowViewModel.userManageListViewModel.UserListCollection.Count == 0) ? 1 : MainWindowViewModel.userManageListViewModel.LastPrimaryKey + 1;
+
+                        string userInsertQuery = string.Format("INSERT INTO {0} VALUES('{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')", tableName, primaryKey, UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, selectedItem.GroupName, selectedItem.GroupId);
+                        if (MainWindowViewModel.manager.MySqlQueryExecuter(userInsertQuery))
+                        {
+                            PrimaryKey = primaryKey.ToString();
+                            UserGroupName = selectedItem.GroupName;
+                            UserGroupId = selectedItem.GroupId;
+                            TempUserId = UserId;
+                            userListCollection.Add(new UserManageListModel(primaryKey.ToString(), UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, UserGroupName, UserGroupId));
+
+                            IsReadOnly = true;
+                            IsEditBtnVisibility = true;
+                            IsDeleteBtnVisibility = true;
+                            IsSaveBtnVisibility = false;
+                            IsCancleBtnVisibility = false;
+                            IsGroupListVisibility = false;
+                            IsUserPwTextBoxVisibility = false;
+                            IsUserPwPasswordBoxVisibility = true;
+                            MainWindowViewModel.userManageListViewModel.IsAddMember = false;
+                            MainWindowViewModel.userManageListViewModel.LastPrimaryKey = primaryKey;
+
+                            UserManageTreeAddInit(selectedItem.GroupId, primaryKey.ToString());
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("값을 모두 입력해주세요.");
+                WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "값을 모두 입력해주세요.";
+                MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                messageBox.ShowDialog();
             }
         }
 
@@ -373,7 +423,7 @@ namespace WPF_MVVM_FusionProject.Model
             }
             else
             {
-                selectUserListCollection.RemoveAt(0);
+                selectUserListCollection.Remove(this);
                 MainWindowViewModel.userManageListViewModel.IsAddMember = false;
             }
         }

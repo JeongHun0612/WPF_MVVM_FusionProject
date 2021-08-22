@@ -2,6 +2,7 @@
 using System.Data;
 using System.Diagnostics;
 using System.Windows;
+using WPF_MVVM_FusionProject.View;
 using WPF_MVVM_FusionProject.ViewModel;
 
 namespace WPF_MVVM_FusionProject.Model
@@ -125,7 +126,10 @@ namespace WPF_MVVM_FusionProject.Model
                 }
                 else
                 {
-                    MessageBox.Show("값을 입력해주세요.");
+                    WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                    MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "값을 모두 입력해주세요.";
+                    MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                    messageBox.ShowDialog();
                     IsTextBoxFocus = true;
                 }
             }
@@ -133,13 +137,17 @@ namespace WPF_MVVM_FusionProject.Model
 
         private void RenameClick(object obj)
         {
+            IsTextBoxFocus = false;
             if (!MainWindowViewModel.userManageTreeViewModel.IsTreeNodeEdit)
             {
                 MainWindowViewModel.userManageTreeViewModel.IsTreeNodeEdit = true;
                 MainWindowViewModel.userManageTreeViewModel.IsEditStatus = "Rename";
                 IsTextBoxVisibility = true;
-                IsTextBoxFocus = true;
-                InputHeader = Header;
+                if (IsTextBoxVisibility)
+                {
+                    IsTextBoxFocus = true;
+                    InputHeader = Header;
+                }
             }
         }
 
@@ -201,7 +209,10 @@ namespace WPF_MVVM_FusionProject.Model
                     DataSet parentGroupNameDataSet = MainWindowViewModel.manager.Select(parentGroupNameSelectQuery, tableName);
                     if (parentGroupNameDataSet.Tables[0].Rows.Count > 0)
                     {
-                        MessageBox.Show("동일한 이름이 있습니다.");
+                        WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                        MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "동일한 이름이 있습니다.";
+                        MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                        messageBox.ShowDialog();
                     }
                     else
                     {
@@ -225,7 +236,10 @@ namespace WPF_MVVM_FusionProject.Model
                     DataSet userGroupNameDataSet = MainWindowViewModel.manager.Select(userGroupNameSelectQuery, tableName);
                     if (userGroupNameDataSet.Tables[0].Rows.Count > 0)
                     {
-                        MessageBox.Show("동일한 이름이 있습니다.");
+                        WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                        MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "동일한 이름이 있습니다.";
+                        MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                        messageBox.ShowDialog();
                     }
                     else
                     {
@@ -275,7 +289,10 @@ namespace WPF_MVVM_FusionProject.Model
                         }
                         else
                         {
-                            MessageBox.Show("동일한 이름이 있습니다.");
+                            WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "동일한 이름이 있습니다.";
+                            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                            messageBox.ShowDialog();
                             InputHeader = Header;
                         }
                     }
@@ -310,7 +327,10 @@ namespace WPF_MVVM_FusionProject.Model
                         }
                         else
                         {
-                            MessageBox.Show("동일한 이름이 있습니다.");
+                            WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "동일한 이름이 있습니다.";
+                            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                            messageBox.ShowDialog();
                             InputHeader = Header;
                         }
                     }

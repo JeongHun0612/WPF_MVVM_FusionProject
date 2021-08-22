@@ -169,6 +169,10 @@
     <Compile Include="View\WarningMessageBoxView.xaml.cs">
       <DependentUpon>WarningMessageBoxView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Control\ComboBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Control\ContextMenuStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -378,8 +382,11 @@
     <Resource Include="Image\warning2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\add6.png" />
-    <Resource Include="Image\add7.png" />
+    <Resource Include="Image\addUserHover.png" />
+    <Resource Include="Image\addUserNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\danger.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

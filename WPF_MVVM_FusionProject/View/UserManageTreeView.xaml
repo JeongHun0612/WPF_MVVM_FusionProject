@@ -22,10 +22,10 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200"/>
-                <RowDefinition/>
+                <RowDefinition/> 
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,15,0,0" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="{x:Null}" Foreground="#FFF1F1F1"/>
+                <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,80" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="{x:Null}" Foreground="#FFF1F1F1"/>
             </Grid>
             <Grid Grid.Row="1">
                 <TreeView x:Name="treeView" Margin="20,-47,0, 0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}">
@@ -37,20 +37,18 @@
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type model:UserManageTreeModel}" ItemsSource="{Binding ChildGroupList}">
                             <Grid>
-                                <TextBlock Text="{Binding Header}" Margin="0,5,0,0">
+                                <TextBlock Text="{Binding Header}">
                                     <TextBlock.Resources>
-                                        <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="ParentGroupContextMenu">
-                                            <MenuItem Header="Add">
-                                                <MenuItem Header="RootAdd" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeRootAddClick}"/>
-                                                <MenuItem Header="ChildAdd" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeChildAddClick}" CommandParameter="{Binding PrimaryKey}"/>
-                                            </MenuItem>
-                                            <MenuItem Header="Delete" Command="{Binding CommandDeleteClick}"/>
-                                            <MenuItem Header="Rename" Command="{Binding CommandRenameClick}"/>
+                                        <ContextMenu Background="#FF1F2428" BorderBrush="Transparent" x:Key="ParentGroupContextMenu">
+                                             <MenuItem Header="루트 추가" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeRootAddClick}"/>
+                                             <MenuItem Header="자식 추가" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeChildAddClick}" CommandParameter="{Binding PrimaryKey}"/>
+                                            <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
+                                            <MenuItem Header="이름 바꾸기" Command="{Binding CommandRenameClick}"/>
                                         </ContextMenu>
-                                        <ContextMenu x:Key="UserGroupContextMenu">
-                                            <MenuItem Header="Add" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeUserAddClick}"/>
-                                            <MenuItem Header="Delete" Command="{Binding CommandDeleteClick}"/>
-                                            <MenuItem Header="Rename" Command="{Binding CommandRenameClick}"/>
+                                        <ContextMenu Background="#FF1F2428" BorderBrush="Transparent" x:Key="UserGroupContextMenu">
+                                            <MenuItem Header="추가" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeUserAddClick}"/>
+                                            <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
+                                            <MenuItem Header="이름바꾸기" Command="{Binding CommandRenameClick}"/>
                                         </ContextMenu>
                                     </TextBlock.Resources>
                                     <TextBlock.Style>
@@ -72,7 +70,8 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
-                                <TextBox Grid.Column="1" Text="{Binding InputHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsTextBoxVisibility, Converter={StaticResource BoolToVisibility}}" local:FocusExtension.IsFocused="{Binding IsTextBoxFocus}" ContextMenu="{x:Null}">
+                                <TextBox Grid.Column="1" Height="20" Margin="0,0,0,6" Background="#FF1F2428" Foreground="#FFF1F1F1"
+                                         Text="{Binding InputHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsTextBoxVisibility, Converter={StaticResource BoolToVisibility}}" local:FocusExtension.IsFocused="{Binding IsTextBoxFocus}" ContextMenu="{x:Null}">
                                     <i:Interaction.Triggers>
                                         <i:EventTrigger EventName="LostFocus">
                                             <i:InvokeCommandAction Command="{Binding CommandSaveClick}"/>
