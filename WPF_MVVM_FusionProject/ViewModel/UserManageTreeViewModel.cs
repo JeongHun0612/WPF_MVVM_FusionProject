@@ -127,6 +127,14 @@ namespace WPF_MVVM_FusionProject.ViewModel
             ObservableCollection<UserManageListModel> userListCollection = MainWindowViewModel.userManageListViewModel.UserListCollection;
             ObservableCollection<UserManageListModel> selectUserListCollection = MainWindowViewModel.userManageListViewModel.SelectUserListCollection;
 
+            foreach (UserManageListModel ListItem in selectUserListCollection)
+            {
+                if (ListItem.IsUserListVisibility)
+                {
+                    ListItem.IsUserListVisibility = false;
+                }
+            }
+
             if (selectedItem != null)
             {
                 switch (selectedItem.DepthCount)
@@ -148,7 +156,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
                         foreach (UserManageTreeModel TreeItem in selectedItem.ChildGroupList)
                         {
-                            selectUserListCollection = TreeItem.UserListCollection;
+                            //selectUserListCollection = TreeItem.UserListCollection;
 
                             //selectUserListCollection = TreeItem.UserListCollection;
                             //if (TreeItem.UserListCollection.Count != 0)
@@ -172,7 +180,14 @@ namespace WPF_MVVM_FusionProject.ViewModel
                         }
                         break;
                     case 1:
-                        MainWindowViewModel.userManageListViewModel.SelectUserListCollection = selectedItem.UserListCollection;
+                        //MainWindowViewModel.userManageListViewModel.SelectUserListCollection = selectedItem.UserListCollection;
+                        foreach(UserManageListModel ListItem in selectUserListCollection)
+                        {
+                            if(ListItem.UserGroupId == selectedItem.PrimaryKey)
+                            {
+                                ListItem.IsUserListVisibility = true;
+                            }
+                        }
 
                         //foreach (UserManageListModel ListItem in selectedItem.UserListCollection)
                         //{

@@ -28,6 +28,7 @@ namespace WPF_MVVM_FusionProject.Model
             this.UserGroupId = string.Empty;
 
             this.isReadOnly = false;
+            this.isUserListVisibility = true;
             this.isUserPwTextBoxVisibility = true;
             this.isUserPwPasswordBoxVisibility = false;
             this.isGroupListVisibility = true;
@@ -36,26 +37,6 @@ namespace WPF_MVVM_FusionProject.Model
             this.isEditBtnVisibility = false;
             this.isDeleteBtnVisibility = false;
             this.isNameTextBoxFocus = true;
-
-            this.commandUserEditClick = new DelegateCommand(UserEditClick);
-            this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
-            this.commandUserSaveClick = new DelegateCommand(UserSaveClick);
-            this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
-        }
-
-        public UserManageListModel(string userGroupId)
-        {
-            this.primaryKey = string.Empty;
-            this.userName = string.Empty;
-            this.userBirth = string.Empty;
-            this.userId = string.Empty;
-            this.tempUserId = string.Empty;
-            this.userPw = string.Empty;
-            this.userDepartment = string.Empty;
-            this.userEmployeeNum = string.Empty;
-            this.userNumber = string.Empty;
-            this.UserGroupName = string.Empty;
-            this.UserGroupId = userGroupId;
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
@@ -76,6 +57,7 @@ namespace WPF_MVVM_FusionProject.Model
             this.userNumber = userNumber;
             this.UserGroupName = userGroupName;
             this.UserGroupId = userGroupId;
+            this.isUserListVisibility = true;
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
@@ -182,6 +164,13 @@ namespace WPF_MVVM_FusionProject.Model
         {
             get { return this.isReadOnly; }
             set { this.isReadOnly = value; NotifyCollection("IsReadOnly"); }
+        }
+
+        private bool isUserListVisibility = true;
+        public bool IsUserListVisibility
+        {
+            get { return this.isUserListVisibility; }
+            set { this.isUserListVisibility = value; NotifyCollection("IsUserListVisibility"); }
         }
 
         private bool isUserPwTextBoxVisibility = false;

@@ -13,6 +13,9 @@ namespace WPF_MVVM_FusionProject.ViewModel
             DateTimer();
         }
 
+        public DispatcherTimer Timer = new DispatcherTimer();
+
+
         private string KSTdateTime = DateTime.Now.ToString("yyyy. mm. dd. HH:mm:ss");
         public string KSTDateTime
         {
@@ -36,10 +39,9 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
         private void DateTimer()
         {
-            DispatcherTimer KSTTimer = new DispatcherTimer();
-            KSTTimer.Start();
-            KSTTimer.Interval = TimeSpan.FromMilliseconds(1000);
-            KSTTimer.Tick += (o, e) =>
+            Timer.Start();
+            Timer.Interval = TimeSpan.FromMilliseconds(1000);
+            Timer.Tick += (o, e) =>
             {
                 KSTDateTime = DateTime.Now.ToString("yyyy. MM. dd. HH:mm:ss");
                 UTCDateTime = DateTime.UtcNow.ToString("yyyy. MM. dd. HH:mm:ss");
