@@ -42,7 +42,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
             KSTTimer.Tick += (o, e) =>
             {
                 KSTDateTime = DateTime.Now.ToString("yyyy. MM. dd. HH:mm:ss");
-                UTCDateTime = DateTime.UtcNow.ToString("yyyy.MM.dd. HH:mm:ss");
+                UTCDateTime = DateTime.UtcNow.ToString("yyyy. MM. dd. HH:mm:ss");
             };
         }
     }

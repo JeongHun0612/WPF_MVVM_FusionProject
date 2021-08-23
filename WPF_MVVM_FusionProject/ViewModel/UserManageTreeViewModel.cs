@@ -16,9 +16,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
             PopulateParentGroupTree();
             this.commandSelectedItem = new DelegateCommand(SelectedItem);
-            this.commandTreeRootAddClick = new DelegateCommand(TreeRootAddClick);
-            this.commandTreeChildAddClick = new DelegateCommand(TreeChildAddClick);
-            this.commandTreeUserAddClick = new DelegateCommand(TreeUserAddClick);
         }
 
         private string[] tableName = new string[3] { "userparentgroup", "usergroup", "users" };
@@ -51,28 +48,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
             set { this.isEditStatus = value; Notify("IsEditStatus"); }
         }
 
-        private DelegateCommand commandTreeRootAddClick = null;
-        private DelegateCommand commandTreeChildAddClick = null;
-        private DelegateCommand commandTreeUserAddClick = null;
         private DelegateCommand commandSelectedItem = null;
-
-        public DelegateCommand CommandTreeRootAddClick
-        {
-            get => this.commandTreeRootAddClick;
-            set => this.commandTreeRootAddClick = value;
-        }
-
-        public DelegateCommand CommandTreeChildAddClick
-        {
-            get => this.commandTreeChildAddClick;
-            set => this.commandTreeChildAddClick = value;
-        }
-
-        public DelegateCommand CommandTreeUserAddClick
-        {
-            get => this.commandTreeUserAddClick;
-            set => this.commandTreeUserAddClick = value;
-        }
 
         public DelegateCommand CommandSelectedItem
         {
@@ -122,11 +98,20 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
             foreach (DataRow item in userDataSet.Tables[0].Rows)
             {
-                string userHeader = item["user_name"].ToString();
-                string userPrimaryKey = item["id"].ToString();
+                string primaryKey = item["id"].ToString();
+                string userName = item["user_name"].ToString();
+                string userBirth = item["user_birth"].ToString();
+                string userId = item["user_id"].ToString();
+                string userPw = item["user_pw"].ToString();
+                string userDepartment = item["user_department"].ToString();
+                string userEmployeeNum = item["user_employee_num"].ToString();
+                string userNumber = item["user_number"].ToString();
+                string userGroupName = item["group_name"].ToString();
+                string userGroupId = item["group_id"].ToString();
 
-                UserManageTreeModel userNode = new UserManageTreeModel(2, userPrimaryKey, userGroupPrimaryKey, userHeader, false, false);
+                UserManageTreeModel userNode = new UserManageTreeModel(2, primaryKey, userGroupPrimaryKey, userName, false, false);
                 userGroupNode.ChildGroupList.Add(userNode);
+                userGroupNode.UserListCollection.Add(new UserManageListModel(primaryKey, userName, userBirth, userId, userPw, userDepartment, userEmployeeNum, userNumber, userGroupName, userGroupId));
             }
         }
 
@@ -137,7 +122,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
             MainWindowViewModel.userManageListViewModel.SelectedItem = selectedItem;
 
             //MainWindowViewModel.userManageListViewModel.SelectUserListCollection = new ObservableCollection<UserManageListModel>();
-            MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Clear();
+            //MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Clear();
 
             ObservableCollection<UserManageListModel> userListCollection = MainWindowViewModel.userManageListViewModel.UserListCollection;
             ObservableCollection<UserManageListModel> selectUserListCollection = MainWindowViewModel.userManageListViewModel.SelectUserListCollection;
@@ -147,32 +132,72 @@ namespace WPF_MVVM_FusionProject.ViewModel
                 switch (selectedItem.DepthCount)
                 {
                     case 0:
-                        foreach(UserManageListModel Listitem in userListCollection)
+                        //foreach(UserManageTreeModel TreeItem in selectedItem.ChildGroupList)
+                        //{
+                        //    if(TreeItem.ChildGroupList.Count != 0)
+                        //    {
+                        //        foreach (UserManageListModel ListItem in userListCollection)
+                        //        {
+                        //            if (ListItem.UserGroupId == TreeItem.PrimaryKey)
+                        //            {
+                        //                PopulateUserList(ListItem, selectUserListCollection);
+                        //            }
+                        //        }
+                        //    }
+                        //}
+
+                        foreach (UserManageTreeModel TreeItem in selectedItem.ChildGroupList)
                         {
-                            foreach (UserManageTreeModel Treeitem in selectedItem.ChildGroupList)
-                            {
-                                if(Listitem.UserGroupId == Treeitem.PrimaryKey)
-                                {
-                                    PopulateUserList(Listitem, selectUserListCollection);
-                                }
-                            }
+                            selectUserListCollection = TreeItem.UserListCollection;
+
+                            //selectUserListCollection = TreeItem.UserListCollection;
+                            //if (TreeItem.UserListCollection.Count != 0)
+                            //{
+                            //    foreach (UserManageListModel ListItem in TreeItem.UserListCollection)
+                            //    {
+                            //        PopulateUserList(ListItem, selectUserListCollection);
+                            //    }
+                            //}
+
+                            //if (TreeItem.ChildGroupList.Count != 0)
+                            //{
+                            //    foreach (UserManageListModel ListItem in userListCollection)
+                            //    {
+                            //        if (ListItem.UserGroupId == TreeItem.PrimaryKey)
+                            //        {
+                            //            PopulateUserList(ListItem, selectUserListCollection);
+                            //        }
+                            //    }
+                            //}
                         }
                         break;
                     case 1:
-                        foreach (UserManageListModel Listitem in userListCollection)
-                        {
-                            if (Listitem.UserGroupId == selectedItem.PrimaryKey)
-                            {
-                                PopulateUserList(Listitem, selectUserListCollection);
-                            }
-                        }
+                        MainWindowViewModel.userManageListViewModel.SelectUserListCollection = selectedItem.UserListCollection;
+
+                        //foreach (UserManageListModel ListItem in selectedItem.UserListCollection)
+                        //{
+                        //    ListItem.UserName = "Test";
+                        //    //PopulateUserList(ListItem, selectUserListCollection);
+                        //}
+
+                        //if (selectedItem.ChildGroupList.Count != 0)
+                        //{
+                        //    foreach (UserManageListModel ListItem in userListCollection)
+                        //    {
+                        //        if (ListItem.UserGroupId == selectedItem.PrimaryKey)
+                        //        {
+                        //            PopulateUserList(ListItem, selectUserListCollection);
+                        //        }
+                        //    }
+                        //}
+
                         break;
                     case 2:
-                        foreach (UserManageListModel Listitem in userListCollection)
+                        foreach (UserManageListModel ListItem in userListCollection)
                         {
-                            if(Listitem.PrimaryKey == selectedItem.PrimaryKey)
+                            if (ListItem.PrimaryKey == selectedItem.PrimaryKey)
                             {
-                                PopulateUserList(Listitem, selectUserListCollection);
+                                PopulateUserList(ListItem, selectUserListCollection);
                             }
                         }
                         break;
@@ -182,58 +207,20 @@ namespace WPF_MVVM_FusionProject.ViewModel
             }
         }
 
-        private void PopulateUserList(UserManageListModel Listitem, ObservableCollection<UserManageListModel> selectUserListCollection)
+        private void PopulateUserList(UserManageListModel ListItem, ObservableCollection<UserManageListModel> selectUserListCollection)
         {
-            string primaryKey = Listitem.PrimaryKey;
-            string userName = Listitem.UserName;
-            string userBirth = Listitem.UserBirth;
-            string userId = Listitem.UserId;
-            string userPw = Listitem.UserPw;
-            string userDepartment = Listitem.UserDepartment;
-            string userEmployeeNum = Listitem.UserEmployeeNum;
-            string userNumber = Listitem.UserNumber;
-            string userGroupName = Listitem.UserGroupName;
-            string userGroupId = Listitem.UserGroupId;
+            string primaryKey = ListItem.PrimaryKey;
+            string userName = ListItem.UserName;
+            string userBirth = ListItem.UserBirth;
+            string userId = ListItem.UserId;
+            string userPw = ListItem.UserPw;
+            string userDepartment = ListItem.UserDepartment;
+            string userEmployeeNum = ListItem.UserEmployeeNum;
+            string userNumber = ListItem.UserNumber;
+            string userGroupName = ListItem.UserGroupName;
+            string userGroupId = ListItem.UserGroupId;
 
             selectUserListCollection.Add(new UserManageListModel(primaryKey, userName, userBirth, userId, userPw, userDepartment, userEmployeeNum, userNumber, userGroupName, userGroupId));
-        }
-
-        private void TreeRootAddClick(object obj)
-        {
-            if (!IsTreeNodeEdit)
-            {
-                IsEditStatus = "Add";
-                IsTreeNodeEdit = true;
-                UserManageTreeModel parentGroupNode = new UserManageTreeModel(0, string.Empty, string.Empty, string.Empty, true, true);
-                ParentGroupList.Add(parentGroupNode);
-            }
-        }
-
-        private void TreeChildAddClick(object obj)
-        {
-            string PrimaryKey = obj as string;
-            if (!IsTreeNodeEdit)
-            {
-                foreach (UserManageTreeModel item in ParentGroupList)
-                {
-                    if (item.PrimaryKey == PrimaryKey)
-                    {
-                        IsEditStatus = "Add";
-                        IsTreeNodeEdit = true;
-                        UserManageTreeModel userGroupNode = new UserManageTreeModel(1, string.Empty, item.PrimaryKey, string.Empty, true, true);
-                        item.ChildGroupList.Add(userGroupNode);
-                    }
-                }
-            }
-        }
-
-        private void TreeUserAddClick(object obj)
-        {
-            if (!MainWindowViewModel.userManageListViewModel.IsAddMember)
-            {
-                MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, 1));
-            }
-            MainWindowViewModel.userManageListViewModel.IsAddMember = true;
         }
     }
 }

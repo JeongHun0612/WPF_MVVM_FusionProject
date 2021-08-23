@@ -43,6 +43,26 @@ namespace WPF_MVVM_FusionProject.Model
             this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
         }
 
+        public UserManageListModel(string userGroupId)
+        {
+            this.primaryKey = string.Empty;
+            this.userName = string.Empty;
+            this.userBirth = string.Empty;
+            this.userId = string.Empty;
+            this.tempUserId = string.Empty;
+            this.userPw = string.Empty;
+            this.userDepartment = string.Empty;
+            this.userEmployeeNum = string.Empty;
+            this.userNumber = string.Empty;
+            this.UserGroupName = string.Empty;
+            this.UserGroupId = userGroupId;
+
+            this.commandUserEditClick = new DelegateCommand(UserEditClick);
+            this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
+            this.commandUserSaveClick = new DelegateCommand(UserSaveClick);
+            this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
+        }
+
         public UserManageListModel(string primaryKey, string userName, string userBirth, string userId, string userPw, string userDepartment, string userEmployeeNum, string userNumber, string userGroupName, string userGroupId)
         {
             this.primaryKey = primaryKey;
@@ -65,9 +85,6 @@ namespace WPF_MVVM_FusionProject.Model
         #endregion
 
         #region UserManageListModel 변수
-        ObservableCollection<UserManageListModel> userListCollection = MainWindowViewModel.userManageListViewModel.UserListCollection;
-        ObservableCollection<UserManageListModel> selectUserListCollection = MainWindowViewModel.userManageListViewModel.SelectUserListCollection;
-        ObservableCollection<UserManageTreeModel> parentGroupList = MainWindowViewModel.userManageTreeViewModel.ParentGroupList;
 
         private string primaryKey = string.Empty;
         public string PrimaryKey
@@ -289,6 +306,7 @@ namespace WPF_MVVM_FusionProject.Model
             {
                 string tableName = "users";
                 string userDeleteQuery = string.Format("DELETE FROM {0} WHERE id = '{1}'", tableName, PrimaryKey);
+                ObservableCollection<UserManageListModel> userListCollection = MainWindowViewModel.userManageListViewModel.UserListCollection;
 
                 if (MainWindowViewModel.manager.MySqlQueryExecuter(userDeleteQuery))
                 {
@@ -300,7 +318,7 @@ namespace WPF_MVVM_FusionProject.Model
                             break;
                         }
                     }
-                    selectUserListCollection.Remove(this);
+                    MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Remove(this);
                     UserManageTreeDeleteInit();
                 }
             }
@@ -313,6 +331,8 @@ namespace WPF_MVVM_FusionProject.Model
         private void UserSaveClick(object obj)
         {
             ComboBoxGroupListModel selectedItem = obj as ComboBoxGroupListModel;
+            ObservableCollection<UserManageListModel> userListCollection = MainWindowViewModel.userManageListViewModel.UserListCollection;
+
             string tableName = "users";
 
             if (UserName != string.Empty && UserBirth != string.Empty && UserId != string.Empty && UserPw != string.Empty && UserDepartment != string.Empty && UserEmployeeNum != string.Empty && selectedItem != null && UserNumber != string.Empty)
@@ -345,7 +365,7 @@ namespace WPF_MVVM_FusionProject.Model
                                         item.UserGroupName = selectedItem.GroupName;
                                     }
                                 }
-                                selectUserListCollection.Remove(this);
+                                MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Remove(this);
 
                                 UserManageTreeDeleteInit();
                                 UserGroupId = selectedItem.GroupId;
@@ -423,14 +443,14 @@ namespace WPF_MVVM_FusionProject.Model
             }
             else
             {
-                selectUserListCollection.Remove(this);
+                MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Remove(this);
                 MainWindowViewModel.userManageListViewModel.IsAddMember = false;
             }
         }
 
         private void UserManageTreeAddInit(string UserGroupId, string PrimaryKey)
         {
-            foreach (UserManageTreeModel item in parentGroupList)
+            foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
             {
                 foreach (UserManageTreeModel item2 in item.ChildGroupList)
                 {
@@ -444,7 +464,7 @@ namespace WPF_MVVM_FusionProject.Model
 
         private void UserManageTreeDeleteInit()
         {
-            foreach (UserManageTreeModel item in parentGroupList)
+            foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
             {
                 foreach (UserManageTreeModel item2 in item.ChildGroupList)
                 {

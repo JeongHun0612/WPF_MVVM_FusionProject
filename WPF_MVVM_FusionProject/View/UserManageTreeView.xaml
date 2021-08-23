@@ -21,14 +21,14 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="200"/>
+                <RowDefinition Height="150"/>
                 <RowDefinition/> 
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,80" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="{x:Null}" Foreground="#FFF1F1F1"/>
+                <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="{x:Null}" Foreground="#FFF1F1F1"/>
             </Grid>
             <Grid Grid.Row="1">
-                <TreeView x:Name="treeView" Margin="20,-47,0, 0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}">
+                <TreeView x:Name="treeView" Margin="20, 0 ,0, 0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedItemChanged">
                             <i:InvokeCommandAction Command="{Binding CommandSelectedItem}" CommandParameter="{Binding ElementName=treeView, Path=SelectedItem}"/>
@@ -40,13 +40,13 @@
                                 <TextBlock Text="{Binding Header}">
                                     <TextBlock.Resources>
                                         <ContextMenu Background="#FF1F2428" BorderBrush="Transparent" x:Key="ParentGroupContextMenu">
-                                             <MenuItem Header="루트 추가" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeRootAddClick}"/>
-                                             <MenuItem Header="자식 추가" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeChildAddClick}" CommandParameter="{Binding PrimaryKey}"/>
+                                            <MenuItem Header="루트 추가" Command="{Binding CommandTreeRootAddClick}"/>
+                                            <MenuItem Header="자식 추가" Command="{Binding CommandTreeChildAddClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"/>
                                             <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
                                             <MenuItem Header="이름 바꾸기" Command="{Binding CommandRenameClick}"/>
                                         </ContextMenu>
                                         <ContextMenu Background="#FF1F2428" BorderBrush="Transparent" x:Key="UserGroupContextMenu">
-                                            <MenuItem Header="추가" Command="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}, Path=CommandTreeUserAddClick}"/>
+                                            <MenuItem Header="추가" Command="{Binding CommandTreeUserAddClick}"/>
                                             <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
                                             <MenuItem Header="이름바꾸기" Command="{Binding CommandRenameClick}"/>
                                         </ContextMenu>
@@ -79,6 +79,7 @@
                                     </i:Interaction.Triggers>
                                     <TextBox.InputBindings>
                                         <KeyBinding Key="Return" Command="{Binding CommandSaveClick}"/>
+                                        <KeyBinding Key="Esc" Command="{Binding CommandCancleClick}"/>
                                     </TextBox.InputBindings>
                                 </TextBox>
                             </Grid>

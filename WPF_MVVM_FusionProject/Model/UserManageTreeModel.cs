@@ -2,6 +2,7 @@
 using System.Data;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Controls;
 using WPF_MVVM_FusionProject.View;
 using WPF_MVVM_FusionProject.ViewModel;
 
@@ -15,10 +16,17 @@ namespace WPF_MVVM_FusionProject.Model
             this.primaryKey = primaryKey;
             this.parentPrimaryKey = parentPrimaryKey;
             this.header = header;
+            this.isExpanded = false;
+            this.inputHeader = string.Empty;
             this.isTextBoxVisibility = isTextBoxVisibility;
             this.isTextBoxFocus = isTextBoxFocus;
 
+            this.commandTreeRootAddClick = new DelegateCommand(TreeRootAddClick);
+            this.commandTreeChildAddClick = new DelegateCommand(TreeChildAddClick);
+            this.commandTreeUserAddClick = new DelegateCommand(TreeUserAddClick);
+
             this.commandSaveClick = new DelegateCommand(SaveClick);
+            this.commandCancleClick = new DelegateCommand(CancleClick);
             this.commandRenameClick = new DelegateCommand(RenameClick);
             this.commandDeleteClick = new DelegateCommand(DeleteClick);
         }
@@ -65,6 +73,13 @@ namespace WPF_MVVM_FusionProject.Model
             set { this.isTextBoxVisibility = value; NotifyCollection("IsTextBoxVisibility"); }
         }
 
+        private bool isExpanded = false;
+        public bool IsExpanded
+        {
+            get { return this.isExpanded; }
+            set { this.isExpanded = value; NotifyCollection("IsExpanded"); }
+        }
+
         private bool isTextBoxFocus = false;
         public bool IsTextBoxFocus
         {
@@ -86,14 +101,56 @@ namespace WPF_MVVM_FusionProject.Model
             set { this.childGroupList = value; NotifyCollection("ChildGroupList"); }
         }
 
+        private ObservableCollection<UserManageListModel> userListCollection;
+        public ObservableCollection<UserManageListModel> UserListCollection
+        {
+            get
+            {
+                if (this.userListCollection == null)
+                {
+                    this.userListCollection = new ObservableCollection<UserManageListModel>();
+                }
+                return this.userListCollection;
+            }
+            set { this.userListCollection = value; NotifyCollection("UserListCollection"); }
+        }
+
+        private DelegateCommand commandTreeRootAddClick = null;
+        private DelegateCommand commandTreeChildAddClick = null;
+        private DelegateCommand commandTreeUserAddClick = null;
         private DelegateCommand commandSaveClick = null;
+        private DelegateCommand commandCancleClick = null;
         private DelegateCommand commandRenameClick = null;
         private DelegateCommand commandDeleteClick = null;
+
+        public DelegateCommand CommandTreeRootAddClick
+        {
+            get => this.commandTreeRootAddClick;
+            set => this.commandTreeRootAddClick = value;
+        }
+
+        public DelegateCommand CommandTreeChildAddClick
+        {
+            get => this.commandTreeChildAddClick;
+            set => this.commandTreeChildAddClick = value;
+        }
+
+        public DelegateCommand CommandTreeUserAddClick
+        {
+            get => this.commandTreeUserAddClick;
+            set => this.commandTreeUserAddClick = value;
+        }
 
         public DelegateCommand CommandSaveClick
         {
             get => this.commandSaveClick;
             set => this.commandSaveClick = value;
+        }
+
+        public DelegateCommand CommandCancleClick
+        {
+            get => this.commandCancleClick;
+            set => this.commandCancleClick = value;
         }
 
         public DelegateCommand CommandRenameClick
@@ -106,6 +163,38 @@ namespace WPF_MVVM_FusionProject.Model
         {
             get => this.commandDeleteClick;
             set => this.commandDeleteClick = value;
+        }
+
+        private void TreeRootAddClick(object obj)
+        {
+            if (!MainWindowViewModel.userManageTreeViewModel.IsTreeNodeEdit)
+            {
+                MainWindowViewModel.userManageTreeViewModel.IsEditStatus = "Add";
+                MainWindowViewModel.userManageTreeViewModel.IsTreeNodeEdit = true;
+                MainWindowViewModel.userManageTreeViewModel.ParentGroupList.Add(new UserManageTreeModel(0, string.Empty, string.Empty, string.Empty, true, true));
+            }
+        }
+
+        private void TreeChildAddClick(object obj)
+        {
+            TreeViewItem treeView = obj as TreeViewItem;
+            treeView.IsExpanded = true;
+            MainWindowViewModel.userManageTreeViewModel.IsEditStatus = "Add";
+
+            if (!MainWindowViewModel.userManageTreeViewModel.IsTreeNodeEdit)
+            {
+                MainWindowViewModel.userManageTreeViewModel.IsTreeNodeEdit = true;
+                this.ChildGroupList.Add(new UserManageTreeModel(1, string.Empty, PrimaryKey, string.Empty, true, true));
+            }
+        }
+
+        private void TreeUserAddClick(object obj)
+        {
+            if (!MainWindowViewModel.userManageListViewModel.IsAddMember)
+            {
+                MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, 1));
+            }
+            MainWindowViewModel.userManageListViewModel.IsAddMember = true;
         }
 
         private void SaveClick(object obj)
@@ -135,6 +224,31 @@ namespace WPF_MVVM_FusionProject.Model
             }
         }
 
+        private void CancleClick(object obj)
+        {
+            if (IsTextBoxVisibility)
+            {
+                IsTextBoxVisibility = false;
+                MainWindowViewModel.userManageTreeViewModel.IsTreeNodeEdit = false;
+
+                switch (DepthCount)
+                {
+                    case 0:
+                        MainWindowViewModel.userManageTreeViewModel.ParentGroupList.Remove(this);
+                        break;
+                    case 1:
+                        foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
+                        {
+                            if(item.PrimaryKey == ParentPrimaryKey)
+                            {
+                                item.ChildGroupList.Remove(this);
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
         private void RenameClick(object obj)
         {
             IsTextBoxFocus = false;
@@ -153,46 +267,54 @@ namespace WPF_MVVM_FusionProject.Model
 
         private void DeleteClick(object obj)
         {
-            switch (DepthCount)
+            WarningMessageBoxView messageBox = new WarningMessageBoxView();
+            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "정말로 삭제하시겠습니까?";
+            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 0;
+            messageBox.ShowDialog();
+
+            if (MainWindowViewModel.warningMessageBoxViewModel.IsMessageBoxResult)
             {
-                case 0:
-                    if (MainWindowViewModel.userManageTreeViewModel.ParentGroupList.Remove(this))
-                    {
-                        foreach (ComboBoxGroupListModel item in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
+                switch (DepthCount)
+                {
+                    case 0:
+                        if (MainWindowViewModel.userManageTreeViewModel.ParentGroupList.Remove(this))
                         {
-                            if (item.IsHeader && (item.GroupId == PrimaryKey))
+                            foreach (ComboBoxGroupListModel item in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
                             {
-                                MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item);
-                                break;
-                            }
-                        }
-                        string tableName = "userparentgroup";
-                        string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE parent_group_id = '{1}'", tableName, PrimaryKey);
-                        MainWindowViewModel.manager.MySqlQueryExecuter(parentGroupDeleteQuery);
-                    }
-                    break;
-                case 1:
-                    foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
-                    {
-                        if (item.PrimaryKey == ParentPrimaryKey)
-                        {
-                            item.ChildGroupList.Remove(this);
-                            foreach (ComboBoxGroupListModel item2 in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
-                            {
-                                if (!item2.IsHeader && (item2.GroupId == PrimaryKey))
+                                if (item.IsHeader && (item.GroupId == PrimaryKey))
                                 {
-                                    MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item2);
+                                    MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item);
                                     break;
                                 }
                             }
-                            string tableName = "usergroup";
-                            string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE group_id = '{1}'", tableName, PrimaryKey);
+                            string tableName = "userparentgroup";
+                            string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE parent_group_id = '{1}'", tableName, PrimaryKey);
                             MainWindowViewModel.manager.MySqlQueryExecuter(parentGroupDeleteQuery);
                         }
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case 1:
+                        foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
+                        {
+                            if (item.PrimaryKey == ParentPrimaryKey)
+                            {
+                                item.ChildGroupList.Remove(this);
+                                foreach (ComboBoxGroupListModel item2 in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
+                                {
+                                    if (!item2.IsHeader && (item2.GroupId == PrimaryKey))
+                                    {
+                                        MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item2);
+                                        break;
+                                    }
+                                }
+                                string tableName = "usergroup";
+                                string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE group_id = '{1}'", tableName, PrimaryKey);
+                                MainWindowViewModel.manager.MySqlQueryExecuter(parentGroupDeleteQuery);
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 

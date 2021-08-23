@@ -66,6 +66,7 @@
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="Foreground" Value="#FFF1F1F1"/>
+        <Setter Property="IsExpanded" Value="False"/>
         <Setter Property="FontFamily" Value="/Fonts/#Roboto Light"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="Template">
@@ -101,6 +102,9 @@
                         <DataTrigger Binding="{Binding DepthCount}" Value="2">
                             <Setter Property="Visibility" TargetName="VerLn" Value="Visible"/>
                             <Setter Property="Padding" TargetName="Bd" Value="0"/>
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsExpanded}" Value="True">
+                            <Setter Property="IsExpanded" Value="True"/>
                         </DataTrigger>
                         <Trigger Property="IsExpanded" Value="false">
                             <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>

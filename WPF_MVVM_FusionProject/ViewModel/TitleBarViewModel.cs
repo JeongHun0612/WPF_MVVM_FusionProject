@@ -57,6 +57,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
         private void ExitClick(object obj)
         {
             MainWindowViewModel.manager.CloseMySqlConnection();
+
             Environment.Exit(0);
         }
     }

@@ -27,9 +27,14 @@
             <RowDefinition Height="15"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Button Width="150" Height="40" VerticalAlignment="Top" HorizontalAlignment="Right" Style="{DynamicResource AddUserButtonStyle}"  Margin="0,37,105,0" Command="{Binding CommandAddMemberClick}"/>
-            <ListBox x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0,80,0,0"
-                     ItemsSource="{Binding SelectUserListCollection}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Button Grid.Row="0" Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource AddUserButtonStyle}"  Margin="0,0,65,0" Command="{Binding CommandAddMemberClick}"/>
+            <Grid Grid.Row="1">
+                <ListBox x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Margin="10,0,0,0"
+                     ItemsSource="{Binding SelectUserListCollection}" ItemContainerStyle="{StaticResource ListBoxItem1}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <WrapPanel/>
@@ -38,7 +43,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <!--<Rectangle Fill="#FF1F2428" HorizontalAlignment="Center" Height="260" Margin="0" RadiusY="10" RadiusX="10" VerticalAlignment="Center" Width="380"/>-->
-                        <Border Background="#FF1F2428" CornerRadius="10" Width="380" Height="260">
+                        <Border Background="#FF1F2428"  CornerRadius="10" Width="400" Height="280">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="180"/>
@@ -108,7 +113,7 @@
                                     </Grid>
                                     <Grid Grid.Row="7">
                                         <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserGroupName}" IsReadOnly="{Binding IsReadOnly}"/>
+                                                 Text="{Binding UserGroupName}" IsReadOnly="{Binding IsReadOnly}" Focusable="False"/>
                                         <Label Content="그룹" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="11" Foreground="Gainsboro"/>
                                         <ComboBox x:Name="groupListComboBox" Style="{DynamicResource ComboBoxStyle1}" ItemsSource="{Binding UserGroupList}" Height="18" Width="95" Margin="25, 0, 0, 0" DisplayMemberPath="GroupName" IsReadOnly="True" Foreground="#FFF1F1F1" FontSize="12" FontFamily="/Fonts/#KoPubDotum Medium"
                                                           Visibility="{Binding IsGroupListVisibility, Converter={StaticResource BoolToVisibility}}" SelectedIndex="{Binding ComboBoxSelectedIndex}">
@@ -142,6 +147,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            </Grid>
             <!--<ListBox x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top"
                      ItemsSource="{Binding SelectUserListCollection}">
                     <ListBox.ItemsPanel>
