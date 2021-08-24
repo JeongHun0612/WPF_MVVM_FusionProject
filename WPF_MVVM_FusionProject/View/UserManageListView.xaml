@@ -28,13 +28,13 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="60"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Style="{DynamicResource AddUserButtonStyle}"  Margin="0,0,65,0" Command="{Binding CommandAddMemberClick}"/>
+            <Button Grid.Row="0" Width="150" Height="Auto" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource AddUserButtonStyle}"  Margin="0,0,78,0" Command="{Binding CommandAddMemberClick}"/>
             <Grid Grid.Row="1">
-                <ListBox x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}" Margin="10,0,0,0"
-                     ItemsSource="{Binding SelectUserListCollection}" ItemContainerStyle="{StaticResource ListBoxItem1}">
+            <ListBox x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Margin="53,0,0,0"
+                     ItemsSource="{Binding UserListCollection}" ItemContainerStyle="{StaticResource ListBoxItem1}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel/>
@@ -42,9 +42,8 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <!--{Binding IsUserListVisibility, Converter={StaticResource BoolToVisibility}}-->
-                            <Grid Visibility="Visible">
-                                <Rectangle Fill="#FF1F2428" HorizontalAlignment="Center" Height="280" Margin="0" RadiusY="10" RadiusX="10" VerticalAlignment="Center" Width="400"/>
+                            <Grid Visibility="{Binding IsUserListVisibility, Converter={StaticResource BoolToVisibility}}">
+                                <Rectangle Fill="#FF1F2428" HorizontalAlignment="Center" Height="260" Margin="0" RadiusY="10" RadiusX="10" VerticalAlignment="Center" Width="380"/>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="180"/>
@@ -116,14 +115,15 @@
                                             <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
                                                  Text="{Binding UserGroupName}" IsReadOnly="{Binding IsReadOnly}" Focusable="False"/>
                                             <Label Content="그룹" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="11" Foreground="Gainsboro"/>
-                                            <ComboBox x:Name="groupListComboBox" Style="{DynamicResource ComboBoxStyle1}" ItemsSource="{Binding UserGroupList}" Height="18" Width="95" Margin="25, 0, 0, 0" DisplayMemberPath="GroupName" IsReadOnly="True" Foreground="#FFF1F1F1" FontSize="12" FontFamily="/Fonts/#KoPubDotum Medium"
+                                            <ComboBox x:Name="groupListComboBox" Style="{DynamicResource ComboBoxStyle1}" ItemsSource="{Binding UserGroupList}" Height="18" Width="95" Margin="25, 0, 0, 0" DisplayMemberPath="GroupName" IsReadOnly="True" Foreground="#FFF1F1F1" FontSize="11" FontFamily="/Fonts/#KoPubDotum Medium"
                                                           Visibility="{Binding IsGroupListVisibility, Converter={StaticResource BoolToVisibility}}" SelectedIndex="{Binding ComboBoxSelectedIndex}">
                                                 <ComboBox.ItemContainerStyle>
                                                     <Style TargetType="ComboBoxItem">
-                                                        <Setter Property="Foreground" Value="#FFF1F1F1"/>
+                                                        <Setter Property="Foreground" Value="#7F7F7F"/>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding IsHeader}" Value="True">
                                                                 <Setter Property="IsEnabled" Value="False"/>
+                                                                <Setter Property="Background" Value="#FF0CC486"/>
                                                                 <Setter Property="FontFamily" Value="/Fonts/#KoPubDotum Bold"/>
                                                                 <Setter Property="FontSize" Value="13"/>
                                                             </DataTrigger>
@@ -149,110 +149,6 @@
                     </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
-            <!--<ListBox x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalAlignment="Left" VerticalAlignment="Top"
-                     ItemsSource="{Binding SelectUserListCollection}">
-                    <ListBox.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Margin="5" />
-                        </ItemsPanelTemplate>
-                    </ListBox.ItemsPanel>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border BorderBrush="Black" Width="400" Height="300" BorderThickness="1">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Button Content="Edit" Width="50" Height="20" HorizontalAlignment="Left" VerticalAlignment="Top"  Visibility="{Binding IsEditBtnVisibility, Converter={StaticResource BoolToVisibility}}"
-                                            Command="{Binding CommandUserEditClick}"/>
-                                        <Button Content="Delete" Width="50" Height="20" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="{Binding IsDeleteBtnVisibility, Converter={StaticResource BoolToVisibility}}"
-                                            Command="{Binding CommandUserDeleteClick}"/>
-                                    </Grid>
-                                    <Grid Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
-
-                                        <Grid Grid.Column="0">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="5*"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Button Grid.Row="1" Grid.Column="0" Content="SAVE" Visibility="{Binding IsSaveBtnVisibility, Converter={StaticResource BoolToVisibility}}"
-                                                Command="{Binding CommandUserSaveClick}" CommandParameter="{Binding ElementName=groupListComboBox, Path=SelectedItem}"/>
-
-                                            <Button Grid.Row="1" Grid.Column="1" Content="CANCLE" Visibility="{Binding IsCancleBtnVisibility, Converter={StaticResource BoolToVisibility}}"
-                                                Command="{Binding CommandUserCancleClick}"/>
-                                        </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
-                                            <Label Grid.Row="0" Grid.Column="0" Content="성명"/>
-                                            <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserName}" IsReadOnly="{Binding IsReadOnly}"/>
-                                            <Label Grid.Row="1" Grid.Column="0"  Content="생년월일"/>
-                                            <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserBirth}" IsReadOnly="{Binding IsReadOnly}"/>
-                                            <Label Grid.Row="2" Grid.Column="0"  Content="아이디"/>
-                                            <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserId}" IsReadOnly="{Binding IsReadOnly}"/>
-                                            <Label Grid.Row="3" Grid.Column="0"  Content="비밀번호"/>
-                                            <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserPw}" IsReadOnly="{Binding IsReadOnly}"/>
-                                            <Label Grid.Row="4" Grid.Column="0"  Content="소속"/>
-                                            <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserDepartment}" IsReadOnly="{Binding IsReadOnly}"/>
-                                            <Label Grid.Row="5" Grid.Column="0"  Content="사번"/>
-                                            <TextBox Grid.Row="5" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserEmployeeNum}" IsReadOnly="{Binding IsReadOnly}"/>
-                                            <Label Grid.Row="6" Grid.Column="0"  Content="그룹"/>
-                                            <TextBox Grid.Row="6" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserGroupName}" IsReadOnly="{Binding IsReadOnly}"/>
-                                            <ComboBox Grid.Row="6" Grid.Column="1" x:Name="groupListComboBox" ItemsSource="{Binding UserGroupList}" SelectedIndex="{Binding ComboBoxSelectedIndex}" DisplayMemberPath="GroupName" IsReadOnly="True" Visibility="{Binding IsGroupListVisibility, Converter={StaticResource BoolToVisibility}}">
-                                            <ComboBox.ItemContainerStyle>
-                                                <Style TargetType="ComboBoxItem">
-                                                    <Setter Property="Foreground" Value="Black"/>
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsHeader}" Value="True">
-                                                            <Setter Property="IsEnabled" Value="False"/>
-                                                            <Setter Property="FontWeight" Value="Bold"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger Binding="{Binding IsHeader}" Value="False">
-                                                            <Setter Property="Margin" Value="10,0,0,0"/>
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </ComboBox.ItemContainerStyle>
-                                            </ComboBox>
-                                            <Label Grid.Row="7" Grid.Column="0"  Content="연락처"/>
-                                            <TextBox Grid.Row="7" Grid.Column="1" Style="{StaticResource ReadOnlyTrueTextBoxStyle}" VerticalContentAlignment="Center" BorderThickness="0,0,0,1"
-                                                     Text="{Binding UserNumber}" IsReadOnly="{Binding IsReadOnly}"/>
-                                        </Grid>
-                                    </Grid>
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>-->
         </Grid>
         <Grid Grid.Row="1" Background="#FF1F2428"/>
     </Grid>

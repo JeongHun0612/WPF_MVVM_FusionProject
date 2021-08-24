@@ -10,6 +10,28 @@ namespace WPF_MVVM_FusionProject.Model
 {
     public class UserManageTreeModel : NotifierCollection
     {
+        public UserManageTreeModel(int index, int depthCount, string primaryKey, string parentPrimaryKey, string header, bool isTextBoxVisibility, bool isTextBoxFocus)
+        {
+            this.index = index;
+            this.depthCount = depthCount;
+            this.primaryKey = primaryKey;
+            this.parentPrimaryKey = parentPrimaryKey;
+            this.header = header;
+            this.isExpanded = false;
+            this.inputHeader = string.Empty;
+            this.isTextBoxVisibility = isTextBoxVisibility;
+            this.isTextBoxFocus = isTextBoxFocus;
+
+            this.commandTreeRootAddClick = new DelegateCommand(TreeRootAddClick);
+            this.commandTreeChildAddClick = new DelegateCommand(TreeChildAddClick);
+            this.commandTreeUserAddClick = new DelegateCommand(TreeUserAddClick);
+
+            this.commandSaveClick = new DelegateCommand(SaveClick);
+            this.commandCancleClick = new DelegateCommand(CancleClick);
+            this.commandRenameClick = new DelegateCommand(RenameClick);
+            this.commandDeleteClick = new DelegateCommand(DeleteClick);
+        }
+
         public UserManageTreeModel(int depthCount, string primaryKey, string parentPrimaryKey, string header, bool isTextBoxVisibility, bool isTextBoxFocus)
         {
             this.depthCount = depthCount;
@@ -29,6 +51,13 @@ namespace WPF_MVVM_FusionProject.Model
             this.commandCancleClick = new DelegateCommand(CancleClick);
             this.commandRenameClick = new DelegateCommand(RenameClick);
             this.commandDeleteClick = new DelegateCommand(DeleteClick);
+        }
+
+        private int index = -1;
+        public int Index
+        {
+            get { return this.index; }
+            set { this.index = value; NotifyCollection("Index"); }
         }
 
         private int depthCount;
@@ -99,20 +128,6 @@ namespace WPF_MVVM_FusionProject.Model
                 return this.childGroupList;
             }
             set { this.childGroupList = value; NotifyCollection("ChildGroupList"); }
-        }
-
-        private ObservableCollection<UserManageListModel> userListCollection;
-        public ObservableCollection<UserManageListModel> UserListCollection
-        {
-            get
-            {
-                if (this.userListCollection == null)
-                {
-                    this.userListCollection = new ObservableCollection<UserManageListModel>();
-                }
-                return this.userListCollection;
-            }
-            set { this.userListCollection = value; NotifyCollection("UserListCollection"); }
         }
 
         private DelegateCommand commandTreeRootAddClick = null;
@@ -190,11 +205,42 @@ namespace WPF_MVVM_FusionProject.Model
 
         private void TreeUserAddClick(object obj)
         {
+            UserManageTreeModel selectedItem = MainWindowViewModel.userManageListViewModel.SelectedItem;
+            ObservableCollection<UserManageListModel> userListCollection = MainWindowViewModel.userManageListViewModel.UserListCollection;
+
             if (!MainWindowViewModel.userManageListViewModel.IsAddMember)
             {
-                MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, 1));
+                MainWindowViewModel.userManageListViewModel.IsAddMember = true;
+
+                if (selectedItem.DepthCount != 1 || selectedItem.PrimaryKey != PrimaryKey)
+                {
+                    foreach (UserManageListModel ListItem in userListCollection)
+                    {
+                        if (ListItem.IsUserListVisibility)
+                        {
+                            ListItem.IsUserListVisibility = false;
+                        }
+                    }
+
+                    foreach (UserManageListModel ListItem in userListCollection)
+                    {
+                        if (ListItem.UserGroupId == PrimaryKey)
+                        {
+                            ListItem.IsUserListVisibility = true;
+                        }
+                    }
+                }
+
+                foreach (ComboBoxGroupListModel item in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
+                {
+                    if (!item.IsHeader && PrimaryKey == item.GroupId)
+                    {
+                        int index = MainWindowViewModel.userManageTreeViewModel.UserGroupList.IndexOf(item);
+                        MainWindowViewModel.userManageListViewModel.UserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, index));
+                        break;
+                    }
+                }
             }
-            MainWindowViewModel.userManageListViewModel.IsAddMember = true;
         }
 
         private void SaveClick(object obj)
@@ -239,7 +285,7 @@ namespace WPF_MVVM_FusionProject.Model
                     case 1:
                         foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
                         {
-                            if(item.PrimaryKey == ParentPrimaryKey)
+                            if (item.PrimaryKey == ParentPrimaryKey)
                             {
                                 item.ChildGroupList.Remove(this);
                             }

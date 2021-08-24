@@ -44,13 +44,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
             set { this.userListCollection = value; Notify("UserListCollection"); }
         }
 
-        private ObservableCollection<UserManageListModel> selectUserListCollection = new ObservableCollection<UserManageListModel>();
-        public ObservableCollection<UserManageListModel> SelectUserListCollection
-        {
-            get { return this.selectUserListCollection; }
-            set { this.selectUserListCollection = value; Notify("SelectUserListCollection"); }
-        }
-
         private DelegateCommand commandAddMemberClick = null;
         public DelegateCommand CommandAddMemberClick
         {
@@ -78,8 +71,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
                 string userGroupId = item["group_id"].ToString();
 
                 UserListCollection.Add(new UserManageListModel(primaryKey, userName, userBirth, userId, userPw, userDepartment, userEmployeeNum, userNumber, userGroupName, userGroupId));
-                SelectUserListCollection.Add(new UserManageListModel(primaryKey, userName, userBirth, userId, userPw, userDepartment, userEmployeeNum, userNumber, userGroupName, userGroupId));
-
                 LastPrimaryKey = int.Parse(primaryKey);
             }
         }
@@ -98,7 +89,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
                             if (item.IsHeader && (SelectedItem.PrimaryKey == item.GroupId))
                             {
                                 int index = MainWindowViewModel.userManageTreeViewModel.UserGroupList.IndexOf(item);
-                                SelectUserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, index + 1));
+                                UserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, index + 1));
                                 break;
                             }
                         }
@@ -112,7 +103,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
                             if (!item.IsHeader && SelectedItemPrimaryKey == item.GroupId)
                             {
                                 int index = MainWindowViewModel.userManageTreeViewModel.UserGroupList.IndexOf(item);
-                                SelectUserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, index));
+                                UserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, index));
                                 break;
                             }
                         }
@@ -121,7 +112,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
                 }
                 else
                 {
-                    SelectUserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, 1));
+                    UserListCollection.Insert(0, new UserManageListModel(MainWindowViewModel.userManageTreeViewModel.UserGroupList, 1));
                 }
             }
         }

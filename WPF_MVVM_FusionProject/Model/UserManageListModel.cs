@@ -307,7 +307,7 @@ namespace WPF_MVVM_FusionProject.Model
                             break;
                         }
                     }
-                    MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Remove(this);
+                    MainWindowViewModel.userManageListViewModel.UserListCollection.Remove(this);
                     UserManageTreeDeleteInit();
                 }
             }
@@ -354,7 +354,7 @@ namespace WPF_MVVM_FusionProject.Model
                                         item.UserGroupName = selectedItem.GroupName;
                                     }
                                 }
-                                MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Remove(this);
+                                MainWindowViewModel.userManageListViewModel.UserListCollection.Remove(this);
 
                                 UserManageTreeDeleteInit();
                                 UserGroupId = selectedItem.GroupId;
@@ -379,7 +379,6 @@ namespace WPF_MVVM_FusionProject.Model
                             UserGroupName = selectedItem.GroupName;
                             UserGroupId = selectedItem.GroupId;
                             TempUserId = UserId;
-                            userListCollection.Add(new UserManageListModel(primaryKey.ToString(), UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, UserGroupName, UserGroupId));
 
                             IsReadOnly = true;
                             IsEditBtnVisibility = true;
@@ -432,7 +431,7 @@ namespace WPF_MVVM_FusionProject.Model
             }
             else
             {
-                MainWindowViewModel.userManageListViewModel.SelectUserListCollection.Remove(this);
+                MainWindowViewModel.userManageListViewModel.UserListCollection.Remove(this);
                 MainWindowViewModel.userManageListViewModel.IsAddMember = false;
             }
         }
@@ -443,7 +442,7 @@ namespace WPF_MVVM_FusionProject.Model
             {
                 foreach (UserManageTreeModel item2 in item.ChildGroupList)
                 {
-                    if (item2.PrimaryKey == userGroupId)
+                    if (item2.PrimaryKey == UserGroupId)
                     {
                         item2.ChildGroupList.Insert(0, new UserManageTreeModel(2, PrimaryKey, UserGroupId, UserName, false, false));
                     }

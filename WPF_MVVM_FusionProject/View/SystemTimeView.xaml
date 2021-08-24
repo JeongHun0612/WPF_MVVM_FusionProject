@@ -12,7 +12,72 @@
         <viewModel:SystemTimeViewModel/>
     </UserControl.DataContext>
 
-    <Grid>
+    <Grid Grid.Column="1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Content="KST" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label Content="2021. 08. 04. 00:00:36" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Rectangle HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="2" Margin="0,4,0,0" RadiusX="1" RadiusY="1">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="#FFC8CBCB" Opacity="0.4"/>
+                </Rectangle.Fill>
+            </Rectangle>
+
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Content="UTC" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label Content="2021. 08. 04. 00:00:36" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Column="3">
+            <Rectangle HorizontalAlignment="Center" Height="20" VerticalAlignment="Center" Width="2" Margin="0,4,0,0" RadiusX="1" RadiusY="1">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="#FFC8CBCB" Opacity="0.4"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
+
+        <Grid Grid.Column="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Label Content="Gps Week" HorizontalAlignment="Right" Margin="0,3,2,0" VerticalAlignment="Center" Width="100" Height="40" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+            </Grid>
+            <Grid Grid.Column="1">
+                <Label Content="318" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </Grid>
+
+        </Grid>
+    </Grid>
+
+    <!--<Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
             <ColumnDefinition Width="10"/>
@@ -39,6 +104,7 @@
                 </Rectangle.Fill>
             </Rectangle>
         </Grid>
+        
         <Grid Grid.Column="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="55"/>
@@ -58,6 +124,7 @@
                 </Rectangle.Fill>
             </Rectangle>
         </Grid>
+        
         <Grid Grid.Column="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="110"/>
@@ -70,5 +137,5 @@
                 <Label Content="{Binding GPSWeek}" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </Grid>
-    </Grid>
+    </Grid>-->
 </UserControl>

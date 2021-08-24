@@ -21,22 +21,22 @@
             <RowDefinition/>
             <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
-        <Border BorderBrush="#FF5F5F5F" BorderThickness="0,0,0,0.5">
+        <Border BorderBrush="#FF5F5F5F" BorderThickness="0,0,0,0.5" Padding="15">
             <Grid Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Image Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Center" Source="{Binding MessageBoxIcon}" Margin="10,5,0,5"/>
+                <Image Width="45" Height="45" HorizontalAlignment="Left" VerticalAlignment="Center" Source="{Binding MessageBoxIcon}" Margin="5,5,0,5"/>
                 <!--<Rectangle HorizontalAlignment="Left" Height="40" VerticalAlignment="Center" Width="40" Margin="10,5,0,5">
                     <Rectangle.Fill>
                         <ImageBrush ImageSource="/WPF_MVVM_FusionProject;component/Image/warning2.png"/>
                     </Rectangle.Fill>
                 </Rectangle>-->
-                <Label Content="{Binding MessageBoxText}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="50,5,10,5" FontFamily="/Fonts/#KoPubDotum Bold" FontSize="12" Foreground="#FF0FB57D"/>
+                <Label Content="{Binding MessageBoxText}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="55,5,10,5" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="14" Foreground="#FF0FB57D"/>
             </Grid>
         </Border>
         <Grid Grid.Row="1" Height="75" VerticalAlignment="Center"  Margin="0" HorizontalAlignment="Center">
             <Grid Visibility="{Binding IsDangerMode, Converter={StaticResource BoolToVisibility}}">
-                <Button Style="{DynamicResource MessageBoxButtonStyle}" Content="Save" HorizontalAlignment="Center" Height="27" Margin="0,0,75,0" VerticalAlignment="Center" Width="65" Background="{x:Null}" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontSize="16"
+                <Button Style="{DynamicResource MessageBoxButtonStyle}" Content="Save" HorizontalAlignment="Center" Height="27" Margin="0,0,75,0" VerticalAlignment="Center" Width="65" Background="{x:Null}" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontFamily="/Fonts/#Roboto Regular" FontSize="16"
                     Command="{Binding CommandSaveClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-                <Button Style="{DynamicResource MessageBoxButtonStyle}" Content="Cancel" HorizontalAlignment="Center" Height="27" Margin="75,0,0,0" VerticalAlignment="Center" Width="65" Background="{x:Null}" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontSize="16"
+                <Button Style="{DynamicResource MessageBoxButtonStyle}" Content="Cancel" HorizontalAlignment="Center" Height="27" Margin="75,0,0,0" VerticalAlignment="Center" Width="65" Background="{x:Null}" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontFamily="/Fonts/#Roboto Regular" FontSize="16"
                     Command="{Binding CommandCancleClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
             </Grid>
             <Grid Visibility="{Binding IsWarningMode, Converter={StaticResource BoolToVisibility}}">

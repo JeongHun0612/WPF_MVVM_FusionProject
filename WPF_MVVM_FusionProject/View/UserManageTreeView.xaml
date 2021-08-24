@@ -20,15 +20,7 @@
             <ColumnDefinition Width="15"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="150"/>
-                <RowDefinition/> 
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="{x:Null}" Foreground="#FFF1F1F1"/>
-            </Grid>
-            <Grid Grid.Row="1">
-                <TreeView x:Name="treeView" Margin="20, 0 ,0, 0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}">
+                <TreeView x:Name="treeView" Margin="20,0,0,0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectedItemChanged">
                             <i:InvokeCommandAction Command="{Binding CommandSelectedItem}" CommandParameter="{Binding ElementName=treeView, Path=SelectedItem}"/>
@@ -40,8 +32,8 @@
                                 <TextBlock Text="{Binding Header}">
                                     <TextBlock.Resources>
                                         <ContextMenu Background="#FF1F2428" BorderBrush="Transparent" x:Key="ParentGroupContextMenu">
-                                            <MenuItem Header="루트 추가" Command="{Binding CommandTreeRootAddClick}"/>
-                                            <MenuItem Header="자식 추가" Command="{Binding CommandTreeChildAddClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"/>
+                                             <MenuItem Header="루트 추가" Command="{Binding CommandTreeRootAddClick}"/>
+                                             <MenuItem Header="자식 추가" Command="{Binding CommandTreeChildAddClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"/>
                                             <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
                                             <MenuItem Header="이름 바꾸기" Command="{Binding CommandRenameClick}"/>
                                         </ContextMenu>
@@ -85,32 +77,10 @@
                             </Grid>
                         </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>
-                    <!--<TreeView.ItemContainerStyle>
-                        <Style TargetType="{x:Type TreeViewItem}">
-                            <Setter Property="FontFamily" Value="/Fonts/#Roboto Light"/>
-                            <Setter Property="FontSize" Value="15"/>
-                            <Style.Resources>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}"/>
-                                <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey }" Color="#FFF1F1F1" />
-                            </Style.Resources>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="FontFamily" Value="/Fonts/#Roboto Bold"/>
-                                    <Setter Property="Foreground" Value="#FF0FB57D"/>
-                                </Trigger>
-                                <MultiTrigger>
-                                    <MultiTrigger.Conditions>
-                                        <Condition Property="IsSelected" Value="true"/>
-                                        <Condition Property="IsSelectionActive" Value="false"/>
-                                    </MultiTrigger.Conditions>
-                                    <Setter Property="Background" Value="{x:Null}"/>
-                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
-                                </MultiTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TreeView.ItemContainerStyle>-->
                 </TreeView>
-            </Grid>
+            <!--Margin="20,27,0,0"-->
+            <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Padding="25,35" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="#FF212A30" Foreground="#FFF1F1F1"/>
+            <!--<Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Margin="20,27,0,0" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="#FF212A30" Foreground="#FFF1F1F1"/>-->
         </Grid>
         <Grid Grid.Column="1" Background="#FF1F2428"/>
     </Grid>

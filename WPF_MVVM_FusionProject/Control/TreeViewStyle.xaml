@@ -78,7 +78,7 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" x:Name="GridRow0">
-                            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Padding="0,3" SnapsToDevicePixels="true">
+                            <Border x:Name="Bd" Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Margin="0" Padding="0,3" SnapsToDevicePixels="true">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition MinWidth="19" Width="Auto"/>
@@ -99,6 +99,9 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Index}" Value="0">
+                            <Setter Property="Margin" TargetName="Bd" Value="0,100,0,0"/>
+                        </DataTrigger>
                         <DataTrigger Binding="{Binding DepthCount}" Value="2">
                             <Setter Property="Visibility" TargetName="VerLn" Value="Visible"/>
                             <Setter Property="Padding" TargetName="Bd" Value="0"/>
