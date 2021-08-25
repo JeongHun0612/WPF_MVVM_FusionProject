@@ -18,8 +18,9 @@
             <ColumnDefinition Width="10"/>
             <ColumnDefinition/>
             <ColumnDefinition Width="10"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="240"/>
         </Grid.ColumnDefinitions>
+        
         <Grid Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="55"/>
@@ -29,7 +30,7 @@
                 <Label Content="KST" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
             <Grid Grid.Column="1">
-                <Label Content="2021. 08. 04. 00:00:36" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Content="{Binding KSTDateTime}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </Grid>
         <Grid Grid.Column="1">
@@ -38,7 +39,6 @@
                     <SolidColorBrush Color="#FFC8CBCB" Opacity="0.4"/>
                 </Rectangle.Fill>
             </Rectangle>
-
         </Grid>
         <Grid Grid.Column="2">
             <Grid.ColumnDefinitions>
@@ -47,10 +47,9 @@
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
                 <Label Content="UTC" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-
             </Grid>
             <Grid Grid.Column="1">
-                <Label Content="2021. 08. 04. 00:00:36" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Content="{Binding UTCDateTime}" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="210" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </Grid>
         <Grid Grid.Column="3">
@@ -60,20 +59,18 @@
                 </Rectangle.Fill>
             </Rectangle>
         </Grid>
-
         <Grid Grid.Column="4">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="110"/>
                 <ColumnDefinition/>
+                <ColumnDefinition Width="133"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-                <Label Content="Gps Week" HorizontalAlignment="Right" Margin="0,3,2,0" VerticalAlignment="Center" Width="100" Height="40" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Content="Gps Week" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Center" Width="100" Height="40" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
 
             </Grid>
-            <Grid Grid.Column="1">
-                <Label Content="318" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Grid Grid.Column="1" HorizontalAlignment="Left" Margin="0,0,0,0">
+                <Label Content="{Binding GPSWeek}" HorizontalAlignment="Left" Margin="0,0,0,3" VerticalAlignment="Center" Width="50" Height="30" FontFamily="/0806;component/Fonts/#Roboto" Foreground="#FFCBCBCB" FontSize="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
-
         </Grid>
     </Grid>
 

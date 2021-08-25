@@ -82,6 +82,23 @@ namespace WPF_MVVM_FusionProject.DBConncet
             }
         }
 
+        public bool MySqlImageInsertExecuter(string query, byte[] imgByteArr)
+        {
+            MySqlCommand command = CreateCommand(query);
+            command.Parameters.Add(new MySqlParameter("img", imgByteArr));
+
+            if (command.ExecuteNonQuery() == 1)
+            {
+                Debug.WriteLine("값 저장 성공");
+                return true;
+            }
+            else
+            {
+                Debug.WriteLine("값 저장 실패");
+                return false;
+            }
+        }
+
         // Query Executer Select
         public DataSet Select(string query, string tableName)
         {

@@ -33,7 +33,7 @@
             </Grid.RowDefinitions>
             <Button Grid.Row="0" Width="150" Height="Auto" VerticalAlignment="Bottom" HorizontalAlignment="Right" Style="{DynamicResource AddUserButtonStyle}"  Margin="0,0,78,0" Command="{Binding CommandAddMemberClick}"/>
             <Grid Grid.Row="1">
-            <ListBox x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Margin="53,0,0,0"
+            <ListBox Style="{DynamicResource ListBoxStyle}" x:Name="listBox" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{x:Null}" BorderBrush="{x:Null}" Margin="53,0,0,0"
                      ItemsSource="{Binding UserListCollection}" ItemContainerStyle="{StaticResource ListBoxItem1}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -50,13 +50,22 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
-                                        <Ellipse HorizontalAlignment="Center" Height="110" Margin="0,0,5,0" VerticalAlignment="Center" Width="110" Stroke="#FFBFBFBF"/>
+                                        <Rectangle HorizontalAlignment="Center" Height="110" Margin="0,0,5,0" VerticalAlignment="Center" Width="110" Stroke="#FFBFBFBF" RadiusX="7" RadiusY="7"/>
                                         <Button Content="Edit" Style="{DynamicResource EditButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Margin="8,8,0,0" Height="30" 
                                                     Visibility="{Binding IsEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserEditClick}"/>
                                         <Button Content="Save" Style="{DynamicResource SaveButtonStyle}" HorizontalAlignment="Center" Height="30" Margin="0,0,75,30" VerticalAlignment="Bottom" Width="72" Background="#FF0FB57D" BorderBrush="{x:Null}" Foreground="#FFE0E4E6" FontSize="16"
                                                     Visibility="{Binding IsSaveBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserSaveClick}" CommandParameter="{Binding ElementName=groupListComboBox, Path=SelectedItem}"/>
                                         <Button Content="Cancel" Style="{DynamicResource CancleButtonStyle}"  HorizontalAlignment="Center" Height="30" Margin="75,0,0,30" VerticalAlignment="Bottom" Width="72" Background="Transparent" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontSize="16"
                                                     Visibility="{Binding IsCancleBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserCancleClick}"/>
+                                        <Image x:Name="Image" HorizontalAlignment="Center"  Width="110" Height="110" Margin="0,0,5,0" VerticalAlignment="Center"/>
+                                        <Button Width="20" Height="20"  BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="105,0,0,105"
+                                                    Visibility="{Binding IsImageEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserImageEditClick}" CommandParameter="{Binding ElementName=Image}">
+                                            <Button.Background>
+                                                <ImageBrush ImageSource="/WPF_MVVM_FusionProject;component/Image/cameraNormal.png"/>
+                                            </Button.Background>
+                                        </Button>
+                                        <!--<Button Content="Add" Width="30" Height="30" HorizontalAlignment="Left" Command="{Binding CommandUserImageEditClick}" CommandParameter="{Binding ElementName=Image}"/>-->
+                                        <Button Content="Show" Width="30" Height="30" HorizontalAlignment="Left" Command="{Binding CommandUserImageShowClick}" CommandParameter="{Binding ElementName=Image}" Margin="0,60,0,0"/>
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>

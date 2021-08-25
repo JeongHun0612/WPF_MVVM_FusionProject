@@ -4,7 +4,7 @@
     <Style TargetType="{x:Type MenuItem}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate  TargetType="{x:Type MenuItem}">
+                <ControlTemplate TargetType="{x:Type MenuItem}">
                     <Border x:Name="Border" BorderThickness="1" BorderBrush="#FF1F2428" Background="#FF1F2428">
                         <Grid Height="25" Background="#FF1F2428">
                             <Grid.ColumnDefinitions>

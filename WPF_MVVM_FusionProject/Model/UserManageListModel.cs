@@ -1,8 +1,14 @@
-﻿using System.Collections.ObjectModel;
+﻿using Microsoft.Win32;
+using MySql.Data.MySqlClient;
+using System;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WPF_MVVM_FusionProject.View;
 using WPF_MVVM_FusionProject.ViewModel;
 
@@ -33,12 +39,14 @@ namespace WPF_MVVM_FusionProject.Model
             this.isUserPwPasswordBoxVisibility = false;
             this.isGroupListVisibility = true;
             this.isSaveBtnVisibility = true;
+            this.isImageEditBtnVisibility = true;
             this.isCancleBtnVisibility = true;
             this.isEditBtnVisibility = false;
             this.isDeleteBtnVisibility = false;
             this.isNameTextBoxFocus = true;
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
+            this.commandUserImageEditClick = new DelegateCommand(UserImageEditClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
             this.commandUserSaveClick = new DelegateCommand(UserSaveClick);
             this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
@@ -60,6 +68,8 @@ namespace WPF_MVVM_FusionProject.Model
             this.isUserListVisibility = true;
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
+            this.commandUserImageEditClick = new DelegateCommand(UserImageEditClick);
+            this.commandUserImageShowClick = new DelegateCommand(UserImageShowClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
             this.commandUserSaveClick = new DelegateCommand(UserSaveClick);
             this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
@@ -67,6 +77,7 @@ namespace WPF_MVVM_FusionProject.Model
         #endregion
 
         #region UserManageListModel 변수
+        string strName, imageName;
 
         private string primaryKey = string.Empty;
         public string PrimaryKey
@@ -201,6 +212,13 @@ namespace WPF_MVVM_FusionProject.Model
             set { this.isEditBtnVisibility = value; NotifyCollection("IsEditBtnVisibility"); }
         }
 
+        private bool isImageEditBtnVisibility = false;
+        public bool IsImageEditBtnVisibility
+        {
+            get { return this.isImageEditBtnVisibility; }
+            set { this.isImageEditBtnVisibility = value; NotifyCollection("IsImageEditBtnVisibility"); }
+        }
+
         private bool isDeleteBtnVisibility = true;
         public bool IsDeleteBtnVisibility
         {
@@ -238,6 +256,8 @@ namespace WPF_MVVM_FusionProject.Model
         #endregion
 
         private DelegateCommand commandUserEditClick = null;
+        private DelegateCommand commandUserImageEditClick = null;
+        private DelegateCommand commandUserImageShowClick = null;
         private DelegateCommand commandUserDeleteClick = null;
         private DelegateCommand commandUserSaveClick = null;
         private DelegateCommand commandUserCancleClick = null;
@@ -246,6 +266,18 @@ namespace WPF_MVVM_FusionProject.Model
         {
             get => this.commandUserEditClick;
             set => this.commandUserEditClick = value;
+        }
+
+        public DelegateCommand CommandUserImageEditClick
+        {
+            get => this.commandUserImageEditClick;
+            set => this.commandUserImageEditClick = value;
+        }
+
+        public DelegateCommand CommandUserImageShowClick
+        {
+            get => this.commandUserImageShowClick;
+            set => this.commandUserImageShowClick = value;
         }
 
         public DelegateCommand CommandUserDeleteClick
@@ -282,6 +314,85 @@ namespace WPF_MVVM_FusionProject.Model
             IsSaveBtnVisibility = true;
             IsCancleBtnVisibility = true;
             IsGroupListVisibility = true;
+        }
+
+        private void UserImageEditClick(object obj)
+        {
+            Image image = obj as Image;
+            try
+            {
+                FileDialog fldlg = new OpenFileDialog();
+                fldlg.InitialDirectory = Environment.SpecialFolder.MyPictures.ToString();
+                fldlg.Filter = "Image File (*.png; *.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp9;*.gif";
+                fldlg.ShowDialog();
+                {
+                    strName = fldlg.SafeFileName;
+                    imageName = fldlg.FileName;
+                    ImageSourceConverter isc = new ImageSourceConverter();
+                    image.SetValue(Image.SourceProperty, isc.ConvertFromString(imageName));
+                }
+                fldlg = null;
+                InsertImageData();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message.ToString());
+            }
+        }
+
+        private void InsertImageData()
+        {
+            try
+            {
+                if (imageName != string.Empty)
+                {
+                    FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read);
+
+                    byte[] imgByteArr = new byte[fs.Length];
+
+                    fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
+                    fs.Close();
+
+                    string userImageInsertQuery = "INSERT INTO imagedata(id, img) VALUES('" + strName + "',@img)";
+
+                    if (MainWindowViewModel.manager.MySqlImageInsertExecuter(userImageInsertQuery, imgByteArr))
+                    {
+                        Debug.WriteLine("Image added successfully.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+
+        private void UserImageShowClick(object obj)
+        {
+            Image image = obj as Image;
+
+            string tableName = "imagedata";
+            string selectUserImageQuery = string.Format("SELECT * FROM {0}", tableName);
+            DataSet userImageDataSet = MainWindowViewModel.manager.Select(selectUserImageQuery, tableName);
+
+            byte[] blob = (byte[])userImageDataSet.Tables[0].Rows[1]["img"];
+
+            MemoryStream stream = new MemoryStream();
+            stream.Write(blob, 0, blob.Length);
+            stream.Position = 0;
+
+            System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
+
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+
+            MemoryStream ms = new MemoryStream();
+            img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+            ms.Seek(0, SeekOrigin.Begin);
+            bi.StreamSource = ms;
+            bi.EndInit();
+
+            image.Source = bi;
         }
 
         private void UserDeleteClick(object obj)
