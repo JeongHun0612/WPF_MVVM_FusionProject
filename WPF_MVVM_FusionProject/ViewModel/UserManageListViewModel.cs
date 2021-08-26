@@ -1,9 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
 using System.IO;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_MVVM_FusionProject.Model;
 
@@ -81,7 +78,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
         public BitmapImage UserImageShow(byte[] blob)
         {
-            if(blob == null)
+            if (blob == null)
             {
                 return null;
             }

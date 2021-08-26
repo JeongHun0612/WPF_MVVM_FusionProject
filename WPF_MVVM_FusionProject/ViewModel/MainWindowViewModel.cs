@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Windows;
+using System.Windows.Input;
 using WPF_MVVM_FusionProject.DBConncet;
 using WPF_MVVM_FusionProject.View;
 using WPF_MVVM_FusionProject.ViewModel.LoginWindowViewModel;
@@ -47,7 +48,18 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
         private void DragMove(object obj)
         {
+            MainWindow mainWindow = obj as MainWindow;
+            Point position = Mouse.GetPosition(mainWindow);
+
             ((MainWindow)Application.Current.MainWindow).DragMove();
+
+            Debug.WriteLine(position);
+
+            //if (((MainWindow)Application.Current.MainWindow).WindowState == WindowState.Maximized)
+            //{
+            //    ((MainWindow)Application.Current.MainWindow).WindowState = WindowState.Normal;
+            //}
+
         }
     }
 }

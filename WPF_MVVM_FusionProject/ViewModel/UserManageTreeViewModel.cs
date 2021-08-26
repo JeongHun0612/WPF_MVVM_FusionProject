@@ -151,6 +151,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
                             }
                         }
                         break;
+
                     case 1:
                         if (selectedItem.ChildGroupList.Count != 0)
                         {
@@ -163,6 +164,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
                             }
                         }
                         break;
+
                     case 2:
                         foreach (UserManageListModel ListItem in userListCollection)
                         {
@@ -172,6 +174,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
                             }
                         }
                         break;
+
                     default:
                         break;
                 }

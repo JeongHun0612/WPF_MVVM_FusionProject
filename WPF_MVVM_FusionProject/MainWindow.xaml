@@ -21,7 +21,7 @@
             <i:InvokeCommandAction Command="{Binding CommandLoaded}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
         </i:EventTrigger>
         <i:EventTrigger EventName="MouseLeftButtonDown">
-            <i:InvokeCommandAction Command="{Binding CommandDragMove}"/>
+            <i:InvokeCommandAction Command="{Binding CommandDragMove}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 

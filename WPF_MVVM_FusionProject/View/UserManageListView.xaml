@@ -62,7 +62,7 @@
                                                     Visibility="{Binding IsEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserEditClick}"/>
                                         <Button Content="Save" Style="{DynamicResource SaveButtonStyle}" HorizontalAlignment="Center" Height="30" Margin="0,0,75,30" VerticalAlignment="Bottom" Width="72" Background="#FF0FB57D" BorderBrush="{x:Null}" Foreground="#FFE0E4E6" FontSize="16"
                                                     Visibility="{Binding IsSaveBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserSaveClick}" CommandParameter="{Binding ElementName=groupListComboBox, Path=SelectedItem}"/>
-                                        <Button Content="Cancel" Style="{DynamicResource CancleButtonStyle}"  HorizontalAlignment="Center" Height="30" Margin="75,0,0,30" VerticalAlignment="Bottom" Width="72" Background="Transparent" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontSize="16"
+                                        <Button Content="Cancel" Style="{DynamicResource CancleButtonStyle}"  HorizontalAlignment="Center" Height="28" Margin="75,0,0,31" VerticalAlignment="Bottom" Width="72" Background="Transparent" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontSize="16"
                                                     Visibility="{Binding IsCancleBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserCancleClick}"/>
                                     </Grid>
                                     <Grid Grid.Column="1">
@@ -87,8 +87,12 @@
                                             </Button>
                                         </Grid>
                                         <Grid Grid.Row="1">
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="Transparent" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserName}" IsReadOnly="{Binding IsReadOnly}" local:FocusExtension.IsFocused="{Binding IsNameTextBoxFocus}"/>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="Transparent" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserName}" IsReadOnly="{Binding IsReadOnly}" local:FocusExtension.IsFocused="{Binding IsNameTextBoxFocus}">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="성명" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="2">
@@ -101,30 +105,54 @@
                                             <Label Content="생년월일" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="3">
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserId}" IsReadOnly="{Binding IsReadOnly}" local:FocusExtension.IsFocused="{Binding IsIdTextBoxFocus}"/>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserId}" IsReadOnly="{Binding IsReadOnly}" local:FocusExtension.IsFocused="{Binding IsIdTextBoxFocus}">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="아이디" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="4">
-                                            <PasswordBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="10" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyPasswordBoxStyle}" ContextMenu="{x:Null}"
-                                                 local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding UserPw, Mode=TwoWay}" PasswordChar="*" IsEnabled="false" Visibility="{Binding IsUserPwPasswordBoxVisibility, Converter={StaticResource BoolToVisibility}}"/>
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0,0,0,1" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserPw}" IsReadOnly="{Binding IsReadOnly}" Visibility="{Binding IsUserPwTextBoxVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                                            <PasswordBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="10" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyPasswordBoxStyle}"
+                                                 local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding UserPw, Mode=TwoWay}" PasswordChar="*" IsEnabled="false" Visibility="{Binding IsUserPwPasswordBoxVisibility, Converter={StaticResource BoolToVisibility}}">
+                                                <PasswordBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </PasswordBox.ContextMenu>
+                                            </PasswordBox>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0,0,0,1" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserPw}" IsReadOnly="{Binding IsReadOnly}" Visibility="{Binding IsUserPwTextBoxVisibility, Converter={StaticResource BoolToVisibility}}">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="비밀번호" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="5">
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserDepartment}" IsReadOnly="{Binding IsReadOnly}"/>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserDepartment}" IsReadOnly="{Binding IsReadOnly}">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="소속" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="6">
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserEmployeeNum}" IsReadOnly="{Binding IsReadOnly}"/>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserEmployeeNum}" IsReadOnly="{Binding IsReadOnly}">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="사번" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="7">
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserGroupName}" IsReadOnly="{Binding IsReadOnly}" Focusable="False"/>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="{x:Null}" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserGroupName}" IsReadOnly="{Binding IsReadOnly}" Focusable="False">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="그룹" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="11" Foreground="Gainsboro"/>
                                             <ComboBox x:Name="groupListComboBox" Style="{DynamicResource ComboBoxStyle1}" ItemsSource="{Binding UserGroupList}" Height="18" Width="95" Margin="25, 0, 0, 0" DisplayMemberPath="GroupName" IsReadOnly="True" Foreground="#FFF1F1F1" FontSize="11" FontFamily="/Fonts/#KoPubDotum Medium"
                                                           Visibility="{Binding IsGroupListVisibility, Converter={StaticResource BoolToVisibility}}" SelectedIndex="{Binding ComboBoxSelectedIndex}">
@@ -148,8 +176,12 @@
                                             </ComboBox>
                                         </Grid>
                                         <Grid Grid.Row="8">
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="Transparent" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserNumber}" IsReadOnly="{Binding IsReadOnly}"/>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="Transparent" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserNumber}" IsReadOnly="{Binding IsReadOnly}">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="연락처" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="9"/>
