@@ -422,7 +422,7 @@ namespace WPF_MVVM_FusionProject.Model
 
                             foreach (ComboBoxGroupListModel item in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
                             {
-                                if (!item.IsHeader && (item.ParentGroupId == ParentPrimaryKey))
+                                if (item.IsHeader && (item.GroupId == ParentPrimaryKey))
                                 {
                                     index = MainWindowViewModel.userManageTreeViewModel.UserGroupList.IndexOf(item);
                                 }
