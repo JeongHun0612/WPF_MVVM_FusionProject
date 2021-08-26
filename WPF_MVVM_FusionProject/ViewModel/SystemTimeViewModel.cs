@@ -15,15 +15,14 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
         public DispatcherTimer Timer = new DispatcherTimer();
 
-
-        private string KSTdateTime = DateTime.Now.ToString("yyyy. mm. dd. HH:mm:ss");
+        private string KSTdateTime = DateTime.Now.ToString("yyyy. MM. dd. HH:mm:ss");
         public string KSTDateTime
         {
             get { return this.KSTdateTime; }
             set { this.KSTdateTime = value; Notify("KSTDateTime"); }
         }
 
-        private string UTCdateTime = DateTime.UtcNow.ToString("yyyy. mm. dd. HH:mm:ss");
+        private string UTCdateTime = DateTime.UtcNow.ToString("yyyy. MM. dd. HH:mm:ss");
         public string UTCDateTime
         {
             get { return this.UTCdateTime; }

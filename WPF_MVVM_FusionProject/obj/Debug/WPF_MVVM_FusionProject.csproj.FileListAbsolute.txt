@@ -139,3 +139,5 @@ C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProj
 C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\Control\ComboBoxStyle.baml
 C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\WPF_MVVM_FusionProject.csproj.AssemblyReference.cache
 C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\Control\ScrollBarStyle.baml
+C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\View\LogListView.g.cs
+C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\View\LogListView.baml

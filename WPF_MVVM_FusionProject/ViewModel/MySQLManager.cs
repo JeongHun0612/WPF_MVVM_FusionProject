@@ -85,7 +85,7 @@ namespace WPF_MVVM_FusionProject.DBConncet
         public bool MySqlImageInsertExecuter(string query, byte[] imgByteArr)
         {
             MySqlCommand command = CreateCommand(query);
-            command.Parameters.Add(new MySqlParameter("img", imgByteArr));
+            command.Parameters.Add(new MySqlParameter("user_image", imgByteArr));
 
             if (command.ExecuteNonQuery() == 1)
             {

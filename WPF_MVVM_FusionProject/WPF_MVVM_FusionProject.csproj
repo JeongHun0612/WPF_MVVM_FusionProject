@@ -124,6 +124,7 @@
     <Compile Include="Library\FocusExtension.cs" />
     <Compile Include="Library\PasswordHelper.cs" />
     <Compile Include="Model\ComboBoxGroupListModel.cs" />
+    <Compile Include="Model\LogListModel.cs" />
     <Compile Include="Model\UserManageListModel.cs" />
     <Compile Include="Model\UserManageTreeModel.cs" />
     <Compile Include="ViewModel\Config.cs" />
@@ -132,6 +133,7 @@
     <Compile Include="ViewModel\LoginWindowViewModel\LoginMainViewModel.cs" />
     <Compile Include="ViewModel\LoginWindowViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\LoginWindowViewModel\MessageBoxViewModel.cs" />
+    <Compile Include="ViewModel\LogListViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MySQLManager.cs" />
     <Compile Include="ViewModel\Notifier.cs" />
@@ -151,6 +153,9 @@
     </Compile>
     <Compile Include="View\LoginWindowView\MessageBoxView.xaml.cs">
       <DependentUpon>MessageBoxView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LogListView.xaml.cs">
+      <DependentUpon>LogListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SystemTimeView.xaml.cs">
       <DependentUpon>SystemTimeView.xaml</DependentUpon>
@@ -235,6 +240,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoginWindowView\MessageBoxView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LogListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

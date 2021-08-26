@@ -1,7 +1,10 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using WPF_MVVM_FusionProject.Model;
 
 namespace WPF_MVVM_FusionProject.ViewModel
@@ -69,9 +72,37 @@ namespace WPF_MVVM_FusionProject.ViewModel
                 string userNumber = item["user_number"].ToString();
                 string userGroupName = item["group_name"].ToString();
                 string userGroupId = item["group_id"].ToString();
+                byte[] blob = (item["user_image"].ToString() != string.Empty) ? (byte[])item["user_image"] : null;
 
-                UserListCollection.Add(new UserManageListModel(primaryKey, userName, userBirth, userId, userPw, userDepartment, userEmployeeNum, userNumber, userGroupName, userGroupId));
+                UserListCollection.Add(new UserManageListModel(primaryKey, userName, userBirth, userId, userPw, userDepartment, userEmployeeNum, userNumber, userGroupName, userGroupId, UserImageShow(blob)));
                 LastPrimaryKey = int.Parse(primaryKey);
+            }
+        }
+
+        public BitmapImage UserImageShow(byte[] blob)
+        {
+            if(blob == null)
+            {
+                return null;
+            }
+            else
+            {
+                MemoryStream stream = new MemoryStream();
+                stream.Write(blob, 0, blob.Length);
+                stream.Position = 0;
+
+                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
+
+                BitmapImage bi = new BitmapImage();
+                bi.BeginInit();
+
+                MemoryStream ms = new MemoryStream();
+                img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                ms.Seek(0, SeekOrigin.Begin);
+                bi.StreamSource = ms;
+                bi.EndInit();
+
+                return bi;
             }
         }
 

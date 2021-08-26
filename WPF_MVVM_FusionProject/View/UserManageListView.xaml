@@ -50,22 +50,20 @@
                                         <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Grid Grid.Column="0">
-                                        <Rectangle HorizontalAlignment="Center" Height="110" Margin="0,0,5,0" VerticalAlignment="Center" Width="110" Stroke="#FFBFBFBF" RadiusX="7" RadiusY="7"/>
+                                        <Rectangle HorizontalAlignment="Center" Height="110" Margin="0,0,5,0" VerticalAlignment="Center" Width="110" Stroke="#FFBFBFBF" RadiusX="7" RadiusY="7">
+                                            <Rectangle.Fill>
+                                                <ImageBrush ImageSource="{Binding ProfileImage}"/>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                        <Button Style="{DynamicResource ImageEditButtonStyle}" Width="20" Height="20" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="105,0,0,105"
+                                                    Visibility="{Binding IsImageEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserImageEditClick}"/>
+                                        
                                         <Button Content="Edit" Style="{DynamicResource EditButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Margin="8,8,0,0" Height="30" 
                                                     Visibility="{Binding IsEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserEditClick}"/>
                                         <Button Content="Save" Style="{DynamicResource SaveButtonStyle}" HorizontalAlignment="Center" Height="30" Margin="0,0,75,30" VerticalAlignment="Bottom" Width="72" Background="#FF0FB57D" BorderBrush="{x:Null}" Foreground="#FFE0E4E6" FontSize="16"
                                                     Visibility="{Binding IsSaveBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserSaveClick}" CommandParameter="{Binding ElementName=groupListComboBox, Path=SelectedItem}"/>
                                         <Button Content="Cancel" Style="{DynamicResource CancleButtonStyle}"  HorizontalAlignment="Center" Height="30" Margin="75,0,0,30" VerticalAlignment="Bottom" Width="72" Background="Transparent" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontSize="16"
                                                     Visibility="{Binding IsCancleBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserCancleClick}"/>
-                                        <Image x:Name="Image" HorizontalAlignment="Center"  Width="110" Height="110" Margin="0,0,5,0" VerticalAlignment="Center"/>
-                                        <Button Width="20" Height="20"  BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="105,0,0,105"
-                                                    Visibility="{Binding IsImageEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserImageEditClick}" CommandParameter="{Binding ElementName=Image}">
-                                            <Button.Background>
-                                                <ImageBrush ImageSource="/WPF_MVVM_FusionProject;component/Image/cameraNormal.png"/>
-                                            </Button.Background>
-                                        </Button>
-                                        <!--<Button Content="Add" Width="30" Height="30" HorizontalAlignment="Left" Command="{Binding CommandUserImageEditClick}" CommandParameter="{Binding ElementName=Image}"/>-->
-                                        <Button Content="Show" Width="30" Height="30" HorizontalAlignment="Left" Command="{Binding CommandUserImageShowClick}" CommandParameter="{Binding ElementName=Image}" Margin="0,60,0,0"/>
                                     </Grid>
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
@@ -94,8 +92,12 @@
                                             <Label Content="성명" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="2">
-                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="Transparent" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}" ContextMenu="{x:Null}"
-                                                 Text="{Binding UserBirth}" IsReadOnly="{Binding IsReadOnly}"/>
+                                            <TextBox HorizontalAlignment="Center" Height="17" Margin="40,0,15,6" TextWrapping="Wrap"  VerticalAlignment="Bottom" Width="95" BorderBrush="#FF9B9C9C" Background="Transparent" Foreground="#FFF1F1F1" FontSize="12" VerticalContentAlignment="Bottom" BorderThickness="0" FontFamily="/Fonts/#KoPubDotum Medium" Style="{DynamicResource ReadOnlyTextBoxStyle}"
+                                                 Text="{Binding UserBirth}" IsReadOnly="{Binding IsReadOnly}">
+                                                <TextBox.ContextMenu>
+                                                    <ContextMenu Visibility="Collapsed"/>
+                                                </TextBox.ContextMenu>
+                                            </TextBox>
                                             <Label Content="생년월일" HorizontalAlignment="Left" Margin="0" VerticalAlignment="Bottom" Height="25" Width="57.5" VerticalContentAlignment="Center" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="12" Foreground="Gainsboro"/>
                                         </Grid>
                                         <Grid Grid.Row="3">

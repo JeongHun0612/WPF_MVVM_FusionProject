@@ -19,10 +19,10 @@
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="160"/>
+                <RowDefinition Height="150"/>
             </Grid.RowDefinitions>
             <view:UserManageListView Grid.Row="0" DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageListViewModel}}"/>
-            <!--<view:LogListView Grid.Row="1" DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.logListViewModel}}"/>-->
+            <view:LogListView Grid.Row="1" DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.logListViewModel}}"/>
         </Grid>
     </Grid>
 </UserControl>

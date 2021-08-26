@@ -52,7 +52,7 @@ namespace WPF_MVVM_FusionProject.Model
             this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
         }
 
-        public UserManageListModel(string primaryKey, string userName, string userBirth, string userId, string userPw, string userDepartment, string userEmployeeNum, string userNumber, string userGroupName, string userGroupId)
+        public UserManageListModel(string primaryKey, string userName, string userBirth, string userId, string userPw, string userDepartment, string userEmployeeNum, string userNumber, string userGroupName, string userGroupId, BitmapImage profileImage)
         {
             this.primaryKey = primaryKey;
             this.userName = userName;
@@ -63,13 +63,12 @@ namespace WPF_MVVM_FusionProject.Model
             this.userDepartment = userDepartment;
             this.userEmployeeNum = userEmployeeNum;
             this.userNumber = userNumber;
-            this.UserGroupName = userGroupName;
-            this.UserGroupId = userGroupId;
-            this.isUserListVisibility = true;
+            this.userGroupName = userGroupName;
+            this.userGroupId = userGroupId;
+            this.profileImage = profileImage;
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
             this.commandUserImageEditClick = new DelegateCommand(UserImageEditClick);
-            this.commandUserImageShowClick = new DelegateCommand(UserImageShowClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
             this.commandUserSaveClick = new DelegateCommand(UserSaveClick);
             this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
@@ -77,8 +76,6 @@ namespace WPF_MVVM_FusionProject.Model
         #endregion
 
         #region UserManageListModel 변수
-        string strName, imageName;
-
         private string primaryKey = string.Empty;
         public string PrimaryKey
         {
@@ -170,6 +167,13 @@ namespace WPF_MVVM_FusionProject.Model
             set { this.userGroupId = value; NotifyCollection("UserGroupId"); }
         }
 
+        private ImageSource profileImage;
+        public ImageSource ProfileImage
+        {
+            get { return this.profileImage; }
+            set { this.profileImage = value; NotifyCollection("ProfileImage"); }
+        }
+
         private bool isReadOnly = true;
         public bool IsReadOnly
         {
@@ -253,11 +257,12 @@ namespace WPF_MVVM_FusionProject.Model
             get { return this.isIdTextBoxFocus; }
             set { this.isIdTextBoxFocus = value; NotifyCollection("IsIdTextBoxFocus"); }
         }
+
+        string strName, imageName;
         #endregion
 
         private DelegateCommand commandUserEditClick = null;
         private DelegateCommand commandUserImageEditClick = null;
-        private DelegateCommand commandUserImageShowClick = null;
         private DelegateCommand commandUserDeleteClick = null;
         private DelegateCommand commandUserSaveClick = null;
         private DelegateCommand commandUserCancleClick = null;
@@ -272,12 +277,6 @@ namespace WPF_MVVM_FusionProject.Model
         {
             get => this.commandUserImageEditClick;
             set => this.commandUserImageEditClick = value;
-        }
-
-        public DelegateCommand CommandUserImageShowClick
-        {
-            get => this.commandUserImageShowClick;
-            set => this.commandUserImageShowClick = value;
         }
 
         public DelegateCommand CommandUserDeleteClick
@@ -314,26 +313,52 @@ namespace WPF_MVVM_FusionProject.Model
             IsSaveBtnVisibility = true;
             IsCancleBtnVisibility = true;
             IsGroupListVisibility = true;
+            IsImageEditBtnVisibility = true;
         }
 
         private void UserImageEditClick(object obj)
         {
-            Image image = obj as Image;
             try
             {
-                FileDialog fldlg = new OpenFileDialog();
+                OpenFileDialog fldlg = new OpenFileDialog();
                 fldlg.InitialDirectory = Environment.SpecialFolder.MyPictures.ToString();
-                fldlg.Filter = "Image File (*.png; *.jpg;*.bmp;*.gif)|*.png;*.jpg;*.bmp9;*.gif";
+                fldlg.Filter = "Image File (*.png; *.jpg;*.bmp;)|*.png;*.jpg;*.bmp9;";
                 fldlg.ShowDialog();
                 {
                     strName = fldlg.SafeFileName;
                     imageName = fldlg.FileName;
-                    ImageSourceConverter isc = new ImageSourceConverter();
-                    image.SetValue(Image.SourceProperty, isc.ConvertFromString(imageName));
+
+                    if (imageName != string.Empty)
+                    {
+                        FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read);
+                        byte[] imgByteArr = new byte[fs.Length];
+                        fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
+                        fs.Close();
+
+                        MemoryStream stream = new MemoryStream();
+                        stream.Write(imgByteArr, 0, imgByteArr.Length);
+                        stream.Position = 0;
+
+                        System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
+
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+
+                        MemoryStream ms = new MemoryStream();
+                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                        ms.Seek(0, SeekOrigin.Begin);
+                        bi.StreamSource = ms;
+                        bi.EndInit();
+
+                        ProfileImage = bi;
+
+                        //ImageSourceConverter isc = new ImageSourceConverter();
+                        //image.SetValue(Image.SourceProperty, isc.ConvertFromString(imageName));
+                    }
                 }
                 fldlg = null;
-                InsertImageData();
             }
+
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message.ToString());
@@ -344,55 +369,23 @@ namespace WPF_MVVM_FusionProject.Model
         {
             try
             {
-                if (imageName != string.Empty)
+                FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read);
+                byte[] imgByteArr = new byte[fs.Length];
+
+                fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
+                fs.Close();
+
+                string userImageInsertQuery = "UPDATE users SET user_image = @user_image WHERE id = " + PrimaryKey;
+
+                if (MainWindowViewModel.manager.MySqlImageInsertExecuter(userImageInsertQuery, imgByteArr))
                 {
-                    FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read);
-
-                    byte[] imgByteArr = new byte[fs.Length];
-
-                    fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
-                    fs.Close();
-
-                    string userImageInsertQuery = "INSERT INTO imagedata(id, img) VALUES('" + strName + "',@img)";
-
-                    if (MainWindowViewModel.manager.MySqlImageInsertExecuter(userImageInsertQuery, imgByteArr))
-                    {
-                        Debug.WriteLine("Image added successfully.");
-                    }
+                    Debug.WriteLine("Image added successfully.");
                 }
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
             }
-        }
-
-        private void UserImageShowClick(object obj)
-        {
-            Image image = obj as Image;
-
-            string tableName = "imagedata";
-            string selectUserImageQuery = string.Format("SELECT * FROM {0}", tableName);
-            DataSet userImageDataSet = MainWindowViewModel.manager.Select(selectUserImageQuery, tableName);
-
-            byte[] blob = (byte[])userImageDataSet.Tables[0].Rows[1]["img"];
-
-            MemoryStream stream = new MemoryStream();
-            stream.Write(blob, 0, blob.Length);
-            stream.Position = 0;
-
-            System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
-
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-
-            MemoryStream ms = new MemoryStream();
-            img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-            ms.Seek(0, SeekOrigin.Begin);
-            bi.StreamSource = ms;
-            bi.EndInit();
-
-            image.Source = bi;
         }
 
         private void UserDeleteClick(object obj)
@@ -465,8 +458,8 @@ namespace WPF_MVVM_FusionProject.Model
                                         item.UserGroupName = selectedItem.GroupName;
                                     }
                                 }
-                                MainWindowViewModel.userManageListViewModel.UserListCollection.Remove(this);
 
+                                IsUserListVisibility = false;
                                 UserManageTreeDeleteInit();
                                 UserGroupId = selectedItem.GroupId;
                                 UserGroupName = selectedItem.GroupName;
@@ -477,13 +470,20 @@ namespace WPF_MVVM_FusionProject.Model
                             IsSaveBtnVisibility = false;
                             IsCancleBtnVisibility = false;
                             IsGroupListVisibility = false;
+                            IsImageEditBtnVisibility = false;
+
+                            if (imageName != null)
+                            {
+                                InsertImageData();
+                            }
                         }
                     }
                     else
                     {
                         int primaryKey = (MainWindowViewModel.userManageListViewModel.UserListCollection.Count == 0) ? 1 : MainWindowViewModel.userManageListViewModel.LastPrimaryKey + 1;
 
-                        string userInsertQuery = string.Format("INSERT INTO {0} VALUES('{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')", tableName, primaryKey, UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, selectedItem.GroupName, selectedItem.GroupId);
+                        string userInsertQuery = string.Format("INSERT INTO {0}(id, user_name, user_birth, user_id, user_pw, user_department, user_employee_num, user_number, group_name, group_id)" +
+                        " VALUES('{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}', '{8}', '{9}', '{10}')", tableName, primaryKey, UserName, UserBirth, UserId, UserPw, UserDepartment, UserEmployeeNum, UserNumber, selectedItem.GroupName, selectedItem.GroupId);
                         if (MainWindowViewModel.manager.MySqlQueryExecuter(userInsertQuery))
                         {
                             PrimaryKey = primaryKey.ToString();
@@ -497,13 +497,19 @@ namespace WPF_MVVM_FusionProject.Model
                             IsSaveBtnVisibility = false;
                             IsCancleBtnVisibility = false;
                             IsGroupListVisibility = false;
+                            IsImageEditBtnVisibility = false;
                             IsUserPwTextBoxVisibility = false;
                             IsUserPwPasswordBoxVisibility = true;
                             MainWindowViewModel.userManageListViewModel.IsAddMember = false;
                             MainWindowViewModel.userManageListViewModel.LastPrimaryKey = primaryKey;
-
                             UserManageTreeAddInit(selectedItem.GroupId, primaryKey.ToString());
+
+                            if (imageName != null)
+                            {
+                                InsertImageData();
+                            }
                         }
+
                     }
                 }
             }
@@ -534,11 +540,13 @@ namespace WPF_MVVM_FusionProject.Model
                 UserNumber = userDataSet.Tables[0].Rows[0]["user_number"].ToString();
                 UserGroupName = userDataSet.Tables[0].Rows[0]["group_name"].ToString();
                 UserGroupId = userDataSet.Tables[0].Rows[0]["group_id"].ToString();
+                ProfileImage = (userDataSet.Tables[0].Rows[0]["user_image"].ToString() != string.Empty) ? MainWindowViewModel.userManageListViewModel.UserImageShow((byte[])userDataSet.Tables[0].Rows[0]["user_image"]) : null;
 
                 IsReadOnly = true;
                 IsSaveBtnVisibility = false;
                 IsCancleBtnVisibility = false;
                 IsGroupListVisibility = false;
+                IsImageEditBtnVisibility = false;
             }
             else
             {
