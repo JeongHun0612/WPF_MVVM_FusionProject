@@ -51,13 +51,13 @@
         <Grid Grid.Row="2" Background="#FF141C1E">
             <TabControl TabStripPlacement="Left" BorderBrush="{x:Null}" Background="#FF212A30">
                 <TabItem Header="Config File" Height="70" Width="220" Margin="0,75,0,-75" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource TabItemStyle1}" FontFamily="/Fonts/#Roboto" FontSize="19" >
-                    <view:UserManageView/>
-                    <!--<Label Content="CONFIG FILE" FontSize="50"/>-->
+                    <Label Content="CONFIG FILE" FontSize="50"/>
                 </TabItem>
                 <TabItem Header="System Config" Height="70" Width="220" Margin="0,75,0,-75" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource TabItemStyle2}" FontFamily="/Fonts/#Roboto" FontSize="19">
                     <Label Content="SYSTEM CONFIG" FontSize="50"/>
                 </TabItem>
                 <TabItem Header="User Manage" Height="70" Width="220" Margin="0,75,0,-75" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource TabItemStyle3}" FontFamily="/Fonts/#Roboto" FontSize="19">
+                    <view:UserManageView/>
                     <!--<view:UserManageView/>-->
                 </TabItem>
             </TabControl>
