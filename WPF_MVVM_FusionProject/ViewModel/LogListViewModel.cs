@@ -13,13 +13,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
         public LogListViewModel()
         {
             MainWindowViewModel.logListViewModel = this;
-
-            logListCollection.Add(new LogListModel("test", "test"));
-            logListCollection.Add(new LogListModel("test", "test"));
-            logListCollection.Add(new LogListModel("test", "test"));
-            logListCollection.Add(new LogListModel("test", "test"));
-            logListCollection.Add(new LogListModel("test", "test"));
-            logListCollection.Add(new LogListModel("test", "test"));
         }
 
         private ObservableCollection<LogListModel> logListCollection = new ObservableCollection<LogListModel>();

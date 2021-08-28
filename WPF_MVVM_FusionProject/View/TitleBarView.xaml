@@ -13,20 +13,27 @@
         <viewModel:TitleBarViewModel/>
     </UserControl.DataContext>
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseDoubleClick">
-            <i:InvokeCommandAction Command="{Binding CommandMaximizeClick}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
-    <!--<Button Content="Button" HorizontalAlignment="Right" Height="20" Margin="0,0,20,0" VerticalAlignment="Center" Width="30" Style="{DynamicResource Xstyle3}"/>
-    <Button Content="Button" HorizontalAlignment="Right" Height="20" Margin="0,0,50,0" VerticalAlignment="Center" Width="30" Style="{DynamicResource minmaxstyle3}"/>
-    <Button Content="Button" HorizontalAlignment="Right" Height="20" Margin="0,0,80,0" VerticalAlignment="Center" Width="30" Style="{DynamicResource minusstyle}"/>-->
-
     <Grid Background="#FF1F2428">
+        <Label>
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding CommandMaximizeClick}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <i:InvokeCommandAction Command="{Binding CommandMouseDown}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="PreviewMouseMove">
+                    <i:InvokeCommandAction Command="{Binding CommandDragMove}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Label>
         <Rectangle Fill="#FF141C1E" HorizontalAlignment="Center" Height="2" Margin="0" RadiusY="1.5" RadiusX="1.5" VerticalAlignment="Bottom" Width="1920"/>
         <Button Style="{DynamicResource TitleMinimizeButtonStyle}" Width="30" Height="20" HorizontalAlignment="Right" Margin="0,0,80,0" Command="{Binding CommandMinimizeClick}"/>
-        <Button Style="{DynamicResource TitleMaximizeButtonStyle}" Width="30" Height="20" HorizontalAlignment="Right" Margin="0,0,50,0" Command="{Binding CommandMaximizeClick}"/>
+        <Button Style="{DynamicResource TitleMaximizeButtonStyle}" Width="30" Height="20" HorizontalAlignment="Right" Margin="0,0,50,0" 
+                Visibility="{Binding IsWindowMaximizeBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandMaximizeClick}"/>
+        <Button Content="ㅁ" Width="30" Height="20" HorizontalAlignment="Right" Margin="0,0,50,0" 
+                Visibility="{Binding IsWindowNormalBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandMaximizeClick}"/>
+        
         <Button Style="{DynamicResource TitleExitButtonStyle}" Width="30" Height="20" HorizontalAlignment="Right" Margin="0,0,20,0" Command="{Binding CommandExitClick}"/>
     </Grid>
 </UserControl>

@@ -55,9 +55,11 @@
                                                 <ImageBrush ImageSource="{Binding ProfileImage}"/>
                                             </Rectangle.Fill>
                                         </Rectangle>
-                                        <Button Style="{DynamicResource ImageEditButtonStyle}" Width="20" Height="20" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="105,0,0,105"
+                                        <Button Style="{DynamicResource ImageEditButtonStyle}" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="105,0,0,105"
                                                     Visibility="{Binding IsImageEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserImageEditClick}"/>
-                                        
+                                        <Button Style="{DynamicResource ImageDeleteButtonStyle}" BorderBrush="{x:Null}" Foreground="{x:Null}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="105,0,0,105"
+                                                    Visibility="{Binding IsImageDeleteBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserImageDeleteClick}"/>
+
                                         <Button Content="Edit" Style="{DynamicResource EditButtonStyle}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="65" Margin="8,8,0,0" Height="30" 
                                                     Visibility="{Binding IsEditBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandUserEditClick}"/>
                                         <Button Content="Save" Style="{DynamicResource SaveButtonStyle}" HorizontalAlignment="Center" Height="30" Margin="0,0,75,30" VerticalAlignment="Bottom" Width="72" Background="#FF0FB57D" BorderBrush="{x:Null}" Foreground="#FFE0E4E6" FontSize="16"

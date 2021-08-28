@@ -5,8 +5,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Border x:Name="Border" BorderThickness="1" BorderBrush="#FF1F2428" Background="#FF1F2428">
-                        <Grid Height="25" Background="#FF1F2428">
+                    <Border x:Name="Border" BorderThickness="0,0,0,1" BorderBrush="#FFF1F1F1" Background="#FF1F2428" Margin="10,0">
+                        <Grid Height="30" Background="#FF1F2428">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
                                 <ColumnDefinition Width="*" />
@@ -45,9 +45,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
                     <Grid>
-                        <Border x:Name="Border" BorderThickness="1">
+                        <Border x:Name="Border" BorderThickness="1" CornerRadius="10">
                             <Border.BorderBrush>
-                                <SolidColorBrush Color="#FF888888" />
+                                <SolidColorBrush Color="Transparent" />
                             </Border.BorderBrush>
                             <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
                         </Border>
@@ -55,9 +55,8 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="HasDropShadow" Value="true">
                             <Setter TargetName="Border" Property="Background" Value="#FF1F2428" />
-                            <Setter TargetName="Border" Property="Padding" Value="0,3,0,3" />
-                            <Setter TargetName="Border" Property="CornerRadius" Value="4" />
-                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter TargetName="Border" Property="Padding" Value="0,10,0,10" />
+                            <Setter TargetName="Border" Property="CornerRadius" Value="10" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

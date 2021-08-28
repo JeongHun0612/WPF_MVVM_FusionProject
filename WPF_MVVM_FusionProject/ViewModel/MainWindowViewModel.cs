@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
 using WPF_MVVM_FusionProject.DBConncet;
@@ -13,7 +14,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
         {
             manager.Initialize();
             this.commandLoaded = new DelegateCommand(Loaded);
-            this.commandDragMove = new DelegateCommand(DragMove);
         }
 
         public static MySQLManager manager = new MySQLManager();
@@ -25,8 +25,8 @@ namespace WPF_MVVM_FusionProject.ViewModel
         public static LogListViewModel logListViewModel { get; set; } = null;
         public static WarningMessageBoxViewModel warningMessageBoxViewModel { get; set; } = null;
 
+
         private DelegateCommand commandLoaded = null;
-        private DelegateCommand commandDragMove = null;
 
         public DelegateCommand CommandLoaded
         {
@@ -34,32 +34,10 @@ namespace WPF_MVVM_FusionProject.ViewModel
             set => this.commandLoaded = value;
         }
 
-        public DelegateCommand CommandDragMove
-        {
-            get => this.commandDragMove;
-            set => this.commandDragMove = value;
-        }
-
         private void Loaded(object obj)
         {
             MainWindow mainWindow = obj as MainWindow;
             Application.Current.MainWindow = mainWindow;
-        }
-
-        private void DragMove(object obj)
-        {
-            MainWindow mainWindow = obj as MainWindow;
-            Point position = Mouse.GetPosition(mainWindow);
-
-            ((MainWindow)Application.Current.MainWindow).DragMove();
-
-            Debug.WriteLine(position);
-
-            //if (((MainWindow)Application.Current.MainWindow).WindowState == WindowState.Maximized)
-            //{
-            //    ((MainWindow)Application.Current.MainWindow).WindowState = WindowState.Normal;
-            //}
-
         }
     }
 }

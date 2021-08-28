@@ -183,6 +183,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Control\DataGridStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Control\ListBoxItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -406,6 +410,14 @@
     <Resource Include="Image\cameraNormal.png" />
     <Resource Include="Image\cameraHover.png" />
     <Resource Include="Image\cameraPressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\imageEditButtonHover.png" />
+    <Resource Include="Image\imageEditButtonNormal.png" />
+    <Resource Include="Image\imageEditButtonPressed.png" />
+    <Resource Include="Image\imageDeleteButtonPressed.png" />
+    <Resource Include="Image\imageDeleteButtonNormal.png" />
+    <Resource Include="Image\imageDeleteButtonHover.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

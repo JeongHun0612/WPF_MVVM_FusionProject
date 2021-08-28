@@ -26,13 +26,13 @@
                     <Grid>
                         <TextBlock Text="{Binding Header}">
                             <TextBlock.Resources>
-                                <ContextMenu Background="#FF1F2428" BorderBrush="Transparent" x:Key="ParentGroupContextMenu">
+                                <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="ParentGroupContextMenu">
                                     <MenuItem Header="루트 추가" Command="{Binding CommandTreeRootAddClick}"/>
                                     <MenuItem Header="자식 추가" Command="{Binding CommandTreeChildAddClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"/>
                                     <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
                                     <MenuItem Header="이름 바꾸기" Command="{Binding CommandRenameClick}"/>
                                 </ContextMenu>
-                                <ContextMenu Background="#FF1F2428" BorderBrush="Transparent" x:Key="UserGroupContextMenu">
+                                <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="UserGroupContextMenu">
                                     <MenuItem Header="추가" Command="{Binding CommandTreeUserAddClick}"/>
                                     <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
                                     <MenuItem Header="이름바꾸기" Command="{Binding CommandRenameClick}"/>

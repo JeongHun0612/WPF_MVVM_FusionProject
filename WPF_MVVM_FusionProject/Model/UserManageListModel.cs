@@ -1,12 +1,9 @@
 ﻿using Microsoft.Win32;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using WPF_MVVM_FusionProject.View;
@@ -40,6 +37,7 @@ namespace WPF_MVVM_FusionProject.Model
             this.isGroupListVisibility = true;
             this.isSaveBtnVisibility = true;
             this.isImageEditBtnVisibility = true;
+            this.isImageDeleteBtnVisibility = false;
             this.isCancleBtnVisibility = true;
             this.isEditBtnVisibility = false;
             this.isDeleteBtnVisibility = false;
@@ -47,6 +45,7 @@ namespace WPF_MVVM_FusionProject.Model
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
             this.commandUserImageEditClick = new DelegateCommand(UserImageEditClick);
+            this.commandUserImageDeleteClick = new DelegateCommand(UserImageDeleteClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
             this.commandUserSaveClick = new DelegateCommand(UserSaveClick);
             this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
@@ -69,6 +68,7 @@ namespace WPF_MVVM_FusionProject.Model
 
             this.commandUserEditClick = new DelegateCommand(UserEditClick);
             this.commandUserImageEditClick = new DelegateCommand(UserImageEditClick);
+            this.commandUserImageDeleteClick = new DelegateCommand(UserImageDeleteClick);
             this.commandUserDeleteClick = new DelegateCommand(UserDeleteClick);
             this.commandUserSaveClick = new DelegateCommand(UserSaveClick);
             this.commandUserCancleClick = new DelegateCommand(UserCancleClick);
@@ -223,6 +223,13 @@ namespace WPF_MVVM_FusionProject.Model
             set { this.isImageEditBtnVisibility = value; NotifyCollection("IsImageEditBtnVisibility"); }
         }
 
+        private bool isImageDeleteBtnVisibility = false;
+        public bool IsImageDeleteBtnVisibility
+        {
+            get { return this.isImageDeleteBtnVisibility; }
+            set { this.isImageDeleteBtnVisibility = value; NotifyCollection("IsImageDeleteBtnVisibility"); }
+        }
+
         private bool isDeleteBtnVisibility = true;
         public bool IsDeleteBtnVisibility
         {
@@ -263,6 +270,7 @@ namespace WPF_MVVM_FusionProject.Model
 
         private DelegateCommand commandUserEditClick = null;
         private DelegateCommand commandUserImageEditClick = null;
+        private DelegateCommand commandUserImageDeleteClick = null;
         private DelegateCommand commandUserDeleteClick = null;
         private DelegateCommand commandUserSaveClick = null;
         private DelegateCommand commandUserCancleClick = null;
@@ -277,6 +285,12 @@ namespace WPF_MVVM_FusionProject.Model
         {
             get => this.commandUserImageEditClick;
             set => this.commandUserImageEditClick = value;
+        }
+
+        public DelegateCommand CommandUserImageDeleteClick
+        {
+            get => this.commandUserImageDeleteClick;
+            set => this.commandUserImageDeleteClick = value;
         }
 
         public DelegateCommand CommandUserDeleteClick
@@ -309,11 +323,19 @@ namespace WPF_MVVM_FusionProject.Model
                 }
             }
 
+            if (ProfileImage == null)
+            {
+                IsImageEditBtnVisibility = true;
+            }
+            else
+            {
+                IsImageDeleteBtnVisibility = true;
+            }
+
             IsReadOnly = false;
             IsSaveBtnVisibility = true;
             IsCancleBtnVisibility = true;
             IsGroupListVisibility = true;
-            IsImageEditBtnVisibility = true;
         }
 
         private void UserImageEditClick(object obj)
@@ -330,30 +352,33 @@ namespace WPF_MVVM_FusionProject.Model
 
                     if (imageName != string.Empty)
                     {
-                        FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read);
-                        byte[] imgByteArr = new byte[fs.Length];
-                        fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
-                        fs.Close();
+                        using (FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read))
+                        {
+                            byte[] imgByteArr = new byte[fs.Length];
+                            fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
+                            fs.Close();
 
-                        MemoryStream stream = new MemoryStream();
-                        stream.Write(imgByteArr, 0, imgByteArr.Length);
-                        stream.Position = 0;
+                            using (MemoryStream stream = new MemoryStream())
+                            {
+                                stream.Write(imgByteArr, 0, imgByteArr.Length);
+                                stream.Position = 0;
 
-                        System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
+                                System.Drawing.Image img = System.Drawing.Image.FromStream(stream);
 
-                        BitmapImage bi = new BitmapImage();
-                        bi.BeginInit();
+                                BitmapImage bi = new BitmapImage();
+                                bi.BeginInit();
 
-                        MemoryStream ms = new MemoryStream();
-                        img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
-                        ms.Seek(0, SeekOrigin.Begin);
-                        bi.StreamSource = ms;
-                        bi.EndInit();
+                                using (MemoryStream ms = new MemoryStream())
+                                {
+                                    img.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp);
+                                    ms.Seek(0, SeekOrigin.Begin);
+                                    bi.StreamSource = ms;
+                                    bi.EndInit();
 
-                        ProfileImage = bi;
-
-                        //ImageSourceConverter isc = new ImageSourceConverter();
-                        //image.SetValue(Image.SourceProperty, isc.ConvertFromString(imageName));
+                                    ProfileImage = bi;
+                                }
+                            }
+                        }
                     }
                 }
                 fldlg = null;
@@ -369,17 +394,19 @@ namespace WPF_MVVM_FusionProject.Model
         {
             try
             {
-                FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read);
-                byte[] imgByteArr = new byte[fs.Length];
-
-                fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
-                fs.Close();
-
-                string userImageInsertQuery = "UPDATE users SET user_image = @user_image WHERE id = " + PrimaryKey;
-
-                if (MainWindowViewModel.manager.MySqlImageInsertExecuter(userImageInsertQuery, imgByteArr))
+                using (FileStream fs = new FileStream(imageName, FileMode.Open, FileAccess.Read))
                 {
-                    Debug.WriteLine("Image added successfully.");
+                    byte[] imgByteArr = new byte[fs.Length];
+
+                    fs.Read(imgByteArr, 0, Convert.ToInt32(fs.Length));
+                    fs.Close();
+
+                    string userImageInsertQuery = "UPDATE users SET user_image = @user_image WHERE id = " + PrimaryKey;
+
+                    if (MainWindowViewModel.manager.MySqlImageInsertExecuter(userImageInsertQuery, imgByteArr))
+                    {
+                        Debug.WriteLine("Image added successfully.");
+                    }
                 }
             }
             catch (Exception ex)
@@ -387,6 +414,20 @@ namespace WPF_MVVM_FusionProject.Model
                 Debug.WriteLine(ex.Message);
             }
         }
+
+        private void UserImageDeleteClick(object obj)
+        {
+            ProfileImage = null;
+        }
+
+        private void DeleteImageData()
+        {
+            string tableName = "users";
+            string userImageUpdateQuery = string.Format("UPDATE {0} SET user_image = null WHERE id = {1}", tableName, PrimaryKey);
+
+            MainWindowViewModel.manager.MySqlQueryExecuter(userImageUpdateQuery);
+        }
+
 
         private void UserDeleteClick(object obj)
         {
@@ -471,10 +512,16 @@ namespace WPF_MVVM_FusionProject.Model
                             IsCancleBtnVisibility = false;
                             IsGroupListVisibility = false;
                             IsImageEditBtnVisibility = false;
+                            IsImageDeleteBtnVisibility = false;
+                            MainWindowViewModel.logListViewModel.LogListCollection.Add(new LogListModel("편집", "test"));
 
                             if (imageName != null)
                             {
                                 InsertImageData();
+                            }
+                            else
+                            {
+                                DeleteImageData();
                             }
                         }
                     }
@@ -503,6 +550,7 @@ namespace WPF_MVVM_FusionProject.Model
                             MainWindowViewModel.userManageListViewModel.IsAddMember = false;
                             MainWindowViewModel.userManageListViewModel.LastPrimaryKey = primaryKey;
                             UserManageTreeAddInit(selectedItem.GroupId, primaryKey.ToString());
+                            MainWindowViewModel.logListViewModel.LogListCollection.Add(new LogListModel("추가", "test"));
 
                             if (imageName != null)
                             {
@@ -547,6 +595,7 @@ namespace WPF_MVVM_FusionProject.Model
                 IsCancleBtnVisibility = false;
                 IsGroupListVisibility = false;
                 IsImageEditBtnVisibility = false;
+                IsImageDeleteBtnVisibility = false;
             }
             else
             {

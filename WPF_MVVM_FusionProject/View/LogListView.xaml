@@ -13,7 +13,8 @@
     </UserControl.DataContext>
     
     <Grid>
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding LogListCollection}">
+        <DataGrid AutoGenerateColumns="False" x:Name="dataGrid1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Style="{DynamicResource DataGridStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+                  CellStyle="{DynamicResource DataGridCellStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" RowHeaderStyle="{DynamicResource DataGridRowHeaderStyle1}" ItemsSource="{Binding LogListCollection}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="TimeStamp" Binding="{Binding TimeStamp}"/>
                 <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>

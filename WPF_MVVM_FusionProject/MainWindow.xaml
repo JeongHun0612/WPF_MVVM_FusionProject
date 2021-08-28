@@ -10,6 +10,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
+        ResizeMode="CanResize"
         Title="MainWindow" Height="1080" Width="1920" Background="#FF242D34">
 
     <Window.DataContext>
@@ -19,9 +20,6 @@
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding CommandLoaded}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="MouseLeftButtonDown">
-            <i:InvokeCommandAction Command="{Binding CommandDragMove}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>
 
@@ -35,6 +33,14 @@
             <view:TitleBarView DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}}"/>
         </Grid>
         <Grid Grid.Row="1" Background="#FF1F2428">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="PreviewMouseDown">
+                    <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandMouseDown}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="PreviewMouseMove">
+                    <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandDragMove}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="830"/>
