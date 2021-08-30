@@ -8,11 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/+++++444.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/++++2.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/++++33.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/-----------------4.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/-------------.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/-----------3.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/titlemaximizehover2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/titlemaximizenormal2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/titlemaximizepressed2.png")]
 
 

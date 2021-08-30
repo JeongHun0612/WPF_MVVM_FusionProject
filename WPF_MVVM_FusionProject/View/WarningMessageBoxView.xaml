@@ -34,7 +34,7 @@
         </Border>
         <Grid Grid.Row="1" Height="75" VerticalAlignment="Center"  Margin="0" HorizontalAlignment="Center">
             <Grid Visibility="{Binding IsDangerMode, Converter={StaticResource BoolToVisibility}}">
-                <Button Style="{DynamicResource MessageBoxButtonStyle}" Content="Save" HorizontalAlignment="Center" Height="27" Margin="0,0,75,0" VerticalAlignment="Center" Width="65" Background="{x:Null}" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontFamily="/Fonts/#Roboto Regular" FontSize="16"
+                <Button Style="{DynamicResource MessageBoxButtonStyle}" Content="OK" HorizontalAlignment="Center" Height="27" Margin="0,0,75,0" VerticalAlignment="Center" Width="65" Background="{x:Null}" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontFamily="/Fonts/#Roboto Regular" FontSize="16"
                     Command="{Binding CommandSaveClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
                 <Button Style="{DynamicResource MessageBoxButtonStyle}" Content="Cancel" HorizontalAlignment="Center" Height="27" Margin="75,0,0,0" VerticalAlignment="Center" Width="65" Background="{x:Null}" BorderBrush="#FF0FB57D" Foreground="#FF0FB57D" FontFamily="/Fonts/#Roboto Regular" FontSize="16"
                     Command="{Binding CommandCancleClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>

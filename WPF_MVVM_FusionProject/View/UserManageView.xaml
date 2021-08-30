@@ -8,21 +8,41 @@
              xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        
+        <!--<Grid Grid.Row="0">
             <view:UserManageTreeView DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}}"/>
-        </Grid>
-        <Grid Grid.Column="1">
+        </Grid>-->
+        <Border Grid.Row="0" Background="#FF212A30" BorderBrush="#FF1F2428" BorderThickness="0,0,1.5,0">
+            <Grid>
+                <view:UserManageTreeView DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageTreeViewModel}}"/>
+            </Grid>
+        </Border>
+        
+        <Grid Grid.Column="1" Background="#FF141C1E" Margin="0,-2"/>
+
+        <Grid Grid.Column="2" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="150"/>
+                <RowDefinition Height="165"/>
             </Grid.RowDefinitions>
-            <view:UserManageListView Grid.Row="0" DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageListViewModel}}"/>
-            <!--<view:LogListView Grid.Row="1" DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.logListViewModel}}"/>-->
+
+            <Border Grid.Row="0" Background="#FF212A30" BorderBrush="#FF1F2428" BorderThickness="0,0,1.5,0">
+                <Grid>
+                    <view:UserManageListView DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.userManageListViewModel}}"/>
+                </Grid>
+            </Border>
+
+            <Border Grid.Row="1" Background="#FF212A30" BorderBrush="#FF1F2428" BorderThickness="0,0,1.5,0">
+                <Grid>
+                    <view:LogListView DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.logListViewModel}}"/>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>

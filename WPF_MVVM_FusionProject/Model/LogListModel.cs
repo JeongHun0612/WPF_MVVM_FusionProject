@@ -9,6 +9,12 @@ namespace WPF_MVVM_FusionProject.Model
 {
     public class LogListModel : Notifier
     {
+        public LogListModel(string content)
+        {
+            this.timeStamp = DateTime.Now.ToString("yyyy. MM. dd. HH:mm:ss");
+            this.content = this.timeStamp + "  " + content;
+        }
+
         public LogListModel(string level, string content)
         {
             this.timeStamp = DateTime.Now.ToString("yyyy. MM. dd. HH:mm:ss");
@@ -29,7 +35,6 @@ namespace WPF_MVVM_FusionProject.Model
             get { return this.level; }
             set { this.level = value; Notify("Level"); }
         }
-
 
         private string content = string.Empty;
         public string Content

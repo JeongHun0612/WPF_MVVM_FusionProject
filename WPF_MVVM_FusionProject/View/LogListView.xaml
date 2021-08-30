@@ -13,13 +13,29 @@
     </UserControl.DataContext>
     
     <Grid>
-        <DataGrid AutoGenerateColumns="False" x:Name="dataGrid1" IsReadOnly="True" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Style="{DynamicResource DataGridStyle1}" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#FF1F2428">
+            <Label Content="Log List" Foreground="#FFF1F1F1" VerticalAlignment="Center" FontSize="13" FontFamily="/Fonts/#Roboto Medium" Margin="8,0,0,0"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <TextBox Text="{Binding Text}" Background="#FF212A30" BorderBrush="#FF212A30" Foreground="WhiteSmoke" FontSize="14" FontFamily="/Fonts/#Roboto Light" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+            <!--<ListView Style="{DynamicResource ListViewStyle1}" ItemsSource="{Binding LogListCollection}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Content}" Margin="5,0,0,0"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+            <!--<DataGrid AutoGenerateColumns="False" x:Name="dataGrid1" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Style="{DynamicResource DataGridStyle1}" ColumnHeaderHeight="0" ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}"
                   CellStyle="{DynamicResource DataGridCellStyle1}" RowStyle="{DynamicResource DataGridRowStyle1}" RowHeaderStyle="{DynamicResource DataGridRowHeaderStyle1}" ItemsSource="{Binding LogListCollection}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="TimeStamp" Binding="{Binding TimeStamp}"/>
-                <DataGridTextColumn Header="Level" Binding="{Binding Level}"/>
-                <DataGridTextColumn Header="Content" Binding="{Binding Content}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="TimeStamp" Binding="{Binding TimeStamp}"/>
+                    <DataGridTextColumn Header="Content" Binding="{Binding Content}"/>
+                </DataGrid.Columns>
+            </DataGrid>-->
+        </Grid>
     </Grid>
 </UserControl>

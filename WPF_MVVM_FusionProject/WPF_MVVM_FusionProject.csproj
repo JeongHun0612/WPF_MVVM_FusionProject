@@ -191,9 +191,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Control\ListViewStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Control\ScrollBarStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Control\ScrollBarStyle2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Control\TabControlStyle.xaml">
       <SubType>Designer</SubType>
@@ -360,21 +368,6 @@
     <Resource Include="Image\eyeTrueHover.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\titleExitPressed.png" />
-    <Resource Include="Image\titleExitHover.png" />
-    <Resource Include="Image\titleExitNormal.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\titleMaximizeNormal.png" />
-    <Resource Include="Image\titleMaximizeHover.png" />
-    <Resource Include="Image\titleMaximizePressed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\titleMinimizePressed.png" />
-    <Resource Include="Image\titleMinimizeHover.png" />
-    <Resource Include="Image\titleMinimizeNormal.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image\userManageIconNormal.png" />
     <Resource Include="Image\userManageIconSelect.png" />
     <Resource Include="Image\configFileIconNormal.png" />
@@ -418,6 +411,26 @@
     <Resource Include="Image\imageDeleteButtonPressed.png" />
     <Resource Include="Image\imageDeleteButtonNormal.png" />
     <Resource Include="Image\imageDeleteButtonHover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\titleMinimizeHover.png" />
+    <Resource Include="Image\titleMinimizeNormal.png" />
+    <Resource Include="Image\titleMinimizePressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\titleExitHover.png" />
+    <Resource Include="Image\titleExitNormal.png" />
+    <Resource Include="Image\titleExitPressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\titleMaximizeHover.png" />
+    <Resource Include="Image\titleMaximizeNormal.png" />
+    <Resource Include="Image\titleMaximizePressed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\titleMaximizeHover2.png" />
+    <Resource Include="Image\titleMaximizeNormal2.png" />
+    <Resource Include="Image\titleMaximizePressed2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

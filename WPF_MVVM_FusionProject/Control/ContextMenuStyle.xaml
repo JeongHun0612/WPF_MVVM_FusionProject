@@ -5,19 +5,29 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type MenuItem}">
-                    <Border x:Name="Border" BorderThickness="0,0,0,1" BorderBrush="#FFF1F1F1" Background="#FF1F2428" Margin="10,0">
-                        <Grid Height="30" Background="#FF1F2428">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <ContentPresenter x:Name="Icon" Margin="6,0,6,0" VerticalAlignment="Center" ContentSource="Icon"/>
-                            <ContentPresenter x:Name="HeaderHost" Margin="3,0,3,0" Grid.Column="1" VerticalAlignment="Center" ContentSource="Header" RecognizesAccessKey="True" TextOptions.TextFormattingMode="Display" />
+                    <Border x:Name="Border" Background="#FF1F2428" Opacity="1.0" Margin="10,0">
+                        <Grid Height="Auto" Background="#FF1F2428">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter x:Name="Icon" Margin="6,0,6,0" VerticalAlignment="Center" ContentSource="Icon"/>
+                                <ContentPresenter x:Name="HeaderHost" Margin="3,0,3,0" Grid.Column="1" VerticalAlignment="Center" Opacity="1.0" ContentSource="Header" RecognizesAccessKey="True" TextOptions.TextFormattingMode="Display"/>
+                            </Grid>
+                            <Rectangle x:Name="RectAngle" Grid.Row="1" Fill="#FFF1F1F1" HorizontalAlignment="Center" Height="1" RadiusY="1.5" RadiusX="1.5" Width="80" Margin="0,7"/>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="Icon" Value="{x:Null}">
                             <Setter TargetName="Icon" Property="Visibility" Value="Collapsed" />
+                        </Trigger>
+                        <Trigger Property="Header" Value="이름 바꾸기">
+                            <Setter Property="Visibility" TargetName="RectAngle" Value="Collapsed"/>
                         </Trigger>
                         <Trigger Property="IsHighlighted" Value="true">
                             <Setter Property="Background" TargetName="Border" Value="#49a3e1"/>

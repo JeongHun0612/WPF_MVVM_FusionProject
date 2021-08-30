@@ -142,3 +142,5 @@ C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProj
 C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\View\LogListView.g.cs
 C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\View\LogListView.baml
 C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\Control\DataGridStyle.baml
+C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\Control\ScrollBarStyle2.baml
+C:\Users\sjh96\OneDrive\바탕 화면\WPF_MVVM_FusionProject\WPF_MVVM_FusionProject\obj\Debug\Control\ListViewStyle.baml

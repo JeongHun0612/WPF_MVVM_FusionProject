@@ -16,6 +16,7 @@
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ContextMenuStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TreeViewStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/DataGridStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ListViewStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <local:BoolToVisibility x:Key="BoolToVisibility"/>
         </ResourceDictionary>

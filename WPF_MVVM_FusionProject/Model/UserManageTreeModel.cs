@@ -313,53 +313,63 @@ namespace WPF_MVVM_FusionProject.Model
 
         private void DeleteClick(object obj)
         {
-            WarningMessageBoxView messageBox = new WarningMessageBoxView();
-            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "정말로 삭제하시겠습니까?";
-            MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 0;
-            messageBox.ShowDialog();
-
-            if (MainWindowViewModel.warningMessageBoxViewModel.IsMessageBoxResult)
+            if(Header == "Working" || Header == "Test")
             {
-                switch (DepthCount)
+                WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "삭제할 수 없는 그룹입니다.";
+                MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 1;
+                messageBox.ShowDialog();
+            }
+            else
+            {
+                WarningMessageBoxView messageBox = new WarningMessageBoxView();
+                MainWindowViewModel.warningMessageBoxViewModel.MessageBoxText = "정말로 삭제하시겠습니까?";
+                MainWindowViewModel.warningMessageBoxViewModel.MessageBoxMode = 0;
+                messageBox.ShowDialog();
+
+                if (MainWindowViewModel.warningMessageBoxViewModel.IsMessageBoxResult)
                 {
-                    case 0:
-                        if (MainWindowViewModel.userManageTreeViewModel.ParentGroupList.Remove(this))
-                        {
-                            foreach (ComboBoxGroupListModel item in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
+                    switch (DepthCount)
+                    {
+                        case 0:
+                            if (MainWindowViewModel.userManageTreeViewModel.ParentGroupList.Remove(this))
                             {
-                                if (item.IsHeader && (item.GroupId == PrimaryKey))
+                                foreach (ComboBoxGroupListModel item in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
                                 {
-                                    MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item);
-                                    break;
-                                }
-                            }
-                            string tableName = "userparentgroup";
-                            string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE parent_group_id = '{1}'", tableName, PrimaryKey);
-                            MainWindowViewModel.manager.MySqlQueryExecuter(parentGroupDeleteQuery);
-                        }
-                        break;
-                    case 1:
-                        foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
-                        {
-                            if (item.PrimaryKey == ParentPrimaryKey)
-                            {
-                                item.ChildGroupList.Remove(this);
-                                foreach (ComboBoxGroupListModel item2 in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
-                                {
-                                    if (!item2.IsHeader && (item2.GroupId == PrimaryKey))
+                                    if (item.IsHeader && (item.GroupId == PrimaryKey))
                                     {
-                                        MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item2);
+                                        MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item);
                                         break;
                                     }
                                 }
-                                string tableName = "usergroup";
-                                string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE group_id = '{1}'", tableName, PrimaryKey);
+                                string tableName = "userparentgroup";
+                                string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE parent_group_id = '{1}'", tableName, PrimaryKey);
                                 MainWindowViewModel.manager.MySqlQueryExecuter(parentGroupDeleteQuery);
                             }
-                        }
-                        break;
-                    default:
-                        break;
+                            break;
+                        case 1:
+                            foreach (UserManageTreeModel item in MainWindowViewModel.userManageTreeViewModel.ParentGroupList)
+                            {
+                                if (item.PrimaryKey == ParentPrimaryKey)
+                                {
+                                    item.ChildGroupList.Remove(this);
+                                    foreach (ComboBoxGroupListModel item2 in MainWindowViewModel.userManageTreeViewModel.UserGroupList)
+                                    {
+                                        if (!item2.IsHeader && (item2.GroupId == PrimaryKey))
+                                        {
+                                            MainWindowViewModel.userManageTreeViewModel.UserGroupList.Remove(item2);
+                                            break;
+                                        }
+                                    }
+                                    string tableName = "usergroup";
+                                    string parentGroupDeleteQuery = string.Format("DELETE FROM {0} WHERE group_id = '{1}'", tableName, PrimaryKey);
+                                    MainWindowViewModel.manager.MySqlQueryExecuter(parentGroupDeleteQuery);
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
         }

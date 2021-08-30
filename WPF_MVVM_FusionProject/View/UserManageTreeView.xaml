@@ -15,66 +15,70 @@
     </UserControl.DataContext>
 
     <Grid>
-        <TreeView Style="{DynamicResource TreeViewStyle}" x:Name="treeView" Margin="20,0,0,0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}" ScrollViewer.VerticalScrollBarVisibility="Visible">
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectedItemChanged">
-                    <i:InvokeCommandAction Command="{Binding CommandSelectedItem}" CommandParameter="{Binding ElementName=treeView, Path=SelectedItem}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-            <TreeView.ItemTemplate>
-                <HierarchicalDataTemplate DataType="{x:Type model:UserManageTreeModel}" ItemsSource="{Binding ChildGroupList}">
-                    <Grid>
-                        <TextBlock Text="{Binding Header}">
-                            <TextBlock.Resources>
-                                <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="ParentGroupContextMenu">
-                                    <MenuItem Header="루트 추가" Command="{Binding CommandTreeRootAddClick}"/>
-                                    <MenuItem Header="자식 추가" Command="{Binding CommandTreeChildAddClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"/>
-                                    <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
-                                    <MenuItem Header="이름 바꾸기" Command="{Binding CommandRenameClick}"/>
-                                </ContextMenu>
-                                <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="UserGroupContextMenu">
-                                    <MenuItem Header="추가" Command="{Binding CommandTreeUserAddClick}"/>
-                                    <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
-                                    <MenuItem Header="이름바꾸기" Command="{Binding CommandRenameClick}"/>
-                                </ContextMenu>
-                            </TextBlock.Resources>
-                            <TextBlock.Style>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding DepthCount}" Value="0">
-                                            <Setter Property="ContextMenu" Value="{StaticResource ParentGroupContextMenu}"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding DepthCount}" Value="1">
-                                            <Setter Property="ContextMenu" Value="{StaticResource UserGroupContextMenu}"/>
-                                        </DataTrigger>
-                                        <DataTrigger Binding="{Binding DepthCount}" Value="2">
-                                            <Setter Property="ContextMenu" Value="{x:Null}"/>
-                                        </DataTrigger>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Foreground" Value="#FF0FB57D"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
-                        <TextBox Grid.Column="1" Height="20" Margin="0,0,0,6" Background="#FF1F2428" Foreground="#FFF1F1F1"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Label Grid.Row="0" Content="User List" VerticalContentAlignment="Center" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Foreground="#FFF1F1F1" Margin="15,0,0,0"/>
+        <Grid Grid.Row="1">
+            <TreeView Style="{DynamicResource TreeViewStyle}" x:Name="treeView" Margin="20,0,0,0" ItemsSource="{Binding ParentGroupList}" Background="{x:Null}" BorderBrush="{x:Null}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectedItemChanged">
+                        <i:InvokeCommandAction Command="{Binding CommandSelectedItem}" CommandParameter="{Binding ElementName=treeView, Path=SelectedItem}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type model:UserManageTreeModel}" ItemsSource="{Binding ChildGroupList}">
+                        <Grid>
+                            <TextBlock Text="{Binding Header}">
+                                <TextBlock.Resources>
+                                    <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="ParentGroupContextMenu">
+                                        <MenuItem Header="루트 추가" Command="{Binding CommandTreeRootAddClick}"/>
+                                        <MenuItem Header="자식 추가" Command="{Binding CommandTreeChildAddClick}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeViewItem}}}"/>
+                                        <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
+                                        <MenuItem Header="이름 바꾸기" Command="{Binding CommandRenameClick}"/>
+                                    </ContextMenu>
+                                    <ContextMenu Style="{DynamicResource ContextMenuStyle}" x:Key="UserGroupContextMenu">
+                                        <MenuItem Header="추가" Command="{Binding CommandTreeUserAddClick}"/>
+                                        <MenuItem Header="삭제" Command="{Binding CommandDeleteClick}"/>
+                                        <MenuItem Header="이름 바꾸기" Command="{Binding CommandRenameClick}"/>
+                                    </ContextMenu>
+                                </TextBlock.Resources>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding DepthCount}" Value="0">
+                                                <Setter Property="ContextMenu" Value="{StaticResource ParentGroupContextMenu}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DepthCount}" Value="1">
+                                                <Setter Property="ContextMenu" Value="{StaticResource UserGroupContextMenu}"/>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding DepthCount}" Value="2">
+                                                <Setter Property="ContextMenu" Value="{x:Null}"/>
+                                            </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="#FF0FB57D"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <TextBox Grid.Column="1" Height="20" Margin="0,0,0,6" Background="#FF1F2428" Foreground="#FFF1F1F1"
                                          Text="{Binding InputHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Visibility="{Binding IsTextBoxVisibility, Converter={StaticResource BoolToVisibility}}" local:FocusExtension.IsFocused="{Binding IsTextBoxFocus}" ContextMenu="{x:Null}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="LostFocus">
-                                    <i:InvokeCommandAction Command="{Binding CommandSaveClick}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                            <TextBox.InputBindings>
-                                <KeyBinding Key="Return" Command="{Binding CommandSaveClick}"/>
-                                <KeyBinding Key="Esc" Command="{Binding CommandCancleClick}"/>
-                            </TextBox.InputBindings>
-                        </TextBox>
-                    </Grid>
-                </HierarchicalDataTemplate>
-            </TreeView.ItemTemplate>
-        </TreeView>
-        <!--Margin="20,27,0,0"-->
-        <Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Padding="25,35" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="#FF212A30" Foreground="#FFF1F1F1"/>
-        <!--<Label Content="User List" HorizontalAlignment="Left" VerticalAlignment="Top" Width="Auto" Margin="20,27,0,0" FontSize="24" FontFamily="/Fonts/#Roboto Bold" Background="#FF212A30" Foreground="#FFF1F1F1"/>-->
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="LostFocus">
+                                        <i:InvokeCommandAction Command="{Binding CommandSaveClick}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Return" Command="{Binding CommandSaveClick}"/>
+                                    <KeyBinding Key="Esc" Command="{Binding CommandCancleClick}"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
+                        </Grid>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Grid>
     </Grid>
 </UserControl>

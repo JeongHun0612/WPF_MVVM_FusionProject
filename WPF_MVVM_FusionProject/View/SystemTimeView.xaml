@@ -13,6 +13,18 @@
         <viewModel:SystemTimeViewModel/>
     </UserControl.DataContext>
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDoubleClick">
+            <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandMaximizeClick}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="PreviewMouseDown">
+            <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandMouseDown}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="PreviewMouseMove">
+            <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandDragMove}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid Grid.Column="1">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
