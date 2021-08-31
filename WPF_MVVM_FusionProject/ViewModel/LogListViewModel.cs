@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,14 +20,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
             LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
             LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
             LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
-            LogListCollection.Add(new LogListModel("testtesttesttesttesttesttesttest"));
         }
 
         private ObservableCollection<LogListModel> logListCollection = new ObservableCollection<LogListModel>();
@@ -36,11 +29,17 @@ namespace WPF_MVVM_FusionProject.ViewModel
             set { this.logListCollection = value; Notify("LogListCollection"); }
         }
 
-        private string text = "Test\n" + "Test\n" + "Test\n" + "Test\n" + "Test\n" + "Test\n" + "Test\n" + "Test\n" + "Test\n" + "Test\n" + "Test\n";
-        public string Text
+        private string logText = string.Empty;
+        public string LogText
         {
-            get { return this.text; }
-            set { this.text = value; Notify("Text"); }
+            get 
+            { 
+                return this.logText; 
+            }
+            set 
+            {
+                this.logText += DateTime.Now.ToString("yyyy. MM. dd. HH:mm:ss") + "  " + value + "\n"; Notify("LogText");
+            }
         }
     }
 }

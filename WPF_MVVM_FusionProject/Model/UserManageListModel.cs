@@ -265,7 +265,7 @@ namespace WPF_MVVM_FusionProject.Model
             set { this.isIdTextBoxFocus = value; NotifyCollection("IsIdTextBoxFocus"); }
         }
 
-        string strName, imageName;
+        string imageName;
         #endregion
 
         private DelegateCommand commandUserEditClick = null;
@@ -343,11 +343,11 @@ namespace WPF_MVVM_FusionProject.Model
             try
             {
                 OpenFileDialog fldlg = new OpenFileDialog();
+
                 fldlg.InitialDirectory = Environment.SpecialFolder.MyPictures.ToString();
                 fldlg.Filter = "Image File (*.png; *.jpg;*.bmp;)|*.png;*.jpg;*.bmp9;";
                 fldlg.ShowDialog();
                 {
-                    strName = fldlg.SafeFileName;
                     imageName = fldlg.FileName;
 
                     if (imageName != string.Empty)
@@ -513,7 +513,7 @@ namespace WPF_MVVM_FusionProject.Model
                             IsGroupListVisibility = false;
                             IsImageEditBtnVisibility = false;
                             IsImageDeleteBtnVisibility = false;
-                            MainWindowViewModel.logListViewModel.LogListCollection.Add(new LogListModel("편집", "test"));
+                            MainWindowViewModel.logListViewModel.LogText = "계정을 편집하였습니다.";
 
                             if (imageName != null)
                             {
@@ -550,7 +550,7 @@ namespace WPF_MVVM_FusionProject.Model
                             MainWindowViewModel.userManageListViewModel.IsAddMember = false;
                             MainWindowViewModel.userManageListViewModel.LastPrimaryKey = primaryKey;
                             UserManageTreeAddInit(selectedItem.GroupId, primaryKey.ToString());
-                            MainWindowViewModel.logListViewModel.LogListCollection.Add(new LogListModel("추가", "test"));
+                            MainWindowViewModel.logListViewModel.LogText = "계정을 생성하였습니다.";
 
                             if (imageName != null)
                             {

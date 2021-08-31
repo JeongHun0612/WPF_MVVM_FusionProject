@@ -102,14 +102,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
             {
                 string primaryKey = item["id"].ToString();
                 string userName = item["user_name"].ToString();
-                string userBirth = item["user_birth"].ToString();
-                string userId = item["user_id"].ToString();
-                string userPw = item["user_pw"].ToString();
-                string userDepartment = item["user_department"].ToString();
-                string userEmployeeNum = item["user_employee_num"].ToString();
-                string userNumber = item["user_number"].ToString();
-                string userGroupName = item["group_name"].ToString();
-                string userGroupId = item["group_id"].ToString();
 
                 UserManageTreeModel userNode = new UserManageTreeModel(2, primaryKey, userGroupPrimaryKey, userName, false, false);
                 userGroupNode.ChildGroupList.Add(userNode);

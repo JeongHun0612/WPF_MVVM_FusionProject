@@ -377,7 +377,7 @@ namespace WPF_MVVM_FusionProject.Model
         // 수정
         private void AddSave()
         {
-            string tableName = string.Empty;
+            string tableName;
 
             switch (DepthCount)
             {
@@ -450,7 +450,7 @@ namespace WPF_MVVM_FusionProject.Model
         // 수정
         private void RenameSave()
         {
-            string tableName = string.Empty;
+            string tableName;
 
             switch (DepthCount)
             {
