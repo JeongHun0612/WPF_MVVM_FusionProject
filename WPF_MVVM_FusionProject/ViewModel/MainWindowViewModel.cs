@@ -1,10 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
+using System.Drawing;
 using System.Windows;
-using System.Windows.Input;
 using WPF_MVVM_FusionProject.DBConncet;
-using WPF_MVVM_FusionProject.View;
-using WPF_MVVM_FusionProject.ViewModel.LoginWindowViewModel;
 
 namespace WPF_MVVM_FusionProject.ViewModel
 {
@@ -13,7 +10,6 @@ namespace WPF_MVVM_FusionProject.ViewModel
         public MainWindowViewModel()
         {
             manager.Initialize();
-            this.commandLoaded = new DelegateCommand(Loaded);
         }
 
         public static MySQLManager manager = new MySQLManager();
@@ -24,20 +20,5 @@ namespace WPF_MVVM_FusionProject.ViewModel
         public static UserManageListViewModel userManageListViewModel { get; set; } = null;
         public static LogListViewModel logListViewModel { get; set; } = null;
         public static WarningMessageBoxViewModel warningMessageBoxViewModel { get; set; } = null;
-
-
-        private DelegateCommand commandLoaded = null;
-
-        public DelegateCommand CommandLoaded
-        {
-            get => this.commandLoaded;
-            set => this.commandLoaded = value;
-        }
-
-        private void Loaded(object obj)
-        {
-            MainWindow mainWindow = obj as MainWindow;
-            Application.Current.MainWindow = mainWindow;
-        }
     }
 }

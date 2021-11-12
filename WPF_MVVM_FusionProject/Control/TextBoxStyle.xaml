@@ -5,24 +5,67 @@
     <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
     <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
 
-    <!-- TextBoxStyle -->
-    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
-        <Setter Property="CaretBrush" Value="#FFD9D9D9"/>
+    <!-- IDPWTextBoxStyle -->
+    <Style x:Key="IDPWTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ContentBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource ContentSelectionBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource ContentForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ContentForegroundBrush}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Roboto Medium"/>
+        <Setter Property="MaxLength" Value="20"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
                     <Grid>
-                        <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
                             <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="BorderBrush" TargetName="Border" Value="#FF04D46A"/>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource ContentHoverForegroundBrush}"/>
                         </Trigger>
-                        <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="Border" Value="#FF04D46A"/>
-                            <Setter Property="BorderThickness" TargetName="Border" Value="0, 0, 0, 2"/>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource ContentHoverForegroundBrush}"/>
+                            <Setter Property="BorderThickness" Value="0, 0, 0, 2"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- PasswordBoxStyle -->
+    <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ContentBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="SelectionBrush" Value="{StaticResource ContentSelectionBrush}"/>
+        <Setter Property="CaretBrush" Value="{StaticResource ContentForegroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ContentForegroundBrush}"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="/Fonts/#Roboto Medium"/>
+        <Setter Property="MaxLength" Value="20"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type PasswordBox}">
+                    <Grid>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource ContentHoverForegroundBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="BorderBrush" Value="{StaticResource ContentHoverForegroundBrush}"/>
+                            <Setter Property="BorderThickness" Value="0, 0, 0, 2"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -103,31 +146,6 @@
                         <DataTrigger Binding="{Binding IsReadOnly}" Value="false">
                             <Setter Property="BorderThickness" TargetName="Border" Value="0,0,0,1"/>
                         </DataTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-    <!-- PasswordBoxStyle -->
-    <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
-        <Setter Property="CaretBrush" Value="#FFD9D9D9"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type PasswordBox}">
-                    <Grid>
-                        <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="BorderBrush" TargetName="Border" Value="#FF04D46A"/>
-                        </Trigger>
-                        <Trigger Property="IsFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="Border" Value="#FF04D46A"/>
-                            <Setter Property="BorderThickness" TargetName="Border" Value="0, 0, 0, 2"/>
-                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

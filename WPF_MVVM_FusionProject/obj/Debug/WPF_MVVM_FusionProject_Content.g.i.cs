@@ -8,8 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/titlemaximizehover2.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/titlemaximizenormal2.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/titlemaximizepressed2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/exithover.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/exithover2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/exitnormal.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/exitnormal2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/exitpressed.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("image/exitpressed2.png")]
 
 

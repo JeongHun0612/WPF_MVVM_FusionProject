@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Data;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
 using WPF_MVVM_FusionProject.Model;
 
 namespace WPF_MVVM_FusionProject.ViewModel

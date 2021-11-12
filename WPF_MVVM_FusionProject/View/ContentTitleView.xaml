@@ -3,29 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_MVVM_FusionProject.View"
              xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
-             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="90" d:DesignWidth="1090">
 
     <UserControl.DataContext>
         <viewModel:ContentTitleViewModel/>
     </UserControl.DataContext>
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="MouseDoubleClick">
-            <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandMaximizeClick}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="PreviewMouseDown">
-            <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandMouseDown}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-        </i:EventTrigger>
-        <i:EventTrigger EventName="PreviewMouseMove">
-            <i:InvokeCommandAction Command="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}, Path=CommandDragMove}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
     <Grid>
-        <Label Content="M a i n  T i t l e" Margin="35,10,0,0" VerticalAlignment="Center" VerticalContentAlignment="Center" FontFamily="/Fonts/#Roboto Medium" FontSize="43" Foreground="#FF0FB57D"/>
+        <Label Content="M a i n  T i t l e" VerticalAlignment="Center" Foreground="{StaticResource MainTitleForegroundBrush}" FontFamily="/Fonts/#Roboto Medium" FontSize="43" Margin="35,0,0,0"/>
     </Grid>
 </UserControl>

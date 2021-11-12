@@ -8,7 +8,7 @@
              xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
              xmlns:model="clr-namespace:WPF_MVVM_FusionProject.Model"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="795" d:DesignWidth="350">
 
     <UserControl.DataContext>
         <viewModel:UserManageTreeViewModel/>

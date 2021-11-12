@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Windows.Threading;
 
 namespace WPF_MVVM_FusionProject.ViewModel
@@ -13,7 +12,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
             DateTimer();
         }
 
-        public DispatcherTimer Timer = new DispatcherTimer();
+        public DispatcherTimer Timer = null;
 
         private string KSTdateTime = DateTime.Now.ToString("yyyy. MM. dd. HH:mm:ss");
         public string KSTDateTime
@@ -38,6 +37,7 @@ namespace WPF_MVVM_FusionProject.ViewModel
 
         private void DateTimer()
         {
+            Timer = new DispatcherTimer();
             Timer.Start();
             Timer.Interval = TimeSpan.FromMilliseconds(1000);
             Timer.Tick += (o, e) =>

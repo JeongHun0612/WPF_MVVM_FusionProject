@@ -2,23 +2,29 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WPF_MVVM_FusionProject"
-             StartupUri="MainWindow.xaml">
-    <!--View/LoginWindowView/LoginMainView.xaml-->
+             StartupUri="LoginMainView.xaml">
+    <!--MainWindow.xaml-->
+    <!--LoginMainView.xaml-->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
+                <!-- UI Brush Color -->
+                <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Color/UIBrush.xaml"/>
+
+                <!-- UI Style -->
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TextStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TextBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ComboBoxStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ButtonStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/CheckBoxStyle.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TabControlStyle.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TabItemStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ContextMenuStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/TreeViewStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/DataGridStyle.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/WPF_MVVM_FusionProject;component/Control/ListViewStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <local:BoolToVisibility x:Key="BoolToVisibility"/>
+            <local:BoolToVisibilityReverse x:Key="BoolToVisibilityReverse"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
 
 namespace WPF_MVVM_FusionProject.ViewModel
 {
@@ -13,8 +12,9 @@ namespace WPF_MVVM_FusionProject.ViewModel
         public TitleBarViewModel()
         {
             MainWindowViewModel.titleBarViewModel = this;
+
+            this.commandMouseDown = new DelegateCommand(MouseDown);
             this.commandDragMove = new DelegateCommand(DragMove);
-            this.commandMouseDown= new DelegateCommand(MouseDown);
             this.commandMinimizeClick = new DelegateCommand(MinimizeClick);
             this.commandMaximizeClick = new DelegateCommand(MaximizeClick);
             this.commandExitClick = new DelegateCommand(ExitClick);
@@ -34,13 +34,11 @@ namespace WPF_MVVM_FusionProject.ViewModel
             set { this.isWindowNormalBtnVisibility = value; Notify("IsWindowNormalBtnVisibility"); }
         }
 
-
         private DelegateCommand commandDragMove = null;
         private DelegateCommand commandMouseDown = null;
         private DelegateCommand commandMinimizeClick = null;
         private DelegateCommand commandMaximizeClick = null;
         private DelegateCommand commandExitClick = null;
-
 
         public DelegateCommand CommandDragMove
         {
@@ -72,57 +70,46 @@ namespace WPF_MVVM_FusionProject.ViewModel
             set => this.commandExitClick = value;
         }
 
+        private void MouseDown(object obj)
+        {
+            startPos = Mouse.GetPosition(Application.Current.MainWindow);
+        }
+
         private void DragMove(object obj)
         {
-            MainWindow mainWindow = obj as MainWindow;
-
             if (Mouse.LeftButton == MouseButtonState.Pressed && (startPos.X != 0 || startPos.Y != 0))
             {
-                Point position = Mouse.GetPosition(mainWindow);
+                Point position = Mouse.GetPosition(Application.Current.MainWindow);
 
-                if (((MainWindow)Application.Current.MainWindow).WindowState == WindowState.Maximized && (Math.Abs(startPos.Y - position.Y) > 2 || Math.Abs(startPos.X - position.X) > 2))
+                if (Application.Current.MainWindow.WindowState == WindowState.Maximized && (Math.Abs(startPos.Y - position.Y) > 2 || Math.Abs(startPos.X - position.X) > 2))
                 {
-                    Point point = mainWindow.PointToScreen(Mouse.GetPosition(null));
+                    Point point = Application.Current.MainWindow.PointToScreen(Mouse.GetPosition(null));
 
-                    ((MainWindow)Application.Current.MainWindow).WindowState = WindowState.Normal;
+                    Application.Current.MainWindow.WindowState = WindowState.Normal;
                     IsWindowNormalBtnVisibility = true;
                     IsWindowMaximizeBtnVisibility = false;
 
-                    mainWindow.Left = point.X - mainWindow.ActualWidth / 2; 
-                    mainWindow.Top = 0;
+                    Application.Current.MainWindow.Left = point.X - Application.Current.MainWindow.ActualWidth / 2;
+                    Application.Current.MainWindow.Top = 0;
                 }
 
-                ((MainWindow)Application.Current.MainWindow).DragMove();
+                Application.Current.MainWindow.DragMove();
             }
-        }
-
-        private void MouseDown(object obj)
-        {
-            MainWindow mainWindow = obj as MainWindow;
-            startPos = Mouse.GetPosition(mainWindow);
         }
 
         private void MinimizeClick(object obj)
         {
-            ((MainWindow)Application.Current.MainWindow).WindowState = WindowState.Minimized;
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
         }
 
         private void MaximizeClick(object obj)
         {
             startPos = new Point(0, 0);
 
-            if (((MainWindow)Application.Current.MainWindow).WindowState == WindowState.Normal)
-            {
-                ((MainWindow)Application.Current.MainWindow).WindowState = WindowState.Maximized;
-                IsWindowNormalBtnVisibility = false;
-                IsWindowMaximizeBtnVisibility = true;
-            }
-            else
-            {
-                ((MainWindow)Application.Current.MainWindow).WindowState = WindowState.Normal;
-                IsWindowNormalBtnVisibility = true;
-                IsWindowMaximizeBtnVisibility = false;
-            }
+            IsWindowNormalBtnVisibility = !IsWindowNormalBtnVisibility;
+            IsWindowMaximizeBtnVisibility = !IsWindowMaximizeBtnVisibility;
+
+            Application.Current.MainWindow.WindowState = (Application.Current.MainWindow.WindowState == WindowState.Normal) ? WindowState.Maximized : WindowState.Normal;
         }
 
         private void ExitClick(object obj)
@@ -130,7 +117,8 @@ namespace WPF_MVVM_FusionProject.ViewModel
             MainWindowViewModel.manager.CloseMySqlConnection();
             MainWindowViewModel.systemTimeViewModel.Timer.Stop();
 
-            Environment.Exit(0);
+            Application.Current.MainWindow.Close();
+            //Environment.Exit(0);
         }
     }
 }

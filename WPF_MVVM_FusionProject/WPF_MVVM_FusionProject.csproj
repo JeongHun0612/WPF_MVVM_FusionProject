@@ -130,9 +130,8 @@
     <Compile Include="ViewModel\Config.cs" />
     <Compile Include="ViewModel\ContentTitleViewModel.cs" />
     <Compile Include="ViewModel\ICommand.cs" />
-    <Compile Include="ViewModel\LoginWindowViewModel\LoginMainViewModel.cs" />
-    <Compile Include="ViewModel\LoginWindowViewModel\LoginViewModel.cs" />
-    <Compile Include="ViewModel\LoginWindowViewModel\MessageBoxViewModel.cs" />
+    <Compile Include="ViewModel\LoginMainViewModel.cs" />
+    <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\LogListViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\MySQLManager.cs" />
@@ -145,14 +144,11 @@
     <Compile Include="View\ContentTitleView.xaml.cs">
       <DependentUpon>ContentTitleView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\LoginWindowView\LoginMainView.xaml.cs">
+    <Compile Include="LoginMainView.xaml.cs">
       <DependentUpon>LoginMainView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\LoginWindowView\LoginView.xaml.cs">
+    <Compile Include="View\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\LoginWindowView\MessageBoxView.xaml.cs">
-      <DependentUpon>MessageBoxView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LogListView.xaml.cs">
       <DependentUpon>LogListView.xaml</DependentUpon>
@@ -175,6 +171,14 @@
     <Compile Include="View\WarningMessageBoxView.xaml.cs">
       <DependentUpon>WarningMessageBoxView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Color\UIBrush.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Color\UIColor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Control\ComboBoxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -203,7 +207,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Control\TabControlStyle.xaml">
+    <Page Include="Control\TabItemStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -243,15 +247,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LoginWindowView\LoginMainView.xaml">
+    <Page Include="LoginMainView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\LoginWindowView\LoginView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\LoginWindowView\MessageBoxView.xaml">
+    <Page Include="View\LoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -332,14 +332,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Color\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\exitPressed.png" />
-    <Resource Include="Image\exitHover.png" />
-    <Resource Include="Image\exitNormal.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image\warning.png" />
   </ItemGroup>
   <ItemGroup>
@@ -358,32 +350,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\eyeFalseNormal.png" />
-    <Resource Include="Image\eyeFalsePressed.png" />
-    <Resource Include="Image\eyeTrueNormal.png" />
-    <Resource Include="Image\eyeTruePressed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\eyeFalseHover.png" />
-    <Resource Include="Image\eyeTrueHover.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Image\userManageIconNormal.png" />
     <Resource Include="Image\userManageIconSelect.png" />
     <Resource Include="Image\configFileIconNormal.png" />
     <Resource Include="Image\configFileIconSelect.png" />
     <Resource Include="Image\systemConfigIconNormal.png" />
     <Resource Include="Image\systemConfigIconSelect.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\화살표.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\exitNormal2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\exitHover2.png" />
-    <Resource Include="Image\exitPressed2.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\editButtonNormal.png" />
@@ -411,26 +383,6 @@
     <Resource Include="Image\imageDeleteButtonPressed.png" />
     <Resource Include="Image\imageDeleteButtonNormal.png" />
     <Resource Include="Image\imageDeleteButtonHover.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\titleMinimizeHover.png" />
-    <Resource Include="Image\titleMinimizeNormal.png" />
-    <Resource Include="Image\titleMinimizePressed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\titleExitHover.png" />
-    <Resource Include="Image\titleExitNormal.png" />
-    <Resource Include="Image\titleExitPressed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\titleMaximizeHover.png" />
-    <Resource Include="Image\titleMaximizeNormal.png" />
-    <Resource Include="Image\titleMaximizePressed.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\titleMaximizeHover2.png" />
-    <Resource Include="Image\titleMaximizeNormal2.png" />
-    <Resource Include="Image\titleMaximizePressed2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

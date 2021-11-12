@@ -2,48 +2,40 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- CheckBoxStyle -->
-    <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
-        <Setter Property="Height" Value="15"/>
+    <Style TargetType="{x:Type CheckBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ContentBorderBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ContentForegroundBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <BulletDecorator Background="Transparent"
-                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}">
-                        <BulletDecorator.Bullet>
-                            <Border x:Name="Border"
-                                Width="15"
-                                Height="15"
-                                CornerRadius="0"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}">
-                                <Grid>
-                                    <Path Visibility="Visible"
-                                      Width="Auto"
-                                      Height="Auto"
-                                      x:Name="CheckMark"
-                                      SnapsToDevicePixels="False"
-                                      StrokeThickness="2" 
-                                      Stretch="Fill"
-                                      Data="M 0 3 L 5.7 13 M 4.9 13 L 12 0"
-                                      Stroke="{Binding AccentColor, RelativeSource={RelativeSource TemplatedParent}}">
-                                    </Path>
-                                </Grid>
-                            </Border>
-                        </BulletDecorator.Bullet>
-                        <ContentPresenter Margin="4,0,0,0"/>
-                    </BulletDecorator>
+                    <Grid x:Name="templateRoot" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Border x:Name="checkBoxBorder" CornerRadius="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="{StaticResource ContentForegroundBrush}" Margin="1" Opacity="0" Stretch="None"/>
+                        </Border>
+                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="5,-1,0,0"/>
+                    </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="BorderThickness" Value="1.5"/>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource ContentHoverBorderBrush}"/>
+                            <Setter Property="Cursor" Value="Hand"/>
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="Border" Property="BorderBrush" Value="Red"/>
-                            <Setter TargetName="CheckMark" Property="Visibility" Value="Visible"/>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource ContentPressedBorderBrush}"/>
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="False">
-                            <Setter TargetName="CheckMark" Property="Visibility" Value="Collapsed"/>
+                        <Trigger Property="IsChecked" Value="true">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
+                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource ContentPressedBorderBrush}"/>
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter Property="Opacity" TargetName="optionMark" Value="0"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

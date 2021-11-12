@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WPF_MVVM_FusionProject"
         xmlns:view="clr-namespace:WPF_MVVM_FusionProject.View"
         xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -11,47 +10,48 @@
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanResize"
-        Title="MainWindow" Height="1080" Width="1920" Background="#FF141C1E">
+        Title="MainWindow" Height="1080" Width="1920" Background="{StaticResource MainBackgroundBrush}">
 
     <Window.DataContext>
         <viewModel:MainWindowViewModel/>
     </Window.DataContext>
 
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding CommandLoaded}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
-
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="90"/>
+            <RowDefinition Height="120"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0" >
-            <view:TitleBarView DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.titleBarViewModel}}"/>
-        </Grid>
+        
+        <view:TitleBarView Grid.Row="0"/>
+
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="830"/>
-            </Grid.ColumnDefinitions>
-            <view:ContentTitleView Grid.Column="0" DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.contentTitleViewModel}}"/>
-            <view:SystemTimeView Grid.Column="1" DataContext="{Binding Source={x:Static viewModel:MainWindowViewModel.systemTimeViewModel}}"/>
-        </Grid>
-        <Grid Grid.Row="2">
-            <TabControl TabStripPlacement="Left" Background="#FF212A30" BorderBrush="{x:Null}">
-                <TabItem Header="Config File" Height="70" Width="220" Margin="0,75,0,-75" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource TabItemStyle1}" FontFamily="/Fonts/#Roboto" FontSize="19" >
-                    <Label Content="CONFIG FILE" FontSize="50" Foreground="WhiteSmoke"/>
+            <TabControl TabStripPlacement="Left" Background="{StaticResource TabControlBackgroundBrush}" BorderBrush="{x:Null}">
+                <TabItem Header="Config File" Width="220" Height="70" Margin="0,60,0,-60">
+                    <Label Content="CONFIG FILE" FontSize="50" Foreground="{StaticResource ContentForegroundBrush}"/>
                 </TabItem>
-                <TabItem Header="System Config" Height="70" Width="220" Margin="0,75,0,-75" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource TabItemStyle2}" FontFamily="/Fonts/#Roboto" FontSize="19">
-                    <Label Content="SYSTEM CONFIG" FontSize="50" Foreground="WhiteSmoke"/>
+                <TabItem Header="System Config" Width="220" Height="70" Margin="0,60,0,-60">
+                    <Label Content="SYSTEM CONFIG" FontSize="50" Foreground="{StaticResource ContentForegroundBrush}"/>
                 </TabItem>
-                <TabItem Header="User Manage" Height="70" Width="220" Margin="0,75,0,-75" HorizontalAlignment="Center" VerticalAlignment="Center" BorderBrush="{x:Null}" Background="{x:Null}" Style="{DynamicResource TabItemStyle3}" FontFamily="/Fonts/#Roboto" FontSize="19">
-                    <view:UserManageView/>
+                <TabItem Header="User Manage" Width="220" Height="70" Margin="0,60,0,-60">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="350"/>
+                            <ColumnDefinition Width="5"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="165"/>
+                        </Grid.RowDefinitions>
+
+                        <view:UserManageTreeView Grid.Column="0" Grid.RowSpan="2"/>
+                        <Grid Grid.Column="1" Grid.RowSpan="2" Background="{StaticResource MainBackgroundBrush}" Margin="0, -2"/>
+                        <view:UserManageListView Grid.Column="2" Grid.Row="0"/>
+                        <view:LogListView Grid.Column="2" Grid.Row="1"/>
+                    </Grid>
+                    <!--<view:UserManageView/>-->
                 </TabItem>
             </TabControl>
         </Grid>
     </Grid>
-</Window> 
+</Window>

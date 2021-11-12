@@ -3,37 +3,79 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_MVVM_FusionProject.View"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:view="clr-namespace:WPF_MVVM_FusionProject.View"
              xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
              mc:Ignorable="d" 
-             d:DesignHeight="25" d:DesignWidth="800">
-    
+             Background="Transparent"
+             d:DesignHeight="120" d:DesignWidth="1920">
+
     <UserControl.DataContext>
         <viewModel:TitleBarViewModel/>
     </UserControl.DataContext>
 
-    <Grid>
-        <Label>
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseDoubleClick">
-                    <i:InvokeCommandAction Command="{Binding CommandMaximizeClick}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="PreviewMouseDown">
-                    <i:InvokeCommandAction Command="{Binding CommandMouseDown}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-                </i:EventTrigger>
-                <i:EventTrigger EventName="PreviewMouseMove">
-                    <i:InvokeCommandAction Command="{Binding CommandDragMove}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
-        </Label>
-        <!--<Rectangle Fill="#FF141C1E" HorizontalAlignment="Center" Height="2" Margin="0" RadiusY="1.5" RadiusX="1.5" VerticalAlignment="Bottom" Width="1920"/>-->
-        <Button Style="{DynamicResource TitleMinimizeButtonStyle}" Height="30" Width="45" HorizontalAlignment="Right" Margin="0,0,90,0" Command="{Binding CommandMinimizeClick}"/>
-        <Button Style="{DynamicResource TitleMaximizeButtonStyle}" Height="30" Width="45" HorizontalAlignment="Right" Margin="0,0,45,0" 
-                Visibility="{Binding IsWindowMaximizeBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandMaximizeClick}"/>
-        <Button Style="{DynamicResource TitleMaximizeButtonStyle2}" Height="30" Width="45" HorizontalAlignment="Right" Margin="0,0,45,0" 
-                Visibility="{Binding IsWindowNormalBtnVisibility, Converter={StaticResource BoolToVisibility}}" Command="{Binding CommandMaximizeClick}"/>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="MouseDoubleClick">
+            <i:InvokeCommandAction Command="{Binding CommandMaximizeClick}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="PreviewMouseDown">
+            <i:InvokeCommandAction Command="{Binding CommandMouseDown}"/>
+        </i:EventTrigger>
+        <i:EventTrigger EventName="MouseMove">
+            <i:InvokeCommandAction Command="{Binding CommandDragMove}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
-        <Button Style="{DynamicResource TitleExitButtonStyle}" Height="30" Width="45" HorizontalAlignment="Right" Command="{Binding CommandExitClick}"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="90"/>
+        </Grid.RowDefinitions>
+
+        <!-- TitleBarView -->
+        <Grid Grid.Row="0">
+            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Right">
+                <!-- MinimizeButton -->
+                <Button Style="{StaticResource SystemButtonStyle}" Width="45" Height="30" Command="{Binding CommandMinimizeClick}">
+                    <Button.Content>
+                        <Rectangle Width="12" Height="1" Fill="{StaticResource ContentForegroundBrush}"/>
+                    </Button.Content>
+                </Button>
+
+                <!-- MaximizeButton -->
+                <Button Style="{StaticResource SystemButtonStyle}" Width="45" Height="30" Command="{Binding CommandMaximizeClick}">
+                    <Button.Content>
+                        <Grid>
+                            <Rectangle Width="10" Height="10" Stroke="{StaticResource ContentForegroundBrush}" Visibility="{Binding IsWindowNormalBtnVisibility, Converter={StaticResource BoolToVisibility}}"/>
+                            <Grid Visibility="{Binding IsWindowMaximizeBtnVisibility, Converter={StaticResource BoolToVisibility}}">
+                                <Rectangle Width="8" Height="8" Stroke="{StaticResource ContentForegroundBrush}" Margin="0,2,2,0"/>
+                                <Polyline Points="3,2 3,0 10,0 10,7 8,7" Stroke="{StaticResource ContentForegroundBrush}"/>
+                            </Grid>
+                        </Grid>
+                    </Button.Content>
+                </Button>
+
+                <!-- ExitButton -->
+                <Button Style="{DynamicResource SystemExitButtonStyle}" Width="45" Height="30" Command="{Binding CommandExitClick}">
+                    <Button.Content>
+                        <Canvas>
+                            <Line X1="-5" Y1="-5" X2="5" Y2="5" Stroke="{StaticResource ContentForegroundBrush}"/>
+                            <Line X1="5" Y1="-5" X2="-5" Y2="5" Stroke="{StaticResource ContentForegroundBrush}"/>
+                        </Canvas>
+                    </Button.Content>
+                </Button>
+            </WrapPanel>
+        </Grid>
+
+        <!-- ContentTitleView, SystemTimeView-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="830"/>
+            </Grid.ColumnDefinitions>
+            
+            <view:ContentTitleView Grid.Column="0"/>
+            <view:SystemTimeView Grid.Column="1"/>
+        </Grid>
     </Grid>
 </UserControl>

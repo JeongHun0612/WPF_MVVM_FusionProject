@@ -1,0 +1,113 @@
+﻿<UserControl x:Class="WPF_MVVM_FusionProject.View.LoginView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPF_MVVM_FusionProject"
+             xmlns:viewModel="clr-namespace:WPF_MVVM_FusionProject.ViewModel"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="380">
+
+    <UserControl.DataContext>
+        <viewModel:LoginViewModel/>
+    </UserControl.DataContext>
+
+    <Grid Background="{StaticResource MainBackgroundBrush}" FocusManager.FocusedElement="{Binding ElementName=IdTextBox}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="200"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Exit Button -->
+        <Grid Grid.Row="0">
+            <Button Style="{DynamicResource ExitButtonStyle}" Width="35" Height="30" HorizontalAlignment="Right" Command="{Binding CommandExitClick}"/>
+        </Grid>
+
+        <!-- Title Icon -->
+        <Grid Grid.Row="1">
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Source="/WPF_MVVM_FusionProject;component/Image/TitleIcon.png">
+                <Image.RenderTransform>
+                    <TransformGroup>
+                        <RotateTransform Angle="6.457"/>
+                    </TransformGroup>
+                </Image.RenderTransform>
+            </Image>
+        </Grid>
+
+        <!-- ID,PW Input -->
+        <Grid Grid.Row="2">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Grid>
+                    <StackPanel>
+                        <Grid>
+                            <TextBox x:Name="IdTextBox" Width="240" Height="24" Style="{DynamicResource IDPWTextBoxStyle}" Text="{Binding UserId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 local:FocusExtension.IsFocused="{Binding IsIdTextBoxFocus}" ContextMenu="{x:Null}">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding CommandLoginClick}"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
+                            <TextBlock Style="{DynamicResource IdWatermarkStyle}" Text="아이디" VerticalAlignment="Center" FontFamily="/Fonts/#KoPubDotum" FontSize="13" Margin="3,0,0,0"/>
+                        </Grid>
+                        <Label Content="{Binding IdErrorMessage}" Foreground="{StaticResource ContentErrorForegroundBrush}" FontFamily="/Fonts/#KoPubDotum Light" Margin="-5,2,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <Grid Margin="0,15,0,0">
+                    <StackPanel>
+                        <Grid>
+                            <TextBox x:Name="PwTextBox" Width="240" Height="24" Style="{DynamicResource IDPWTextBoxStyle}" Text="{Binding UserPw, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ContextMenu="{x:Null}"
+                                 local:FocusExtension.IsFocused="{Binding IsPwTextBoxFocus}" Visibility="{Binding IsShowPwCheck, Converter={StaticResource BoolToVisibility}}">
+                                <TextBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding CommandLoginClick}"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
+                            <PasswordBox Style="{StaticResource PasswordBoxStyle}" Width="240" Height="24" ContextMenu="{x:Null}"
+                                         local:FocusExtension.IsFocused="{Binding IsPwTextBoxFocus}" local:PasswordHelper.Attach="True" local:PasswordHelper.Password="{Binding UserPw, Mode=TwoWay}" Visibility="{Binding IsShowPwCheck, Converter={StaticResource BoolToVisibilityReverse}}">
+                                <PasswordBox.InputBindings>
+                                    <KeyBinding Key="Enter" Command="{Binding CommandLoginClick}"/>
+                                </PasswordBox.InputBindings>
+                            </PasswordBox>
+                            <TextBlock Style="{DynamicResource PwWatermarkStyle}" Text="비밀번호" VerticalAlignment="Center" FontFamily="/Fonts/#KoPubDotum" FontSize="13" Margin="3,0,0,0"/>
+                        </Grid>
+                        <Label Content="{Binding PwErrorMessage}" Foreground="{StaticResource ContentErrorForegroundBrush}" FontFamily="/Fonts/#KoPubDotum Light" Margin="-5,2,0,0"/>
+                    </StackPanel>
+                </Grid>
+                <CheckBox Width="Auto" IsChecked="{Binding IsShowPwCheck}" Content="비밀번호 보기" HorizontalAlignment="Left" Margin="0,10,0,0"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Login Button -->
+        <Grid Grid.Row="3">
+            <Button x:Name="loginButton" Content="Log in" Width="240" Height="40" FontFamily="/Fonts/#Roboto Medium" FontSize="17" IsEnabled="{Binding IsLoginButtonEnabled}" Command="{Binding CommandLoginClick}"/>
+        </Grid>
+
+        <!-- Function Button -->
+        <Grid Grid.Row="4" VerticalAlignment="Top">
+            <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Button Style="{StaticResource TextButtonStyle}" Content="아이디 찾기" FontFamily="/Font/#KoPubDotum Light" FontSize="11"/>
+                <Line X1="0" Y1="0" X2="0" Y2="10" Stroke="{StaticResource ContentBorderBrush}" StrokeThickness="0.5" VerticalAlignment="Center" Margin="15,0"/>
+                <Button Style="{StaticResource TextButtonStyle}" Content="비밀번호 찾기" FontFamily="/Font/#KoPubDotum Light" FontSize="11"/>
+                <Line X1="0" Y1="0" X2="0" Y2="10" Stroke="{StaticResource ContentBorderBrush}" StrokeThickness="0.5" VerticalAlignment="Center" Margin="15,0"/>
+                <Button Style="{StaticResource TextButtonStyle}" Content="회원가입" FontFamily="/Font/#KoPubDotum Light" FontSize="11"/>
+            </WrapPanel>
+        </Grid>
+
+        <Grid Grid.RowSpan="5" Visibility="{Binding IsLoginWarning, Converter={StaticResource BoolToVisibility}}">
+            <Rectangle Fill="Black" Opacity="0.6">
+                <Rectangle.Effect>
+                    <BlurEffect Radius="55"/>
+                </Rectangle.Effect>
+            </Rectangle>
+            <Border Width="270" Height="200" Background="{StaticResource ContentBackgroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" CornerRadius="5">
+                <StackPanel VerticalAlignment="Center" Margin="0,0,0,20">
+                    <Image Width="70" Height="70" Source="/WPF_MVVM_FusionProject;component/Image/warning2.png"/>
+                    <TextBlock Text="{Binding WarningErrorMessage}" TextAlignment="Center" Foreground="{StaticResource ContentForegroundBrush}" FontFamily="/Fonts/#KoPubDotum Medium" FontSize="13" Margin="0,10,0,20"/>
+                    <Button Width="150" Height="30" Content="Exit" FontFamily="/Fonts/#Roboto Medium" FontSize="15" Command="{Binding CommandWarningMessageExitClick}"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

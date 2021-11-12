@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Media.Imaging;
 using WPF_MVVM_FusionProject.Model;
